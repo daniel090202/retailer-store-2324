@@ -15,13 +15,11 @@ function Item({
 }) {
   const currentPage = usePathname();
 
-  console.log(currentPage);
-
   return (
     <Link
       href={path}
       className={`text-xl text-gray-600 font-medium my-2 p-4 rounded-lg hover:text-gray-800 hover:bg-slate-100 ${
-        path === currentPage ? "bg-white" : ""
+        path === currentPage ? "bg-white shadow-lg" : ""
       }`}
     >
       <span>{icon}</span>

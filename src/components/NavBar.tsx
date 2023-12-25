@@ -69,7 +69,7 @@ const NavBar = () => {
                     route.path === currentPage ? "bg-gray-100" : ""
                   }`}
                 >
-                  <Link href={route.path} className="block">
+                  <Link href={route.path}>
                     {route.title}
                   </Link>
                 </li>
