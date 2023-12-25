@@ -7,6 +7,7 @@ import "./globals.css";
 
 import Header from "@/components/Header/page";
 import NavBar from "@/components/NavBar/page";
+import Footer from "@/components/Footer/page";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <NavBar />
         </Header>
         {children}
+        <Footer />
       </body>
     </html>
   );

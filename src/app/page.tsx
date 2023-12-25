@@ -9,7 +9,10 @@ const Home = () => {
           {1}
         </span>
       </div>
-      <div className="grid my-4">
+      <div className="my-4 grid grid-cols-3 gap-3">
+        <Card />
+        <Card />
+        <Card />
         <Card />
       </div>
     </div>
