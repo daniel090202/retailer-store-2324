@@ -1,4 +1,4 @@
-import Card from "@/components/Card/page";
+import Card from "@/components/Card";
 
 const Home = () => {
   return (

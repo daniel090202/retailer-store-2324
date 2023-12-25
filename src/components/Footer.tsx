@@ -20,7 +20,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="max-w-screen-xl bg-white mx-auto p-6 text-gray-600 flex items-center justify-between md:p-8">
+    <footer className="bg-white mx-auto p-6 text-gray-600 flex items-center justify-between md:p-8">
       <div className="flex items-center py-4 md:block">
         <a
           href={appRoutes.home}

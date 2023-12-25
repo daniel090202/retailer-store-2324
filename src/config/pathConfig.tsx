@@ -1,3 +1,5 @@
+import icons from "@/assets/Icons/index";
+
 const appRoutes = {
   home: "/",
 };
@@ -9,12 +11,30 @@ const navigationRoutes = [
   },
   {
     title: "Services",
-    path: "/home/services/",
+    path: "/services/users",
   },
   {
     title: "About us",
-    path: "/home/about/",
+    path: "/about",
   },
 ];
 
-export { appRoutes, navigationRoutes };
+const servicesSidebarRoutes = [
+  {
+    title: "Human resources",
+    path: "/services/users",
+    icon: icons.userGroup,
+  },
+  {
+    title: "Product catalog",
+    path: "/services/products",
+    icon: icons.shirt,
+  },
+  {
+    title: "Customer relationship",
+    path: "/services/customers",
+    icon: icons.users,
+  },
+];
+
+export { appRoutes, navigationRoutes, servicesSidebarRoutes };

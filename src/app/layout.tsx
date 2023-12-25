@@ -5,14 +5,14 @@ import { Inter } from "next/font/google";
 
 import "./globals.css";
 
-import Header from "@/components/Header/page";
-import NavBar from "@/components/NavBar/page";
-import Footer from "@/components/Footer/page";
+import Header from "@/components/Header";
+import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const metadata: Metadata = {
-  title: "Retailer Store",
+  title: "Retailer store",
   description: "A cloth website management for retailers.",
 };
 

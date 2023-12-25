@@ -12,7 +12,6 @@ import { appRoutes, navigationRoutes } from "@/config/pathConfig";
 
 const NavBar = () => {
   const [state, setState] = useState(false);
-
   const currentPage = usePathname();
 
   return (
