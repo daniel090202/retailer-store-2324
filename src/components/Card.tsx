@@ -2,7 +2,7 @@ import icons from "@/assets/Icons/index";
 
 const Card = () => {
   return (
-    <div className="max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-600 md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-2">
       <div className="my-2">{icons.solidStar}</div>
       <a href="#">
         <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-600 dark:text-white">

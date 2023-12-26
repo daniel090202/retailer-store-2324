@@ -15,7 +15,7 @@ const Button = ({
 }) => {
   return (
     <button
-      className={`${className} p-2 border text-lg text-gray-400 rounded-xl bg-gray-200 hover:text-gray-600 hover:bg-slate-100`}
+      className={`${className} p-2 border text-base text-gray-600 rounded-xl shadow-lg bg-white hover:text-gray-800 hover:bg-slate-100 md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1`}
       onClick={onClick}
     >
       {leftIcon && <span>{leftIcon}</span>}

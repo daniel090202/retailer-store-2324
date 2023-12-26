@@ -21,7 +21,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-white mx-auto p-6 text-gray-600 flex items-center justify-between md:p-8">
-      <div className="flex items-center py-4 md:block">
+      <div className="hidden flex items-center py-4 md:block">
         <a
           href={appRoutes.home}
           className="font-bold hidden md:text-2xl md:flex md:items-center lg:text-4xl"
@@ -37,11 +37,11 @@ const Footer = () => {
         <span className="italic">Developed by Daniel Nguyen</span>
       </div>
       <div className="mx-4">
-        <p className="text-2xl text-gray-800 font-medium">Contact us</p>
+        <p className="text-xl md:text-2xl md:text-gray-800 md:font-medium ">Contact us</p>
         <ul>
           {footerContactAddresses.map((contactAddress, index) => {
             return (
-              <li key={index} className="my-2 text-lg">
+              <li key={index} className="text-lg md:my-2 md:text-lg">
                 <a href={contactAddress.path}>
                   <span className="mr-4">{contactAddress.icon}</span>
                   <span>{contactAddress.title}</span>

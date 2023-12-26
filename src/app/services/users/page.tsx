@@ -16,7 +16,7 @@ const Users = () => {
 
   return (
     <div className="flex-1 mx-2 my-4 p-4 bg-white rounded-xl">
-      <h1 className="text-2xl font-bold">Human resources management</h1>
+      <h1 className="my-2 text-2xl font-bold flex justify-center">Human resources management</h1>
       <div className="flex justify-between">
         <div className="my-2">
           <span>Total available users in the store:</span>
@@ -30,7 +30,7 @@ const Users = () => {
             className="mx-2"
             onClick={() => handleAddUsers()}
           >
-            New product
+            New user
           </Button>
           <Button
             leftIcon={icons.archive}

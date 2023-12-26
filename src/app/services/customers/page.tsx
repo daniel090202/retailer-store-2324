@@ -1,7 +1,38 @@
+"use client";
+
+import Table from "./Table";
+
+import icons from "@/assets/Icons";
+import Button from "@/components/Button";
+
 const Customers = () => {
+  const handleViewArchivedUsers = () => {
+    return;
+  };
+
   return (
     <div className="flex-1 mx-2 my-4 p-4 bg-white rounded-xl">
-      <h1 className="text-2xl font-bold">Customers relationship management</h1>
+      <h1 className="my-2 text-2xl font-bold flex justify-center">
+        Customers relationship management
+      </h1>
+      <div className="flex justify-between">
+        <div className="my-2">
+          <span>Total available customers in the store:</span>
+          <span className="mx-4 text-lg">12</span>
+          <span>person(s)</span>
+        </div>
+        <div>
+          <Button
+            leftIcon={icons.archive}
+            rightIcon=""
+            className=""
+            onClick={() => handleViewArchivedUsers()}
+          >
+            Archive (10)
+          </Button>
+        </div>
+      </div>
+      <Table />
     </div>
   );
 };

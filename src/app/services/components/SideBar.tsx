@@ -7,8 +7,8 @@ import { servicesSidebarRoutes } from "@/config/pathConfig";
 
 const SideBar = () => {
   return (
-    <aside className="w-1/4 m-2">
-      <Menu className="flex flex-col">
+    <aside className="md:w-1/4 md:m-2">
+      <Menu className="flex md:flex-col">
         {servicesSidebarRoutes.map((route, index) => {
           return (
             <Item

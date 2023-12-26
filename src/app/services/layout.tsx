@@ -2,7 +2,7 @@ import SideBar from "./components/SideBar";
 
 const ServicesLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex">
+    <div className="md:flex">
       <SideBar />
       {children}
     </div>
