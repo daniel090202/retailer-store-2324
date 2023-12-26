@@ -10,7 +10,10 @@ import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 import { appRoutes, navigationRoutes } from "@/config/pathConfig";
 
+import UserTippy from "./UserTippy";
+
 const NavBar = () => {
+  const [profileButtonClicked, setProfileButtonClicked] = useState(false);
   const [state, setState] = useState(false);
   const currentPage = usePathname();
 
@@ -69,24 +72,23 @@ const NavBar = () => {
                     route.path === currentPage ? "bg-gray-100" : ""
                   }`}
                 >
-                  <Link href={route.path}>
-                    {route.title}
-                  </Link>
+                  <Link href={route.path}>{route.title}</Link>
                 </li>
               );
             })}
-            <li>
-              <a
-                href={appRoutes.home}
-                className="shadow-lg border rounded-xl p-3 hidden transition ease-in-out delay-150 hover:-translate-y-1 md:block"
+            <li className="relative shadow-lg border rounded-xl p-3 hidden cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 md:block">
+              <UserTippy
+                profileButtonClicked={profileButtonClicked}
+                setProfileButtonClicked={setProfileButtonClicked}
               >
                 <Image
                   src={images.maleDefaultProfilePicture}
                   width={40}
                   height={40}
                   alt="User's profile picture."
+                  onClick={() => setProfileButtonClicked(!profileButtonClicked)}
                 />
-              </a>
+              </UserTippy>
             </li>
           </ul>
         </div>
