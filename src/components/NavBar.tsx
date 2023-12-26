@@ -68,7 +68,7 @@ const NavBar = () => {
               return (
                 <li
                   key={index}
-                  className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-slate-100 ${
+                  className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
                     route.path === currentPage ? "bg-gray-100" : ""
                   }`}
                 >

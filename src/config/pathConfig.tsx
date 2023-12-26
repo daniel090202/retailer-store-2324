@@ -14,8 +14,8 @@ const navigationRoutes = [
     path: "/services/users",
   },
   {
-    title: "About us",
-    path: "/about",
+    title: "Counter",
+    path: "/counter",
   },
 ];
 
