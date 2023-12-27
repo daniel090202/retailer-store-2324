@@ -1,9 +1,9 @@
 "use client";
 
-import Table from "./Table";
-
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
+
+import Table from "./Table";
 
 const Customers = () => {
   const handleViewArchivedUsers = () => {

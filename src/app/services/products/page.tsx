@@ -1,12 +1,19 @@
 "use client";
 
-import Table from "./Table";
+import { useState } from "react";
 
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
+import Table from "./Table";
+import AddProduct from "./CreateProduct";
+
 const Products = () => {
+  const [addProductModal, setAddProductModal] = useState(false);
+
   const handleAddUsers = () => {
+    setAddProductModal(true);
+
     return;
   };
 
@@ -16,7 +23,9 @@ const Products = () => {
 
   return (
     <div className="flex-1 mx-2 my-4 p-4 bg-white rounded-xl">
-      <h1 className="my-2 text-2xl font-bold flex justify-center">Products catalog management</h1>
+      <h1 className="my-2 text-2xl font-bold flex justify-center">
+        Products catalog management
+      </h1>
       <div className="flex justify-between">
         <div className="my-2">
           <span>Total available products in the store:</span>
@@ -43,6 +52,10 @@ const Products = () => {
         </div>
       </div>
       <Table />
+      <AddProduct
+        addProductModal={addProductModal}
+        setAddProductModal={setAddProductModal}
+      />
     </div>
   );
 };

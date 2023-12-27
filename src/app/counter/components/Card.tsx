@@ -1,7 +1,7 @@
 import icons from "@/assets/Icons/index";
 
 const Card = () => {
-  const color = "#E0BBE4";
+  const productBackgroundColor = "bg-[#9AC8EB]";
 
   return (
     <div className="max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-600 md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-2">
@@ -19,7 +19,9 @@ const Card = () => {
       <hr className="my-2" />
       <div className="my-2 flex justify-between font-normal text-gray-500 dark:text-gray-400">
         <span>Color:</span>
-        <span className={`w-6 h-6 rounded-full bg-[${color}]`}></span>
+        <span
+          className={`w-6 h-6 rounded-full ${productBackgroundColor}`}
+        ></span>
       </div>
       <div className="my-2 flex justify-between font-normal text-gray-500 dark:text-gray-400">
         <span>Amount:</span>
