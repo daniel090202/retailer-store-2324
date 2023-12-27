@@ -2,13 +2,14 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 import icons from "@/assets/Icons";
+import Button from "@/components/Button";
 
 const CreateProduct = ({
-  addProductModal,
-  setAddProductModal,
+  createProductModal,
+  setCreateProductModal,
 }: {
-  addProductModal: boolean;
-  setAddProductModal: (value: boolean) => void;
+  createProductModal: boolean;
+  setCreateProductModal: (value: boolean) => void;
 }) => {
   const [originalPriceAmount, setOriginalPriceAmount] = useState(1);
   const [salePriceAmount, setSalePriceAmount] = useState(1);
@@ -21,6 +22,7 @@ const CreateProduct = ({
     for (let i: number = 0; i < colorAmount; i++) {
       colorInputs.push(
         <input
+          type="text"
           id={`color${i}`}
           name={`color${i}`}
           placeholder="Color"
@@ -38,6 +40,7 @@ const CreateProduct = ({
     for (let i: number = 0; i < sizeAmount; i++) {
       sizeInputs.push(
         <input
+          type="text"
           id={`size${i}`}
           name={`size${i}`}
           placeholder="Size"
@@ -55,10 +58,11 @@ const CreateProduct = ({
     for (let i: number = 0; i < originalPriceAmount; i++) {
       originalPriceInputs.push(
         <input
+          type="number"
           id={`originalPrice${i}`}
           name={`originalPrice${i}`}
           placeholder="Original"
-          className="w-1/4 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none"
+          className="w-1/4 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         />
       );
     }
@@ -72,10 +76,11 @@ const CreateProduct = ({
     for (let i: number = 0; i < salePriceAmount; i++) {
       salePriceInputs.push(
         <input
+          type="number"
           id={`salePrice${i}`}
           name={`salePrice${i}`}
           placeholder="Sale"
-          className="w-1/4 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none"
+          className="w-1/4 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         />
       );
     }
@@ -83,19 +88,23 @@ const CreateProduct = ({
     return salePriceInputs;
   };
 
-  return addProductModal ? (
+  const handleCreateProduct = () => {
+    return;
+  };
+
+  return createProductModal ? (
     <div className="fixed inset-0 z-10 text-base overflow-y-auto">
       <div
-        className="fixed inset-0 w-full h-full bg-black opacity-40"
-        onClick={() => setAddProductModal(false)}
+        className="fixed inset-0 w-full h-full bg-black cursor-pointer opacity-40"
+        onClick={() => setCreateProductModal(false)}
       ></div>
       <div className="flex items-center min-h-screen p-8">
-        <div className="relative w-full max-w-6xl max-h-[600px] p-4 mx-auto bg-white rounded-xl shadow-lg overflow-y-auto">
+        <div className="relative w-full max-w-6xl max-h-[660px] p-4 mx-auto bg-white rounded-xl shadow-lg overflow-y-auto">
           <div className="my-2 flex justify-between">
-            <h1 className="text-2xl">Create new product</h1>
+            <h1 className="text-2xl">New product details</h1>
             <span
-              className="px-2 py-1 rounded-full hover:bg-gray-200"
-              onClick={() => setAddProductModal(false)}
+              className="px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
+              onClick={() => setCreateProductModal(false)}
             >
               {icons.cross}
             </span>
@@ -105,6 +114,7 @@ const CreateProduct = ({
             <div className="my-4">
               <label htmlFor="barcode">Barcode</label>
               <input
+                type="text"
                 id="barcode"
                 name="barcode"
                 placeholder="Product's barcode"
@@ -116,6 +126,7 @@ const CreateProduct = ({
               <input
                 id="name"
                 name="name"
+                type="text"
                 placeholder="Product's name"
                 className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
               />
@@ -124,6 +135,7 @@ const CreateProduct = ({
               <label htmlFor="brand">Brand</label>
               <input
                 id="brand"
+                type="text"
                 name="brand"
                 placeholder="Product's brand"
                 className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
@@ -135,7 +147,7 @@ const CreateProduct = ({
                 id="category"
                 name="category"
                 defaultValue={0}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none appearance-none"
+                className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
               >
                 <option value="0" hidden>
                   Select a type
@@ -151,7 +163,7 @@ const CreateProduct = ({
                 {renderAddColorInput()}
                 <div
                   onClick={() => setColorAmount(colorAmount + 1)}
-                  className="px-2 py-1 border rounded-full text-gray-200 hover:bg-gray-200 hover:text-gray-400"
+                  className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
                 >
                   {icons.plus}
                 </div>
@@ -163,7 +175,7 @@ const CreateProduct = ({
                 {renderAddSizeInput()}
                 <div
                   onClick={() => setSizeAmount(sizeAmount + 1)}
-                  className="px-2 py-1 border rounded-full text-gray-200 hover:bg-gray-200 hover:text-gray-400"
+                  className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
                 >
                   {icons.plus}
                 </div>
@@ -177,7 +189,7 @@ const CreateProduct = ({
                   onClick={() =>
                     setOriginalPriceAmount(originalPriceAmount + 1)
                   }
-                  className="px-2 py-1 border rounded-full text-gray-200 hover:bg-gray-200 hover:text-gray-400"
+                  className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
                 >
                   {icons.plus}
                 </div>
@@ -189,12 +201,23 @@ const CreateProduct = ({
                 {renderAddSalePriceInput()}
                 <div
                   onClick={() => setSalePriceAmount(salePriceAmount + 1)}
-                  className="px-2 py-1 border rounded-full text-gray-200 hover:bg-gray-200 hover:text-gray-400"
+                  className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
                 >
                   {icons.plus}
                 </div>
               </div>
             </div>
+          </div>
+          <hr />
+          <div className="flex justify-center">
+            <Button
+              leftIcon={icons.plus}
+              rightIcon=""
+              className="mt-4 p-4"
+              onClick={() => handleCreateProduct()}
+            >
+              Create product
+            </Button>
           </div>
         </div>
       </div>
@@ -205,8 +228,8 @@ const CreateProduct = ({
 };
 
 CreateProduct.propTypes = {
-  addProductModal: PropTypes.bool,
-  setAddProductModal: PropTypes.func,
+  createProductModal: PropTypes.bool,
+  setCreateProductModal: PropTypes.func,
 };
 
 export default CreateProduct;

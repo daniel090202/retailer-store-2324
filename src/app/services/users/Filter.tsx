@@ -10,7 +10,7 @@ const Filter = () => {
         <select
           name="filter"
           id="filter"
-          className="appearance-none outline-none"
+          className="cursor-pointer appearance-none outline-none"
         >
           <option value="0">All</option>
           <option value="1">Age</option>

@@ -6,18 +6,18 @@ import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
 import Table from "./Table";
-import AddProduct from "./CreateProduct";
+import CreateProduct from "./CreateProduct";
 
 const Products = () => {
-  const [addProductModal, setAddProductModal] = useState(false);
+  const [createProductModal, setCreateProductModal] = useState(false);
 
-  const handleAddUsers = () => {
-    setAddProductModal(true);
+  const handleCreateProduct = () => {
+    setCreateProductModal(true);
 
     return;
   };
 
-  const handleViewArchivedUsers = () => {
+  const handleViewArchivedProducts = () => {
     return;
   };
 
@@ -37,7 +37,7 @@ const Products = () => {
             leftIcon={icons.plus}
             rightIcon=""
             className="mx-2"
-            onClick={() => handleAddUsers()}
+            onClick={() => handleCreateProduct()}
           >
             New product
           </Button>
@@ -45,16 +45,16 @@ const Products = () => {
             leftIcon={icons.archive}
             rightIcon=""
             className=""
-            onClick={() => handleViewArchivedUsers()}
+            onClick={() => handleViewArchivedProducts()}
           >
             Archive (10)
           </Button>
         </div>
       </div>
       <Table />
-      <AddProduct
-        addProductModal={addProductModal}
-        setAddProductModal={setAddProductModal}
+      <CreateProduct
+        createProductModal={createProductModal}
+        setCreateProductModal={setCreateProductModal}
       />
     </div>
   );
