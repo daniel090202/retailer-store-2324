@@ -146,15 +146,15 @@ const CreateProduct = ({
               <select
                 id="category"
                 name="category"
-                defaultValue={0}
+                defaultValue={-1}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
               >
-                <option value="0" hidden>
+                <option value="-1" hidden>
                   Select a type
                 </option>
-                <option value="1">Phone</option>
-                <option value="2">Tablet</option>
-                <option value="3">Laptop</option>
+                <option value="0">Phone</option>
+                <option value="1">Tablet</option>
+                <option value="2">Laptop</option>
               </select>
             </div>
             <div className="my-4 flex flex-col">

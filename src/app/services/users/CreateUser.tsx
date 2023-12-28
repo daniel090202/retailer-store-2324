@@ -32,7 +32,7 @@ const CreateUser = ({
             </span>
           </div>
           <hr />
-          <div className="mx-auto py-3 space-y-3 grid grid-cols-2 gap-x-4">
+          <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
             <div className="my-4">
               <label htmlFor="fullName">Full name</label>
               <input
@@ -50,16 +50,6 @@ const CreateUser = ({
                 name="age"
                 type="number"
                 placeholder="User's age"
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-              />
-            </div>
-            <div className="my-4">
-              <label htmlFor="address">Address</label>
-              <input
-                id="address"
-                type="text"
-                name="address"
-                placeholder="User's address"
                 className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
               />
             </div>
@@ -84,26 +74,17 @@ const CreateUser = ({
               />
             </div>
             <div className="my-4">
-              <label htmlFor="position">Position</label>
-              <input
-                id="position"
-                name="position"
-                placeholder="User's position"
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-              />
-            </div>
-            <div className="my-4">
               <label htmlFor="salary">Basic salary</label>
               <input
                 id="salary"
                 type="number"
                 name="salary"
                 placeholder="User's basic salary"
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
               />
             </div>
             <div className="my-4">
-              <label htmlFor="startWorkingDate">Start working date</label>
+              <label htmlFor="startWorkingDate">Working date</label>
               <input
                 id="startWorkingDate"
                 name="startWorkingDate"
@@ -112,6 +93,79 @@ const CreateUser = ({
                 className="w-full p-4 my-2 border text-gray-400 rounded-xl shadow-xl outline-none"
               />
             </div>
+            <div className="my-4">
+              <label htmlFor="address">Address</label>
+              <select
+                id="address"
+                name="address"
+                defaultValue={-1}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
+              >
+                <option value="-1" hidden>
+                  Select an address
+                </option>
+                <option value="0">Ho Chi Minh</option>
+                <option value="1">Binh Duong</option>
+                <option value="2">Dong Nai</option>
+              </select>
+            </div>
+
+            <div className="my-4">
+              <label htmlFor="position">Position</label>
+              <select
+                id="position"
+                name="position"
+                defaultValue={-1}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
+              >
+                <option value="-1" hidden>
+                  Select a position
+                </option>
+                <option value="0">Administrator</option>
+                <option value="1">Accountant</option>
+                <option value="2">Seller</option>
+              </select>
+            </div>
+            <fieldset className="my-4">
+              <legend>Select a gender</legend>
+              <div className="my-2">
+                <input
+                  type="radio"
+                  id="male"
+                  name="gender"
+                  value="0"
+                  className="accent-gray-400"
+                  defaultChecked
+                />
+                <label htmlFor="male" className="mx-4">
+                  Male
+                </label>
+              </div>
+              <div className="my-2">
+                <input
+                  type="radio"
+                  id="female"
+                  name="gender"
+                  value="1"
+                  className="accent-gray-400"
+                />
+                <label htmlFor="female" className="mx-4">
+                  Female
+                </label>
+              </div>
+              <div className="my-2">
+                <input
+                  type="radio"
+                  id="other"
+                  name="gender"
+                  value="2"
+                  className="accent-gray-400"
+                />
+                <label htmlFor="other" className="mx-4">
+                  Other
+                </label>
+              </div>
+            </fieldset>
           </div>
           <hr />
           <div className="flex justify-center">
