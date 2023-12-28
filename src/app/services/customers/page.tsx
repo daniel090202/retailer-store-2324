@@ -11,7 +11,7 @@ const Customers = () => {
   };
 
   return (
-    <div className="flex-1 mx-2 my-4 p-4 bg-white rounded-xl">
+    <div className="flex-1 mx-2 my-4 p-4 h-[680px] bg-white rounded-xl">
       <h1 className="my-2 text-2xl font-bold flex justify-center">
         Customers relationship management
       </h1>

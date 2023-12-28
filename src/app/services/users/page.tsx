@@ -13,8 +13,6 @@ const Users = () => {
 
   const handleCreateUser = () => {
     setCreateUserModal(true);
-
-    return;
   };
 
   const handleViewArchivedUsers = () => {
@@ -22,7 +20,7 @@ const Users = () => {
   };
 
   return (
-    <div className="flex-1 mx-2 my-4 p-4 bg-white rounded-xl">
+    <div className="flex-1 mx-2 my-4 p-4 h-[680px] bg-white rounded-xl">
       <h1 className="my-2 text-2xl font-bold flex justify-center">
         Human resources management
       </h1>

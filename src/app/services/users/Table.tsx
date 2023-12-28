@@ -1,4 +1,7 @@
+import Link from "next/link";
+
 import icons from "@/assets/Icons/index";
+import { userProfilePath } from "@/config/pathConfig";
 
 import Filter from "./Filter";
 
@@ -30,91 +33,14 @@ const Table = () => {
             <td className="px-6 py-4 whitespace-nowrap">
               minhkhanh090202@gmail.com
             </td>
-            <td>{icons.solidLinkDirect}</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-4 whitespace-nowrap">0</td>
-            <td className="px-6 py-4 whitespace-nowrap">Daniel Nguyen</td>
-            <td className="px-6 py-4 whitespace-nowrap">21</td>
-            <td className="px-6 py-4 whitespace-nowrap">Male</td>
-            <td className="px-6 py-4 whitespace-nowrap">Ho Chi Minh</td>
-            <td className="px-6 py-4 whitespace-nowrap">0936720339</td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              minhkhanh090202@gmail.com
+            <td>
+              <Link
+                href={userProfilePath + "/daniel.nguyen"}
+                className="flex items-center"
+              >
+                {icons.solidLinkDirect}
+              </Link>
             </td>
-            <td>{icons.solidLinkDirect}</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-4 whitespace-nowrap">0</td>
-            <td className="px-6 py-4 whitespace-nowrap">Daniel Nguyen</td>
-            <td className="px-6 py-4 whitespace-nowrap">21</td>
-            <td className="px-6 py-4 whitespace-nowrap">Male</td>
-            <td className="px-6 py-4 whitespace-nowrap">Ho Chi Minh</td>
-            <td className="px-6 py-4 whitespace-nowrap">0936720339</td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              minhkhanh090202@gmail.com
-            </td>
-            <td>{icons.solidLinkDirect}</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-4 whitespace-nowrap">0</td>
-            <td className="px-6 py-4 whitespace-nowrap">Daniel Nguyen</td>
-            <td className="px-6 py-4 whitespace-nowrap">21</td>
-            <td className="px-6 py-4 whitespace-nowrap">Male</td>
-            <td className="px-6 py-4 whitespace-nowrap">Ho Chi Minh</td>
-            <td className="px-6 py-4 whitespace-nowrap">0936720339</td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              minhkhanh090202@gmail.com
-            </td>
-            <td>{icons.solidLinkDirect}</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-4 whitespace-nowrap">0</td>
-            <td className="px-6 py-4 whitespace-nowrap">Daniel Nguyen</td>
-            <td className="px-6 py-4 whitespace-nowrap">21</td>
-            <td className="px-6 py-4 whitespace-nowrap">Male</td>
-            <td className="px-6 py-4 whitespace-nowrap">Ho Chi Minh</td>
-            <td className="px-6 py-4 whitespace-nowrap">0936720339</td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              minhkhanh090202@gmail.com
-            </td>
-            <td>{icons.solidLinkDirect}</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-4 whitespace-nowrap">0</td>
-            <td className="px-6 py-4 whitespace-nowrap">Daniel Nguyen</td>
-            <td className="px-6 py-4 whitespace-nowrap">21</td>
-            <td className="px-6 py-4 whitespace-nowrap">Male</td>
-            <td className="px-6 py-4 whitespace-nowrap">Ho Chi Minh</td>
-            <td className="px-6 py-4 whitespace-nowrap">0936720339</td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              minhkhanh090202@gmail.com
-            </td>
-            <td>{icons.solidLinkDirect}</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-4 whitespace-nowrap">0</td>
-            <td className="px-6 py-4 whitespace-nowrap">Daniel Nguyen</td>
-            <td className="px-6 py-4 whitespace-nowrap">21</td>
-            <td className="px-6 py-4 whitespace-nowrap">Male</td>
-            <td className="px-6 py-4 whitespace-nowrap">Ho Chi Minh</td>
-            <td className="px-6 py-4 whitespace-nowrap">0936720339</td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              minhkhanh090202@gmail.com
-            </td>
-            <td>{icons.solidLinkDirect}</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-4 whitespace-nowrap">0</td>
-            <td className="px-6 py-4 whitespace-nowrap">Daniel Nguyen</td>
-            <td className="px-6 py-4 whitespace-nowrap">21</td>
-            <td className="px-6 py-4 whitespace-nowrap">Male</td>
-            <td className="px-6 py-4 whitespace-nowrap">Ho Chi Minh</td>
-            <td className="px-6 py-4 whitespace-nowrap">0936720339</td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              minhkhanh090202@gmail.com
-            </td>
-            <td>{icons.solidLinkDirect}</td>
           </tr>
         </tbody>
       </table>

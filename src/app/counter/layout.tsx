@@ -1,6 +1,8 @@
+import PropTypes from "prop-types";
+
 import SideBar from "./components/SideBar";
 
-const ServicesLayout = ({ children }: { children: React.ReactNode }) => {
+const CounterLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="md:flex">
       <SideBar />
@@ -9,4 +11,8 @@ const ServicesLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default ServicesLayout;
+CounterLayout.propsType = {
+  children: PropTypes.node.isRequired,
+};
+
+export default CounterLayout;

@@ -1,5 +1,7 @@
 import icons from "@/assets/Icons/index";
 
+const userProfilePath = "/user";
+
 const appRoutes = {
   home: "/",
 };
@@ -37,4 +39,4 @@ const servicesSidebarRoutes = [
   },
 ];
 
-export { appRoutes, navigationRoutes, servicesSidebarRoutes };
+export { userProfilePath, appRoutes, navigationRoutes, servicesSidebarRoutes };
