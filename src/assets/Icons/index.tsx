@@ -18,6 +18,7 @@ import {
   faCaretDown,
   faListCheck,
   faBoxArchive,
+  faAddressCard,
   IconDefinition,
   faRightFromBracket,
   faArrowUpRightFromSquare,
@@ -55,6 +56,7 @@ const icons = {
   instagram: wrapIcon(faInstagram),
   caretDown: wrapIcon(faCaretDown),
   userGroup: wrapIcon(faUserGroup),
+  addressCard: wrapIcon(faAddressCard),
   logout: wrapIcon(faRightFromBracket),
   solidLinkDirect: wrapIcon(faArrowUpRightFromSquare),
 };

@@ -1,8 +1,22 @@
+import Link from "next/link";
+
 import icons from "@/assets/Icons/index";
+import { customerProfilePath } from "@/config/pathConfig";
+import { renderUserGender } from "@/services/userServices";
 
 import Filter from "./Filter";
 
 const Table = () => {
+  const customer = {
+    slug: "daniel.nguyen",
+    fullName: "Daniel Nguyen",
+    age: 21,
+    gender: 0,
+    address: "Ho Chi Minh",
+    phone: "0936730339",
+    email: "minhkhanh090202@gmail.com",
+  };
+
   return (
     <div>
       <Filter />
@@ -22,15 +36,22 @@ const Table = () => {
         <tbody className="text-gray-600 divide-y">
           <tr>
             <td className="px-6 py-4 whitespace-nowrap">0</td>
-            <td className="px-6 py-4 whitespace-nowrap">Daniel Nguyen</td>
-            <td className="px-6 py-4 whitespace-nowrap">21</td>
-            <td className="px-6 py-4 whitespace-nowrap">Male</td>
-            <td className="px-6 py-4 whitespace-nowrap">Ho Chi Minh</td>
-            <td className="px-6 py-4 whitespace-nowrap">0936720339</td>
+            <td className="px-6 py-4 whitespace-nowrap">{customer.fullName}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{customer.age}</td>
             <td className="px-6 py-4 whitespace-nowrap">
-              minhkhanh090202@gmail.com
+              {renderUserGender(customer.gender)}
             </td>
-            <td>{icons.solidLinkDirect}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{customer.address}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{customer.phone}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{customer.email}</td>
+            <td>
+              <Link
+                href={customerProfilePath + `/${customer.slug}`}
+                className="flex items-center transition ease-in-out delay-150 hover:-translate-y-1"
+              >
+                {icons.solidLinkDirect}
+              </Link>
+            </td>
           </tr>
         </tbody>
       </table>
