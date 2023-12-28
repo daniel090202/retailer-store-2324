@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 
+import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
 const User = ({ params }: { params: { id: string } }) => {
@@ -16,7 +17,13 @@ const User = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <div className="flex-1 h-[480px] mx-2 my-4 p-4 bg-white rounded-xl overflow-y-scroll">
+    <div className="flex-1 h-[500px] mx-2 my-4 p-4 bg-white rounded-xl overflow-y-scroll">
+      <span
+        onClick={() => window.history.back()}
+        className="px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
+      >
+        {icons.arrowLeft}
+      </span>
       <div className="flex justify-center items-center">
         <div className="shadow-lg border rounded-xl p-3 cursor-pointer">
           <Image

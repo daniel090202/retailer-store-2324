@@ -1,6 +1,7 @@
 import icons from "@/assets/Icons/index";
 
 const userProfilePath = "/user";
+const productDetailsPath = "/product";
 
 const appRoutes = {
   home: "/",
@@ -39,4 +40,10 @@ const servicesSidebarRoutes = [
   },
 ];
 
-export { userProfilePath, appRoutes, navigationRoutes, servicesSidebarRoutes };
+export {
+  userProfilePath,
+  productDetailsPath,
+  appRoutes,
+  navigationRoutes,
+  servicesSidebarRoutes,
+};

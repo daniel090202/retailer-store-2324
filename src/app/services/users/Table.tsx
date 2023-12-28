@@ -36,7 +36,7 @@ const Table = () => {
             <td>
               <Link
                 href={userProfilePath + "/daniel.nguyen"}
-                className="flex items-center"
+                className="flex items-center transition ease-in-out delay-150 hover:-translate-y-1"
               >
                 {icons.solidLinkDirect}
               </Link>
