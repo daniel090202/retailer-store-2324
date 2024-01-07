@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 
 import icons from "@/assets/Icons";
+
 import Button from "@/components/Button";
 
 const CreateUser = ({

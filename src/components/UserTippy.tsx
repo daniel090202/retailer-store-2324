@@ -48,7 +48,7 @@ const UserTippy = ({
         <hr />
         <UserTippyElement
           key={tippyContents.length}
-          icon={icons.logout}
+          icon={icons.entering}
           title={"Log out"}
         />
       </div>

@@ -1,8 +1,16 @@
 "use client";
 
+import { useState } from "react";
+
 import Button from "@/components/Button";
 
 const SideBar = () => {
+  const [totalAmount, setTotalAmount] = useState(12);
+  const [totalExpense, setTotalExpense] = useState(100000);
+  const [customerPayment, setCustomerPayment] = useState(200000);
+
+  const exchange = customerPayment - totalExpense;
+
   const handleForwardOrder = () => {
     return;
   };
@@ -21,15 +29,15 @@ const SideBar = () => {
       <div className="p-4 rounded-xl border-2">
         <div className="my-2 flex justify-between">
           <span>Total products:</span>
-          <span>12</span>
+          <span>{totalAmount}</span>
         </div>
         <div className="my-2 flex justify-between">
           <span>Total expense:</span>
-          <span>300.000</span>
+          <span>{totalExpense.toLocaleString()}</span>
         </div>
         <div className="my-2 flex justify-between">
           <span>Payment:</span>
-          <span>400.000</span>
+          <span>{customerPayment.toLocaleString()}</span>
         </div>
         <div className="my-2 flex justify-between">
           <span>Coupons:</span>
@@ -38,7 +46,7 @@ const SideBar = () => {
         <hr className="my-2" />
         <div className="my-2 flex justify-between">
           <span>Exchange:</span>
-          <span>100.000</span>
+          <span>{exchange.toLocaleString()}</span>
         </div>
       </div>
       <Button

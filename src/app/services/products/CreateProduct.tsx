@@ -1,8 +1,14 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-import icons from "@/assets/Icons";
 import Button from "@/components/Button";
+
+import icons from "@/assets/Icons";
+import {
+  allProductUnits,
+  allStorageLocation,
+  allProductCategories,
+} from "@/services/productServices";
 
 const CreateProduct = ({
   createProductModal,
@@ -11,10 +17,124 @@ const CreateProduct = ({
   createProductModal: boolean;
   setCreateProductModal: (value: boolean) => void;
 }) => {
-  const [originalPriceAmount, setOriginalPriceAmount] = useState(1);
-  const [salePriceAmount, setSalePriceAmount] = useState(1);
-  const [colorAmount, setColorAmount] = useState(1);
   const [sizeAmount, setSizeAmount] = useState(1);
+  const [colorAmount, setColorAmount] = useState(1);
+  const [salePriceAmount, setSalePriceAmount] = useState(1);
+  const [originalPriceAmount, setOriginalPriceAmount] = useState(1);
+
+  const [unit, setUnit] = useState("-1");
+  const [category, setCategory] = useState("-1");
+  const [forGender, setForGender] = useState("-1");
+  const [storageLocation, setStorageLocation] = useState("-1");
+
+  const [sizeList, setSizeList] = useState<string[]>([]);
+  const [colorList, setColorList] = useState<string[]>([]);
+
+  const [product, setProduct] = useState<{
+    SKU: string;
+    UPC: string;
+    name: string;
+    brand: string;
+    forGender: string;
+    category: string;
+    size: string[];
+    color: string[];
+    originalPrice: string;
+    salePrice: string;
+    unit: string;
+    initialInventory: string;
+    minimumInventory: string;
+    maximumInventory: string;
+    storageLocation: string;
+  }>({
+    SKU: "",
+    UPC: "",
+    name: "",
+    brand: "",
+    forGender: "",
+    category: "",
+    size: [],
+    color: [],
+    originalPrice: "",
+    salePrice: "",
+    unit: "",
+    initialInventory: "",
+    minimumInventory: "",
+    maximumInventory: "",
+    storageLocation: "",
+  });
+
+  const handleColorInputProduct = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const startIndex = parseInt(event.target.name.split("_")[1]);
+
+    if (startIndex < colorList.length) {
+      colorList.splice(startIndex, 1, event.target.value);
+    } else {
+      colorList.splice(startIndex, 0, event.target.value);
+    }
+
+    setColorList([...colorList]);
+    setProduct({ ...product, color: [...colorList] });
+  };
+
+  const handleSizeInputProduct = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const startIndex = parseInt(event.target.name.split("_")[1]);
+
+    if (startIndex < sizeList.length) {
+      sizeList.splice(startIndex, 1, event.target.value);
+    } else {
+      sizeList.splice(startIndex, 0, event.target.value);
+    }
+
+    setSizeList([...sizeList]);
+    setProduct({ ...product, size: [...sizeList] });
+  };
+
+  const renderUnits = () => {
+    const units = [];
+
+    for (let i: number = 0; i < allProductUnits.length; i++) {
+      units.push(
+        <option key={i} value={i}>
+          {allProductUnits[i]}
+        </option>
+      );
+    }
+
+    return units;
+  };
+
+  const renderCategories = () => {
+    const categories = [];
+
+    for (let i: number = 0; i < allProductCategories.length; i++) {
+      categories.push(
+        <option key={i} value={i}>
+          {allProductCategories[i]}
+        </option>
+      );
+    }
+
+    return categories;
+  };
+
+  const renderStorageLocation = () => {
+    const storageLocation = [];
+
+    for (let i: number = 0; i < allStorageLocation.length; i++) {
+      storageLocation.push(
+        <option key={i} value={i}>
+          {allStorageLocation[i]}
+        </option>
+      );
+    }
+
+    return storageLocation;
+  };
 
   const renderAddColorInput = () => {
     const colorInputs = [];
@@ -22,11 +142,15 @@ const CreateProduct = ({
     for (let i: number = 0; i < colorAmount; i++) {
       colorInputs.push(
         <input
+          key={i}
           type="text"
           id={`color${i}`}
-          name={`color${i}`}
+          name={`color_${i}`}
           placeholder="Color"
-          className="w-1/4 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none"
+          onChange={(event) => {
+            handleColorInputProduct(event);
+          }}
+          className="w-1/6 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none"
         />
       );
     }
@@ -40,11 +164,15 @@ const CreateProduct = ({
     for (let i: number = 0; i < sizeAmount; i++) {
       sizeInputs.push(
         <input
+          key={i}
           type="text"
           id={`size${i}`}
-          name={`size${i}`}
+          name={`size_${i}`}
           placeholder="Size"
-          className="w-1/4 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none"
+          onChange={(event) => {
+            handleSizeInputProduct(event);
+          }}
+          className="w-1/6 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none"
         />
       );
     }
@@ -52,40 +180,36 @@ const CreateProduct = ({
     return sizeInputs;
   };
 
-  const renderAddOriginalPriceInput = () => {
-    const originalPriceInputs = [];
-
-    for (let i: number = 0; i < originalPriceAmount; i++) {
-      originalPriceInputs.push(
-        <input
-          type="number"
-          id={`originalPrice${i}`}
-          name={`originalPrice${i}`}
-          placeholder="Original"
-          className="w-1/4 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        />
-      );
-    }
-
-    return originalPriceInputs;
+  const handleInputProduct = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setProduct({ ...product, [event.target.name]: event.target.value });
   };
 
-  const renderAddSalePriceInput = () => {
-    const salePriceInputs = [];
+  const handleForGenderSelectProduct = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setForGender(event.target.value);
+    setProduct({ ...product, [event.target.name]: event.target.value });
+  };
 
-    for (let i: number = 0; i < salePriceAmount; i++) {
-      salePriceInputs.push(
-        <input
-          type="number"
-          id={`salePrice${i}`}
-          name={`salePrice${i}`}
-          placeholder="Sale"
-          className="w-1/4 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        />
-      );
-    }
+  const handleCategorySelectProduct = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setCategory(event.target.value);
+    setProduct({ ...product, [event.target.name]: event.target.value });
+  };
 
-    return salePriceInputs;
+  const handleUnitSelectProduct = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setUnit(event.target.value);
+    setProduct({ ...product, [event.target.name]: event.target.value });
+  };
+
+  const handleStorageLocationSelectProduct = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setStorageLocation(event.target.value);
+    setProduct({ ...product, [event.target.name]: event.target.value });
   };
 
   const handleCreateProduct = () => {
@@ -99,7 +223,7 @@ const CreateProduct = ({
         onClick={() => setCreateProductModal(false)}
       ></div>
       <div className="flex items-center min-h-screen p-8">
-        <div className="relative w-full max-w-6xl max-h-[660px] p-4 mx-auto bg-white rounded-xl shadow-lg overflow-y-auto">
+        <div className="relative w-full max-w-6xl max-h-[600px] p-4 mx-auto bg-white rounded-xl shadow-lg overflow-y-auto">
           <div className="my-2 flex justify-between">
             <h1 className="text-2xl">New product details</h1>
             <span
@@ -110,14 +234,26 @@ const CreateProduct = ({
             </span>
           </div>
           <hr />
-          <div className="mx-auto py-3 space-y-3 grid grid-cols-2 gap-x-4">
+          <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
             <div className="my-4">
-              <label htmlFor="barcode">Barcode</label>
+              <label htmlFor="sku">Stock keeping unit</label>
               <input
                 type="text"
-                id="barcode"
-                name="barcode"
-                placeholder="Product's barcode"
+                id="SKU"
+                name="SKU"
+                placeholder="Stock keeping unit"
+                onChange={(event) => handleInputProduct(event)}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+              />
+            </div>
+            <div className="my-4">
+              <label htmlFor="sku">Universal product code</label>
+              <input
+                type="number"
+                id="UPC"
+                name="UPC"
+                placeholder="Universal product code"
+                onChange={(event) => handleInputProduct(event)}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
               />
             </div>
@@ -128,6 +264,7 @@ const CreateProduct = ({
                 name="name"
                 type="text"
                 placeholder="Product's name"
+                onChange={(event) => handleInputProduct(event)}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
               />
             </div>
@@ -138,26 +275,139 @@ const CreateProduct = ({
                 type="text"
                 name="brand"
                 placeholder="Product's brand"
+                onChange={(event) => handleInputProduct(event)}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
               />
+            </div>
+            <div className="my-4 flex flex-col">
+              <label htmlFor="originalPrice">Original price</label>
+              <div className="flex justify-start items-center">
+                <input
+                  type="number"
+                  id="originalPrice"
+                  name="originalPrice"
+                  placeholder="Original price"
+                  onChange={(event) => handleInputProduct(event)}
+                  className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+                />
+              </div>
+            </div>
+            <div className="my-4 flex flex-col">
+              <label htmlFor="salePrice">Sale price</label>
+              <div className="flex justify-start items-center">
+                <input
+                  type="number"
+                  id="salePrice"
+                  name="salePrice"
+                  placeholder="Sale price"
+                  onChange={(event) => handleInputProduct(event)}
+                  className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+                />
+              </div>
+            </div>
+            <div className="my-4">
+              <label htmlFor="initialInventory">Initial inventory</label>
+              <input
+                type="number"
+                id="initialInventory"
+                name="initialInventory"
+                placeholder="Initial inventory"
+                onChange={(event) => handleInputProduct(event)}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+              />
+            </div>
+            <div className="my-4">
+              <label htmlFor="minimumInventory">Minimum inventory</label>
+              <input
+                type="number"
+                id="minimumInventory"
+                name="minimumInventory"
+                placeholder="Minimum inventory"
+                onChange={(event) => handleInputProduct(event)}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+              />
+            </div>
+            <div className="my-4">
+              <label htmlFor="maximumInventory">Maximum inventory</label>
+              <input
+                type="number"
+                id="maximumInventory"
+                name="maximumInventory"
+                placeholder="Maximum inventory"
+                onChange={(event) => handleInputProduct(event)}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+              />
+            </div>
+          </div>
+          <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
+            <div className="my-4 flex flex-col">
+              <label htmlFor="storageLocation">Storage location</label>
+              <select
+                id="storageLocation"
+                name="storageLocation"
+                value={storageLocation}
+                onChange={(event) => handleStorageLocationSelectProduct(event)}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
+              >
+                <option value="-1" hidden>
+                  Select a location
+                </option>
+
+                {renderStorageLocation()}
+              </select>
+            </div>
+            <div className="my-4 flex flex-col">
+              <label htmlFor="category">For gender</label>
+              <select
+                id="forGender"
+                name="forGender"
+                value={forGender}
+                onChange={(event) => handleForGenderSelectProduct(event)}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
+              >
+                <option value="-1" hidden>
+                  Select a kind of gender
+                </option>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+                <option value="2">Unisex</option>
+              </select>
             </div>
             <div className="my-4 flex flex-col">
               <label htmlFor="category">Category</label>
               <select
                 id="category"
                 name="category"
-                defaultValue={-1}
+                value={category}
+                onChange={(event) => handleCategorySelectProduct(event)}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
               >
                 <option value="-1" hidden>
-                  Select a type
+                  Select a category
                 </option>
-                <option value="0">Phone</option>
-                <option value="1">Tablet</option>
-                <option value="2">Laptop</option>
+
+                {renderCategories()}
               </select>
             </div>
             <div className="my-4 flex flex-col">
+              <label htmlFor="unit">Unit</label>
+              <select
+                id="unit"
+                name="unit"
+                value={unit}
+                onChange={(event) => handleUnitSelectProduct(event)}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
+              >
+                <option value="-1" hidden>
+                  Select a unit
+                </option>
+
+                {renderUnits()}
+              </select>
+            </div>
+          </div>
+          <div className="mx-auto py-3 space-y-3">
+            <div className="my-4 w-full flex flex-col">
               <label htmlFor="color">Color</label>
               <div className="flex justify-start items-center">
                 {renderAddColorInput()}
@@ -175,32 +425,6 @@ const CreateProduct = ({
                 {renderAddSizeInput()}
                 <div
                   onClick={() => setSizeAmount(sizeAmount + 1)}
-                  className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
-                >
-                  {icons.plus}
-                </div>
-              </div>
-            </div>
-            <div className="my-4 flex flex-col">
-              <label htmlFor="originalPrice">Original price</label>
-              <div className="flex justify-start items-center">
-                {renderAddOriginalPriceInput()}
-                <div
-                  onClick={() =>
-                    setOriginalPriceAmount(originalPriceAmount + 1)
-                  }
-                  className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
-                >
-                  {icons.plus}
-                </div>
-              </div>
-            </div>
-            <div className="my-4 flex flex-col">
-              <label htmlFor="salePrice">Sale price</label>
-              <div className="flex justify-start items-center">
-                {renderAddSalePriceInput()}
-                <div
-                  onClick={() => setSalePriceAmount(salePriceAmount + 1)}
                   className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
                 >
                   {icons.plus}

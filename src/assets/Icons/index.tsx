@@ -1,4 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faFaceSmile } from "@fortawesome/free-regular-svg-icons";
+
+import {
+  faShopify,
+  faFacebook,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
+
 import {
   faLock,
   faGear,
@@ -24,12 +33,6 @@ import {
   faArrowUpRightFromSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
-import {
-  faShopify,
-  faFacebook,
-  faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
-
 const wrapIcon = (icon: IconDefinition) => {
   return <FontAwesomeIcon icon={icon} />;
 };
@@ -50,6 +53,7 @@ const icons = {
   facebook: wrapIcon(faFacebook),
   solidCircle: wrapIcon(faCircle),
   archive: wrapIcon(faBoxArchive),
+  faceSmile: wrapIcon(faFaceSmile),
   arrowLeft: wrapIcon(faArrowLeft),
   lockOpened: wrapIcon(faLockOpen),
   listCheck: wrapIcon(faListCheck),
@@ -57,7 +61,7 @@ const icons = {
   caretDown: wrapIcon(faCaretDown),
   userGroup: wrapIcon(faUserGroup),
   addressCard: wrapIcon(faAddressCard),
-  logout: wrapIcon(faRightFromBracket),
+  entering: wrapIcon(faRightFromBracket),
   solidLinkDirect: wrapIcon(faArrowUpRightFromSquare),
 };
 
