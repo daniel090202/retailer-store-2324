@@ -1,12 +1,29 @@
 "use client";
 
-import icons from "@/assets/Icons";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
+import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
+import { loginUser } from "@/api/authRequests";
+
 const Login = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const [account, setAccount] = useState({
+    userName: "",
+    password: "",
+  });
+
+  const handleInputAccount = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAccount({ ...account, [event.target.name]: event.target.value });
+  };
+
   const handleUserLogin = () => {
-    return;
+    loginUser(router, dispatch, account);
   };
 
   return (
@@ -28,6 +45,9 @@ const Login = () => {
             id="userName"
             name="userName"
             placeholder="Your username"
+            onChange={(event) => {
+              handleInputAccount(event);
+            }}
             className="w-full p-4 my-2 border-2 rounded-xl shadow-xl outline-none"
           />
         </div>
@@ -43,6 +63,9 @@ const Login = () => {
             id="password"
             name="password"
             placeholder="Your password"
+            onChange={(event) => {
+              handleInputAccount(event);
+            }}
             className="w-full p-4 my-2 border-2 rounded-xl shadow-xl outline-none"
           />
         </div>

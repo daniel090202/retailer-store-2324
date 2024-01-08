@@ -8,7 +8,7 @@ import {
   allProductUnits,
   allStorageLocation,
   allProductCategories,
-} from "@/services/productServices";
+} from "@/utils/productProperties";
 
 const CreateProduct = ({
   createProductModal,

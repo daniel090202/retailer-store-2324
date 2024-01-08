@@ -1,8 +1,10 @@
 import Link from "next/link";
 
 import icons from "@/assets/Icons/index";
+
 import { productDetailsPath } from "@/config/pathConfig";
-import { renderProductCategory } from "@/services/productServices";
+
+import { renderProductCategory } from "@/utils/productProperties";
 
 import Filter from "./Filter";
 

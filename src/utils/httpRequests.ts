@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_SERVER_BASE_URL,
 });
 
 const get = async (url: string, options: object = {}) => {
@@ -10,5 +10,11 @@ const get = async (url: string, options: object = {}) => {
   return response.data;
 };
 
-export { get };
+const post = async (url: string, options: object = {}) => {
+  const response = await request.post(url, options);
+
+  return response;
+};
+
+export { get, post };
 export default request;

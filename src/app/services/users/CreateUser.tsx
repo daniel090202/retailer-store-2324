@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 
 import icons from "@/assets/Icons";
@@ -11,9 +12,60 @@ const CreateUser = ({
   createUserModal: boolean;
   setCreateUserModal: (value: boolean) => void;
 }) => {
+  const [address, setAddress] = useState("-1");
+  const [position, setPosition] = useState("-1");
+
+  const [user, setUser] = useState<{
+    firstName: string;
+    lastName: string;
+    middleName: string;
+    email: string;
+    age: string;
+    address: string;
+    gender: string;
+    position: string;
+    phone: string;
+  }>({
+    firstName: "",
+    lastName: "",
+    middleName: "",
+    email: "",
+    age: "",
+    address: "",
+    gender: "",
+    position: "",
+    phone: "",
+  });
+
+  const handleInputUser = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, [event.target.name]: event.target.value });
+  };
+
+  const handleAddressSelectUser = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setAddress(event.target.value);
+    setUser({ ...user, [event.target.name]: event.target.value });
+  };
+
+  const handlePositionSelectUser = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setPosition(event.target.value);
+    setUser({ ...user, [event.target.name]: event.target.value });
+  };
+
+  const handleGenderRadioUser = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setUser({ ...user, [event.target.name]: event.target.value });
+  };
+
   const handleCreateUser = () => {
     return;
   };
+
+  console.log(user);
 
   return createUserModal ? (
     <div className="fixed inset-0 z-10 text-base overflow-y-auto">
@@ -35,12 +87,35 @@ const CreateUser = ({
           <hr />
           <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
             <div className="my-4">
-              <label htmlFor="fullName">Full name</label>
+              <label htmlFor="firstName">First name</label>
               <input
                 type="text"
-                id="fullName"
-                name="fullName"
-                placeholder="User's full name"
+                id="firstName"
+                name="firstName"
+                placeholder="First name"
+                onChange={(event) => handleInputUser(event)}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+              />
+            </div>
+            <div className="my-4">
+              <label htmlFor="lastName">Last name</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Last name"
+                onChange={(event) => handleInputUser(event)}
+                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+              />
+            </div>
+            <div className="my-4">
+              <label htmlFor="middleName">Middle name</label>
+              <input
+                type="text"
+                id="middleName"
+                name="middleName"
+                placeholder="Middle name"
+                onChange={(event) => handleInputUser(event)}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
               />
             </div>
@@ -51,6 +126,7 @@ const CreateUser = ({
                 name="age"
                 type="number"
                 placeholder="User's age"
+                onChange={(event) => handleInputUser(event)}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
               />
             </div>
@@ -61,6 +137,7 @@ const CreateUser = ({
                 name="phone"
                 type="number"
                 placeholder="User's phone"
+                onChange={(event) => handleInputUser(event)}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
               />
             </div>
@@ -71,35 +148,19 @@ const CreateUser = ({
                 type="email"
                 name="email"
                 placeholder="User's email"
+                onChange={(event) => handleInputUser(event)}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
               />
             </div>
+          </div>
+          <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
             <div className="my-4">
-              <label htmlFor="salary">Basic salary</label>
-              <input
-                id="salary"
-                type="number"
-                name="salary"
-                placeholder="User's basic salary"
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-              />
-            </div>
-            <div className="my-4">
-              <label htmlFor="startWorkingDate">Working date</label>
-              <input
-                id="startWorkingDate"
-                name="startWorkingDate"
-                type="date"
-                placeholder="Start working date"
-                className="w-full p-4 my-2 border text-gray-400 rounded-xl shadow-xl outline-none"
-              />
-            </div>
-            <div className="my-4">
-              <label htmlFor="address">Address</label>
+              <label htmlFor="address">Residential address</label>
               <select
                 id="address"
                 name="address"
-                defaultValue={-1}
+                value={address}
+                onChange={(event) => handleAddressSelectUser(event)}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
               >
                 <option value="-1" hidden>
@@ -110,13 +171,13 @@ const CreateUser = ({
                 <option value="2">Dong Nai</option>
               </select>
             </div>
-
-            <div className="my-4">
+            <div className="my-4 ">
               <label htmlFor="position">Position</label>
               <select
                 id="position"
                 name="position"
-                defaultValue={-1}
+                value={position}
+                onChange={(event) => handlePositionSelectUser(event)}
                 className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
               >
                 <option value="-1" hidden>
@@ -127,47 +188,50 @@ const CreateUser = ({
                 <option value="2">Seller</option>
               </select>
             </div>
-            <fieldset className="my-4">
-              <legend>Select a gender</legend>
-              <div className="my-2">
-                <input
-                  type="radio"
-                  id="male"
-                  name="gender"
-                  value="0"
-                  className="accent-gray-400"
-                  defaultChecked
-                />
-                <label htmlFor="male" className="mx-4">
-                  Male
-                </label>
-              </div>
-              <div className="my-2">
-                <input
-                  type="radio"
-                  id="female"
-                  name="gender"
-                  value="1"
-                  className="accent-gray-400"
-                />
-                <label htmlFor="female" className="mx-4">
-                  Female
-                </label>
-              </div>
-              <div className="my-2">
-                <input
-                  type="radio"
-                  id="other"
-                  name="gender"
-                  value="2"
-                  className="accent-gray-400"
-                />
-                <label htmlFor="other" className="mx-4">
-                  Other
-                </label>
-              </div>
-            </fieldset>
           </div>
+          <fieldset className="my-4">
+            <legend>Select a gender</legend>
+            <div className="my-2">
+              <input
+                type="radio"
+                id="male"
+                name="gender"
+                value="0"
+                className="accent-gray-400"
+                defaultChecked
+                onChange={(event) => handleGenderRadioUser(event)}
+              />
+              <label htmlFor="male" className="mx-4">
+                Male
+              </label>
+            </div>
+            <div className="my-2">
+              <input
+                type="radio"
+                id="female"
+                name="gender"
+                value="1"
+                className="accent-gray-400"
+                onChange={(event) => handleGenderRadioUser(event)}
+              />
+              <label htmlFor="female" className="mx-4">
+                Female
+              </label>
+            </div>
+            <div className="my-2">
+              <input
+                type="radio"
+                id="other"
+                name="gender"
+                value="2"
+                className="accent-gray-400"
+                onChange={(event) => handleGenderRadioUser(event)}
+              />
+              <label htmlFor="other" className="mx-4">
+                Other
+              </label>
+            </div>
+          </fieldset>
           <hr />
           <div className="flex justify-center">
             <Button
