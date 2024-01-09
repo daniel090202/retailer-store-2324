@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 import Header from "@/components/Header";
 import NavBar from "@/components/NavBar";
@@ -22,6 +23,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
+        <Toaster />
         <StoreProvider>
           <Header>
             <NavBar />

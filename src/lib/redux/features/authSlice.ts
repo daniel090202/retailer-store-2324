@@ -9,7 +9,9 @@ type InitialState = {
 type AuthState = {
   isAuth: boolean;
   error: boolean;
-  currentUser: User;
+  currentUser:
+    | { statusCode: string; message: string; data: User; accessToken: string }
+    | undefined;
   isFetching: boolean;
   isModerator: boolean;
 };
@@ -18,7 +20,7 @@ const initialState = {
   login: {
     isAuth: false,
     error: false,
-    currentUser: new User(),
+    currentUser: undefined,
     isFetching: false,
     isModerator: false,
   } as AuthState,
@@ -31,7 +33,15 @@ const authSlice = createSlice({
     logInStart: (state) => {
       state.login.isFetching = true;
     },
-    logInSuccess: (state, action: PayloadAction<User>) => {
+    logInSuccess: (
+      state,
+      action: PayloadAction<{
+        statusCode: string;
+        message: string;
+        data: User;
+        accessToken: string;
+      }>
+    ) => {
       state.login.error = false;
       state.login.isFetching = false;
       state.login.currentUser = action.payload;
@@ -46,7 +56,7 @@ const authSlice = createSlice({
     logOutSuccess: (state) => {
       state.login.error = false;
       state.login.isFetching = true;
-      state.login.currentUser = new User();
+      state.login.currentUser = undefined;
     },
     logOutFail: (state) => {
       state.login.error = true;

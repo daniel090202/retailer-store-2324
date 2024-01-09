@@ -8,14 +8,51 @@ import { usePathname } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
+
+import { User } from "@/dto";
+import { success } from "@/lib/hot-toast";
+import { useAppSelector } from "@/lib/redux/store";
 import { appRoutes, navigationRoutes } from "@/config/pathConfig";
 
 import UserTippy from "./UserTippy";
 
 const NavBar = () => {
-  const [profileButtonClicked, setProfileButtonClicked] = useState(false);
   const [state, setState] = useState(false);
+  const [profileButtonClicked, setProfileButtonClicked] = useState(false);
+
   const currentPage = usePathname();
+
+  const userData:
+    | {
+        statusCode: string;
+        message: string;
+        data: User;
+        accessToken: string;
+      }
+    | undefined = useAppSelector((state) => {
+    return state.authReducer.login?.currentUser;
+  });
+
+  const renderNavBarElements = () => {
+    if (userData !== undefined) {
+      const message: string = userData.message;
+
+      success(message);
+
+      return navigationRoutes.map((route, index) => {
+        return (
+          <li
+            key={index}
+            className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
+              route.path === currentPage ? "bg-gray-100" : ""
+            }`}
+          >
+            <Link href={route.path}>{route.title}</Link>
+          </li>
+        );
+      });
+    }
+  };
 
   return (
     <nav
@@ -64,18 +101,7 @@ const NavBar = () => {
           }`}
         >
           <ul className="justify-center items-center space-y-4 text-sm md:text-lg md:flex md:space-x-6 md:space-y-0 lg:text-xl">
-            {navigationRoutes.map((route, index) => {
-              return (
-                <li
-                  key={index}
-                  className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
-                    route.path === currentPage ? "bg-gray-100" : ""
-                  }`}
-                >
-                  <Link href={route.path}>{route.title}</Link>
-                </li>
-              );
-            })}
+            {renderNavBarElements()}
             <li className="relative shadow-lg border rounded-xl p-3 hidden cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 md:block">
               <UserTippy
                 profileButtonClicked={profileButtonClicked}
