@@ -1,5 +1,3 @@
-import { useRouter } from "next/navigation";
-
 import {
   logInFail,
   logOutFail,
@@ -24,9 +22,14 @@ const loginUser = async (
   dispatch(logInStart());
 
   try {
-    const user = await login(account);
+    const userData = (await login(account)) as {
+      statusCode: number;
+      message: string;
+      data: User;
+      accessToken: string;
+    };
 
-    dispatch(logInSuccess(user as User));
+    dispatch(logInSuccess(userData));
 
     router.push(appRoutes.home);
   } catch (error) {

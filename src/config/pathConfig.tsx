@@ -6,6 +6,7 @@ const customerProfilePath = "/customer";
 
 const appRoutes = {
   home: "/",
+  login: "/login",
 };
 
 const navigationRoutes = [

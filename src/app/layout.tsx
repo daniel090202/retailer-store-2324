@@ -4,11 +4,14 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
+import { getServerSession } from "next-auth";
+
 import Header from "@/components/Header";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
 import StoreProvider from "@/lib/redux/StoreProvider";
+import NextAuthProviders from "@/lib/next-auth/NextAuthProviders";
 
 import "./globals.css";
 
@@ -19,18 +22,25 @@ const metadata: Metadata = {
   description: "A cloth website management for retailers.",
 };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const RootLayout = async (props: Props) => {
+  const session = await getServerSession();
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <Toaster />
-        <StoreProvider>
-          <Header>
-            <NavBar />
-          </Header>
-          {children}
-          <Footer />
-        </StoreProvider>
+        <NextAuthProviders session={session}>
+          <Toaster />
+          <StoreProvider>
+            <Header>
+              <NavBar />
+            </Header>
+            {props.children}
+            <Footer />
+          </StoreProvider>
+        </NextAuthProviders>
       </body>
     </html>
   );

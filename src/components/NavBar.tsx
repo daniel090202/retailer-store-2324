@@ -3,42 +3,35 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { User } from "@/dto";
-import { success } from "@/lib/hot-toast";
-import { useAppSelector } from "@/lib/redux/store";
 import { appRoutes, navigationRoutes } from "@/config/pathConfig";
 
 import UserTippy from "./UserTippy";
 
 const NavBar = () => {
+  const router = useRouter();
+  const session = useSession();
+  const currentPage = usePathname();
+
   const [state, setState] = useState(false);
   const [profileButtonClicked, setProfileButtonClicked] = useState(false);
 
-  const currentPage = usePathname();
-
-  const userData:
-    | {
-        statusCode: string;
-        message: string;
-        data: User;
-        accessToken: string;
-      }
-    | undefined = useAppSelector((state) => {
-    return state.authReducer.login?.currentUser;
-  });
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      router.replace("/api/auth/signin");
+    }
+  }, []);
 
   const renderNavBarElements = () => {
-    if (userData !== undefined) {
-      const message: string = userData.message;
-
-      success(message);
-
+    if (session.status !== "unauthenticated") {
       return navigationRoutes.map((route, index) => {
         return (
           <li

@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+
 import { useRouter } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
-import { loginUser } from "@/api/authRequests";
+import { loginUser } from "@/pages/api/authRequests";
 
 const Login = () => {
   const router = useRouter();

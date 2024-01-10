@@ -10,7 +10,7 @@ type AuthState = {
   isAuth: boolean;
   error: boolean;
   currentUser:
-    | { statusCode: string; message: string; data: User; accessToken: string }
+    | { statusCode: number; message: string; data: User; accessToken: string }
     | undefined;
   isFetching: boolean;
   isModerator: boolean;
@@ -36,7 +36,7 @@ const authSlice = createSlice({
     logInSuccess: (
       state,
       action: PayloadAction<{
-        statusCode: string;
+        statusCode: number;
         message: string;
         data: User;
         accessToken: string;

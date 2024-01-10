@@ -1,5 +1,9 @@
-import "tippy.js/dist/tippy.css";
 import PropTypes from "prop-types";
+
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
+import "tippy.js/dist/tippy.css";
 import HeadlessTippy from "@tippyjs/react/headless";
 
 import icons from "@/assets/Icons";
@@ -8,27 +12,78 @@ import UserTippyElement from "./UserTippyElement";
 
 const UserTippy = ({
   profileButtonClicked = false,
-  setProfileButtonClicked,
   children,
 }: {
   profileButtonClicked: boolean;
   setProfileButtonClicked: (value: boolean) => void;
   children: React.ReactElement;
 }) => {
-  const tippyContents = [
+  const router = useRouter();
+  const session = useSession();
+
+  const handleViewProfile = () => {
+    return;
+  };
+
+  const handleViewTasks = () => {
+    return;
+  };
+
+  const handleViewSettings = () => {
+    return;
+  };
+
+  const handleLogIn = () => {
+    router.push("/api/auth/signin");
+  };
+
+  const handleLogOut = () => {
+    router.push("/api/auth/signout");
+  };
+
+  const tippyContents: Array<{
+    icon: React.ReactNode;
+    title: string;
+    onClick: () => void;
+  }> = [
     {
       icon: icons.user,
       title: "View profile",
+      onClick: () => handleViewProfile(),
     },
     {
       icon: icons.listCheck,
       title: "Tasks",
+      onClick: () => handleViewTasks(),
     },
     {
       icon: icons.gear,
       title: "Settings",
+      onClick: () => handleViewSettings(),
     },
   ];
+
+  const renderAuthSelection = () => {
+    if (session.status !== "unauthenticated") {
+      return (
+        <UserTippyElement
+          key={tippyContents.length}
+          icon={icons.entering}
+          title={"Log out"}
+          onClick={() => handleLogOut()}
+        />
+      );
+    } else {
+      return (
+        <UserTippyElement
+          key={tippyContents.length}
+          icon={icons.entering}
+          title={"Log in"}
+          onClick={() => handleLogIn()}
+        />
+      );
+    }
+  };
 
   const renderTippyContent = ({ ...attrs }) => {
     return (
@@ -42,15 +97,12 @@ const UserTippy = ({
               key={index}
               icon={content.icon}
               title={content.title}
+              onClick={content.onClick}
             />
           );
         })}
         <hr />
-        <UserTippyElement
-          key={tippyContents.length}
-          icon={icons.entering}
-          title={"Log out"}
-        />
+        {renderAuthSelection()}
       </div>
     );
   };

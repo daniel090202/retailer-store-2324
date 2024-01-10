@@ -7,11 +7,18 @@ const login = async (account: { userName: string; password: string }) => {
     const url = "/user/login";
 
     const response = await request.post(url, account);
-    const user: User = response.data;
+    const userData: {
+      statusCode: number;
+      message: string;
+      data: User;
+      accessToken: string;
+    } = response.data;
 
-    return user;
+    if (userData.statusCode === 200) {
+      return userData;
+    }
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
