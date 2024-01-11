@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { User } from "@/dto";
+import { User } from "@/models/dto";
 
 const authOptions: NextAuthOptions = {
   providers: [

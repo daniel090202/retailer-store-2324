@@ -1,4 +1,2 @@
-export * from "./httpRequests";
-export * from "./userProperties";
-export * from "./productProperties";
-export * from "./customerProperties";
+export * from "./http";
+export * from "./properties";

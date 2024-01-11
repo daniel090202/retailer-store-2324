@@ -1,6 +1,6 @@
 import * as request from "@/utils/httpRequests";
 
-import { User } from "@/dto";
+import { User } from "@/models/dto";
 
 const login = async (account: { userName: string; password: string }) => {
   try {

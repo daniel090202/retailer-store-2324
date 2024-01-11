@@ -9,7 +9,7 @@ import {
 
 import { AppDispatch } from "@/lib/redux/store";
 
-import { User } from "@/dto";
+import { User } from "@/models/dto";
 
 import { login } from "@/services";
 import { appRoutes } from "@/config/pathConfig";

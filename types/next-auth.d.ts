@@ -1,4 +1,4 @@
-import { User as UserDTO } from "@/dto";
+import { User as UserDTO } from "@/models/dto";
 import { DefaultUser } from "next-auth";
 
 declare module "next-auth" {

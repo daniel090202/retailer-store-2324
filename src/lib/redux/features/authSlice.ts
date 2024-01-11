@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { User } from "@/dto";
+import { User } from "@/models/dto";
 
 type InitialState = {
   login: AuthState;

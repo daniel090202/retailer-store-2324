@@ -1,4 +1,4 @@
-import { IUser, IUserConstructor } from "./user.interface";
+import { IUser } from "../interfaces";
 
 class User implements IUser {
   public email: string;
