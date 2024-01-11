@@ -1,6 +1,4 @@
-import React from "react";
 import Link from "next/link";
-import PropTypes from "prop-types";
 
 import { usePathname } from "next/navigation";
 
@@ -27,11 +25,5 @@ function Item({
     </Link>
   );
 }
-
-Item.propsType = {
-  titles: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
-  icon: PropTypes.node.isRequired,
-};
 
 export default Item;

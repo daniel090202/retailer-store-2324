@@ -2,7 +2,8 @@
 
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
-import { renderCustomerLevel } from "@/services/customerServices";
+
+import { renderCustomerLevel } from "@/utils/customerProperties";
 
 const SideBar = () => {
   const customer = {

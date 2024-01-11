@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 import SideBar from "./components/SideBar";
 
 const CustomerLayout = ({ children }: { children: React.ReactNode }) => {
@@ -9,10 +7,6 @@ const CustomerLayout = ({ children }: { children: React.ReactNode }) => {
       {children}
     </div>
   );
-};
-
-CustomerLayout.propsType = {
-  children: PropTypes.node.isRequired,
 };
 
 export default CustomerLayout;

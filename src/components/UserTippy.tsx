@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
@@ -117,12 +115,6 @@ const UserTippy = ({
       {children}
     </HeadlessTippy>
   );
-};
-
-UserTippy.propTypes = {
-  profileButtonClicked: PropTypes.bool,
-  setProfileButtonClicked: PropTypes.func,
-  children: PropTypes.node.isRequired,
 };
 
 export default UserTippy;

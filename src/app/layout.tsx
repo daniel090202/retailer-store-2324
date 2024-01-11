@@ -1,10 +1,6 @@
-import PropTypes from "prop-types";
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
-
-import { getServerSession } from "next-auth";
 
 import Header from "@/components/Header";
 import NavBar from "@/components/NavBar";
@@ -27,11 +23,10 @@ interface Props {
 }
 
 const RootLayout = async (props: Props) => {
-  const session = await getServerSession();
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <NextAuthProviders session={session}>
+        <NextAuthProviders>
           <Toaster />
           <StoreProvider>
             <Header>
@@ -44,10 +39,6 @@ const RootLayout = async (props: Props) => {
       </body>
     </html>
   );
-};
-
-RootLayout.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export { metadata };

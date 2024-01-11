@@ -6,14 +6,17 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
 import icons from "@/assets/Icons";
+
+import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 
-import { loginUser } from "@/pages/api/authRequests";
+import { loginUser } from "@/api/authRequests";
 
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const [loginUserModal, setLoginUserModal] = useState(false);
   const [account, setAccount] = useState({
     userName: "",
     password: "",
@@ -28,17 +31,14 @@ const Login = () => {
   };
 
   return (
-    <div className="w-[600px] h-[520px] my-4 p-8 bg-white text-lg rounded-xl">
+    <Modal modal={loginUserModal} setCloseModal={setLoginUserModal}>
       <h1 className="text-2xl font-bold flex justify-center uppercase">
         <span>Welcome to No Brand</span>
         <span className="mx-2">{icons.faceSmile}</span>
       </h1>
       <div className="mx-auto py-3 space-y-3 text-gray-600">
-        <div className="relative top-4">
-          <label
-            htmlFor="userName"
-            className="absolute ml-4 px-4 top-[-8px] left-0 bg-white"
-          >
+        <div className="top-4">
+          <label htmlFor="userName" className="ml-4 px-4">
             User name
           </label>
           <input
@@ -52,11 +52,8 @@ const Login = () => {
             className="w-full p-4 my-2 border-2 rounded-xl shadow-xl outline-none"
           />
         </div>
-        <div className="relative top-12">
-          <label
-            htmlFor="password"
-            className="absolute ml-4 px-4 top-[-8px] left-0 bg-white"
-          >
+        <div className="">
+          <label htmlFor="password" className="ml-4 px-4">
             Password
           </label>
           <input
@@ -70,7 +67,7 @@ const Login = () => {
             className="w-full p-4 my-2 border-2 rounded-xl shadow-xl outline-none"
           />
         </div>
-        <div className="relative top-20 flex items-center">
+        <div className="flex items-center">
           <input
             type="checkbox"
             id="rememberLogin"
@@ -82,7 +79,7 @@ const Login = () => {
             Remember for one session
           </label>
         </div>
-        <div className="relative top-24 flex justify-center">
+        <div className="flex justify-center">
           <Button
             leftIcon={icons.entering}
             rightIcon=""
@@ -93,7 +90,7 @@ const Login = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 

@@ -1,9 +1,10 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
-
-import Button from "@/components/Button";
 
 import icons from "@/assets/Icons";
+
+import Modal from "@/components/Modal";
+import Button from "@/components/Button";
+
 import {
   allProductUnits,
   allStorageLocation,
@@ -217,243 +218,230 @@ const CreateProduct = ({
   };
 
   return createProductModal ? (
-    <div className="fixed inset-0 z-10 text-base overflow-y-auto">
-      <div
-        className="fixed inset-0 w-full h-full bg-black cursor-pointer opacity-40"
-        onClick={() => setCreateProductModal(false)}
-      ></div>
-      <div className="flex items-center min-h-screen p-8">
-        <div className="relative w-full max-w-6xl max-h-[600px] p-4 mx-auto bg-white rounded-xl shadow-lg overflow-y-auto">
-          <div className="my-2 flex justify-between">
-            <h1 className="text-2xl">New product details</h1>
-            <span
-              className="px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
-              onClick={() => setCreateProductModal(false)}
+    <Modal modal={createProductModal} setCloseModal={setCreateProductModal}>
+      <div className="my-2 flex justify-between">
+        <h1 className="text-2xl">New product details</h1>
+        <span
+          className="px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
+          onClick={() => setCreateProductModal(false)}
+        >
+          {icons.cross}
+        </span>
+      </div>
+      <hr />
+      <div className="mx-auto py-3 space-y-3 grid grid-cols-5 gap-x-5">
+        <div className="my-4">
+          <label htmlFor="sku">Stock keeping unit</label>
+          <input
+            type="text"
+            id="SKU"
+            name="SKU"
+            placeholder="Stock keeping unit"
+            onChange={(event) => handleInputProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          />
+        </div>
+        <div className="my-4">
+          <label htmlFor="sku">Universal product code</label>
+          <input
+            type="number"
+            id="UPC"
+            name="UPC"
+            placeholder="Universal product code"
+            onChange={(event) => handleInputProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          />
+        </div>
+        <div className="my-4">
+          <label htmlFor="name">Name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Product's name"
+            onChange={(event) => handleInputProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          />
+        </div>
+        <div className="my-4">
+          <label htmlFor="brand">Brand</label>
+          <input
+            id="brand"
+            type="text"
+            name="brand"
+            placeholder="Product's brand"
+            onChange={(event) => handleInputProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          />
+        </div>
+        <div className="my-4 flex flex-col">
+          <label htmlFor="originalPrice">Original price</label>
+          <div className="flex justify-start items-center">
+            <input
+              type="number"
+              id="originalPrice"
+              name="originalPrice"
+              placeholder="Original price"
+              onChange={(event) => handleInputProduct(event)}
+              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+            />
+          </div>
+        </div>
+        <div className="my-4 flex flex-col">
+          <label htmlFor="salePrice">Sale price</label>
+          <div className="flex justify-start items-center">
+            <input
+              type="number"
+              id="salePrice"
+              name="salePrice"
+              placeholder="Sale price"
+              onChange={(event) => handleInputProduct(event)}
+              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+            />
+          </div>
+        </div>
+        <div className="my-4">
+          <label htmlFor="initialInventory">Initial inventory</label>
+          <input
+            type="number"
+            id="initialInventory"
+            name="initialInventory"
+            placeholder="Initial inventory"
+            onChange={(event) => handleInputProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          />
+        </div>
+        <div className="my-4">
+          <label htmlFor="minimumInventory">Minimum inventory</label>
+          <input
+            type="number"
+            id="minimumInventory"
+            name="minimumInventory"
+            placeholder="Minimum inventory"
+            onChange={(event) => handleInputProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          />
+        </div>
+        <div className="my-4">
+          <label htmlFor="maximumInventory">Maximum inventory</label>
+          <input
+            type="number"
+            id="maximumInventory"
+            name="maximumInventory"
+            placeholder="Maximum inventory"
+            onChange={(event) => handleInputProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          />
+        </div>
+      </div>
+      <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
+        <div className="my-4 flex flex-col">
+          <label htmlFor="storageLocation">Storage location</label>
+          <select
+            id="storageLocation"
+            name="storageLocation"
+            value={storageLocation}
+            onChange={(event) => handleStorageLocationSelectProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
+          >
+            <option value="-1" hidden>
+              Select a location
+            </option>
+
+            {renderStorageLocation()}
+          </select>
+        </div>
+        <div className="my-4 flex flex-col">
+          <label htmlFor="category">For gender</label>
+          <select
+            id="forGender"
+            name="forGender"
+            value={forGender}
+            onChange={(event) => handleForGenderSelectProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
+          >
+            <option value="-1" hidden>
+              Select a kind of gender
+            </option>
+            <option value="0">Male</option>
+            <option value="1">Female</option>
+            <option value="2">Unisex</option>
+          </select>
+        </div>
+        <div className="my-4 flex flex-col">
+          <label htmlFor="category">Category</label>
+          <select
+            id="category"
+            name="category"
+            value={category}
+            onChange={(event) => handleCategorySelectProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
+          >
+            <option value="-1" hidden>
+              Select a category
+            </option>
+
+            {renderCategories()}
+          </select>
+        </div>
+        <div className="my-4 flex flex-col">
+          <label htmlFor="unit">Unit</label>
+          <select
+            id="unit"
+            name="unit"
+            value={unit}
+            onChange={(event) => handleUnitSelectProduct(event)}
+            className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
+          >
+            <option value="-1" hidden>
+              Select a unit
+            </option>
+
+            {renderUnits()}
+          </select>
+        </div>
+      </div>
+      <div className="mx-auto py-3 space-y-3">
+        <div className="my-4 w-full flex flex-col">
+          <label htmlFor="color">Color</label>
+          <div className="flex justify-start items-center">
+            {renderAddColorInput()}
+            <div
+              onClick={() => setColorAmount(colorAmount + 1)}
+              className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
             >
-              {icons.cross}
-            </span>
-          </div>
-          <hr />
-          <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
-            <div className="my-4">
-              <label htmlFor="sku">Stock keeping unit</label>
-              <input
-                type="text"
-                id="SKU"
-                name="SKU"
-                placeholder="Stock keeping unit"
-                onChange={(event) => handleInputProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-              />
-            </div>
-            <div className="my-4">
-              <label htmlFor="sku">Universal product code</label>
-              <input
-                type="number"
-                id="UPC"
-                name="UPC"
-                placeholder="Universal product code"
-                onChange={(event) => handleInputProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-              />
-            </div>
-            <div className="my-4">
-              <label htmlFor="name">Name</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Product's name"
-                onChange={(event) => handleInputProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-              />
-            </div>
-            <div className="my-4">
-              <label htmlFor="brand">Brand</label>
-              <input
-                id="brand"
-                type="text"
-                name="brand"
-                placeholder="Product's brand"
-                onChange={(event) => handleInputProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-              />
-            </div>
-            <div className="my-4 flex flex-col">
-              <label htmlFor="originalPrice">Original price</label>
-              <div className="flex justify-start items-center">
-                <input
-                  type="number"
-                  id="originalPrice"
-                  name="originalPrice"
-                  placeholder="Original price"
-                  onChange={(event) => handleInputProduct(event)}
-                  className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-                />
-              </div>
-            </div>
-            <div className="my-4 flex flex-col">
-              <label htmlFor="salePrice">Sale price</label>
-              <div className="flex justify-start items-center">
-                <input
-                  type="number"
-                  id="salePrice"
-                  name="salePrice"
-                  placeholder="Sale price"
-                  onChange={(event) => handleInputProduct(event)}
-                  className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-                />
-              </div>
-            </div>
-            <div className="my-4">
-              <label htmlFor="initialInventory">Initial inventory</label>
-              <input
-                type="number"
-                id="initialInventory"
-                name="initialInventory"
-                placeholder="Initial inventory"
-                onChange={(event) => handleInputProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-              />
-            </div>
-            <div className="my-4">
-              <label htmlFor="minimumInventory">Minimum inventory</label>
-              <input
-                type="number"
-                id="minimumInventory"
-                name="minimumInventory"
-                placeholder="Minimum inventory"
-                onChange={(event) => handleInputProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-              />
-            </div>
-            <div className="my-4">
-              <label htmlFor="maximumInventory">Maximum inventory</label>
-              <input
-                type="number"
-                id="maximumInventory"
-                name="maximumInventory"
-                placeholder="Maximum inventory"
-                onChange={(event) => handleInputProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-              />
+              {icons.plus}
             </div>
           </div>
-          <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
-            <div className="my-4 flex flex-col">
-              <label htmlFor="storageLocation">Storage location</label>
-              <select
-                id="storageLocation"
-                name="storageLocation"
-                value={storageLocation}
-                onChange={(event) => handleStorageLocationSelectProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
-              >
-                <option value="-1" hidden>
-                  Select a location
-                </option>
-
-                {renderStorageLocation()}
-              </select>
-            </div>
-            <div className="my-4 flex flex-col">
-              <label htmlFor="category">For gender</label>
-              <select
-                id="forGender"
-                name="forGender"
-                value={forGender}
-                onChange={(event) => handleForGenderSelectProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
-              >
-                <option value="-1" hidden>
-                  Select a kind of gender
-                </option>
-                <option value="0">Male</option>
-                <option value="1">Female</option>
-                <option value="2">Unisex</option>
-              </select>
-            </div>
-            <div className="my-4 flex flex-col">
-              <label htmlFor="category">Category</label>
-              <select
-                id="category"
-                name="category"
-                value={category}
-                onChange={(event) => handleCategorySelectProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
-              >
-                <option value="-1" hidden>
-                  Select a category
-                </option>
-
-                {renderCategories()}
-              </select>
-            </div>
-            <div className="my-4 flex flex-col">
-              <label htmlFor="unit">Unit</label>
-              <select
-                id="unit"
-                name="unit"
-                value={unit}
-                onChange={(event) => handleUnitSelectProduct(event)}
-                className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
-              >
-                <option value="-1" hidden>
-                  Select a unit
-                </option>
-
-                {renderUnits()}
-              </select>
-            </div>
-          </div>
-          <div className="mx-auto py-3 space-y-3">
-            <div className="my-4 w-full flex flex-col">
-              <label htmlFor="color">Color</label>
-              <div className="flex justify-start items-center">
-                {renderAddColorInput()}
-                <div
-                  onClick={() => setColorAmount(colorAmount + 1)}
-                  className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
-                >
-                  {icons.plus}
-                </div>
-              </div>
-            </div>
-            <div className="my-4 flex flex-col">
-              <label htmlFor="size">Size</label>
-              <div className="flex justify-start items-center">
-                {renderAddSizeInput()}
-                <div
-                  onClick={() => setSizeAmount(sizeAmount + 1)}
-                  className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
-                >
-                  {icons.plus}
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr />
-          <div className="flex justify-center">
-            <Button
-              leftIcon={icons.plus}
-              rightIcon=""
-              className="mt-4 p-4"
-              onClick={() => handleCreateProduct()}
+        </div>
+        <div className="my-4 flex flex-col">
+          <label htmlFor="size">Size</label>
+          <div className="flex justify-start items-center">
+            {renderAddSizeInput()}
+            <div
+              onClick={() => setSizeAmount(sizeAmount + 1)}
+              className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
             >
-              Create product
-            </Button>
+              {icons.plus}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <hr />
+      <div className="flex justify-center">
+        <Button
+          leftIcon={icons.plus}
+          rightIcon=""
+          className="mt-4 p-4"
+          onClick={() => handleCreateProduct()}
+        >
+          Create product
+        </Button>
+      </div>
+    </Modal>
   ) : (
     <div></div>
   );
-};
-
-CreateProduct.propTypes = {
-  createProductModal: PropTypes.bool,
-  setCreateProductModal: PropTypes.func,
 };
 
 export default CreateProduct;

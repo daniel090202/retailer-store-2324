@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 const UserTippyElement = ({
   icon,
   title,
@@ -15,11 +13,6 @@ const UserTippyElement = ({
       <span className="mx-2">{title}</span>
     </div>
   );
-};
-
-UserTippyElement.propTypes = {
-  icon: PropTypes.node,
-  title: PropTypes.string,
 };
 
 export default UserTippyElement;

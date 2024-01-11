@@ -4,7 +4,8 @@ import Image from "next/image";
 
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
-import { renderProductCategory } from "@/services/productServices";
+
+import { renderProductCategory } from "@/utils/productProperties";
 
 const Product = ({ params }: { params: { id: string } }) => {
   const product = {

@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 const Button = ({
   children,
   leftIcon,
@@ -25,14 +23,6 @@ const Button = ({
       {rightIcon && <span>{rightIcon}</span>}
     </button>
   );
-};
-
-Button.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  leftIcon: PropTypes.node,
-  rightIcon: PropTypes.node,
-  onClick: PropTypes.func,
 };
 
 export default Button;
