@@ -5,14 +5,13 @@ import {
   logOutStart,
   logInSuccess,
   logOutSuccess,
-} from "@/lib/redux/features/authSlice";
-
-import { AppDispatch } from "@/lib/redux/store";
-
-import { User } from "@/models/dto";
+} from "@/lib/redux/features";
 
 import { login } from "@/services";
-import { appRoutes } from "@/config/pathConfig";
+import { appRoutes } from "@/config";
+
+import { User } from "@/models/dto";
+import { AppDispatch } from "@/lib/redux/store";
 
 const loginUser = async (
   router: any,

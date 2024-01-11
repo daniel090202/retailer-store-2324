@@ -1,20 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { User } from "@/models/dto";
-
-type InitialState = {
-  login: AuthState;
-};
-
-type AuthState = {
-  isAuth: boolean;
-  error: boolean;
-  currentUser:
-    | { statusCode: number; message: string; data: User; accessToken: string }
-    | undefined;
-  isFetching: boolean;
-  isModerator: boolean;
-};
+import { User } from "@/models";
 
 const initialState = {
   login: {
@@ -22,9 +8,8 @@ const initialState = {
     error: false,
     currentUser: undefined,
     isFetching: false,
-    isModerator: false,
   } as AuthState,
-} as InitialState;
+} as AuthInitialState;
 
 const authSlice = createSlice({
   name: "auth",

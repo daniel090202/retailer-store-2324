@@ -2,21 +2,74 @@ import Link from "next/link";
 
 import icons from "@/assets/Icons/index";
 
+import { renderProductCategory } from "@/utils";
 import { productDetailsPath } from "@/config/pathConfig";
-
-import { renderProductCategory } from "@/utils/productProperties";
+import { useAppSelector } from "@/lib/redux/store";
 
 import Filter from "./Filter";
 
 const Table = () => {
-  const product = {
-    barcode: "SWEATER0001",
-    name: "Christmas Eve cardigan 2023",
-    category: 2,
-    color: ["#E0BBE4", "#957DAD", "#D291BC"],
-    size: ["XS", "S", "L", "XL", "2XL", "3XL", "4XL"],
-    salePrice: 350000,
-    remainStock: 3,
+  const products = useAppSelector((state) => {
+    return state.productsReducer.products.allProducts?.data;
+  });
+
+  const renderAllProducts = (): React.ReactNode => {
+    return products?.map((product, index) => {
+      return (
+        <tr key={index}>
+          <td className="px-6 py-4 whitespace-nowrap">{index}</td>
+          <td className="px-6 py-4 whitespace-nowrap">{product.SKU}</td>
+          <td className="px-6 py-4">{product.name}</td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <select name="category" id="category">
+              {product.category.map((category, index) => {
+                return (
+                  <option key={index} value={index}>
+                    {renderProductCategory(category)}
+                  </option>
+                );
+              })}
+            </select>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <select name="color" id="color">
+              {product.color.map((color, index) => {
+                return (
+                  <option key={index} value={index}>
+                    {color}
+                  </option>
+                );
+              })}
+            </select>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <select name="size" id="size">
+              {product.size.map((size, index) => {
+                return (
+                  <option key={index} value={index}>
+                    {size}
+                  </option>
+                );
+              })}
+            </select>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            {product.salePrice.toLocaleString()}
+          </td>
+          <td className="px-6 py-4 text-center whitespace-nowrap">
+            {product.remainInventory}
+          </td>
+          <td>
+            <Link
+              href={productDetailsPath + `/${product.SKU}`}
+              className="flex items-center transition ease-in-out delay-150 hover:-translate-y-1"
+            >
+              {icons.solidLinkDirect}
+            </Link>
+          </td>
+        </tr>
+      );
+    });
   };
 
   return (
@@ -36,52 +89,7 @@ const Table = () => {
             <th className="py-3 px-6"></th>
           </tr>
         </thead>
-        <tbody className="text-gray-600 divide-y">
-          <tr>
-            <td className="px-6 py-4 whitespace-nowrap">0</td>
-            <td className="px-6 py-4 whitespace-nowrap">{product.barcode}</td>
-            <td className="px-6 py-4">{product.name}</td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              {renderProductCategory(product.category)}
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <select name="color" id="color">
-                {product.color.map((color, index) => {
-                  return (
-                    <option key={index} value={index}>
-                      {color}
-                    </option>
-                  );
-                })}
-              </select>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <select name="size" id="size">
-                {product.size.map((size, index) => {
-                  return (
-                    <option key={index} value={index}>
-                      {size}
-                    </option>
-                  );
-                })}
-              </select>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              {product.salePrice.toLocaleString()} VND
-            </td>
-            <td className="px-6 py-4 text-center whitespace-nowrap">
-              {product.remainStock}
-            </td>
-            <td>
-              <Link
-                href={productDetailsPath + `/${product.barcode}`}
-                className="flex items-center transition ease-in-out delay-150 hover:-translate-y-1"
-              >
-                {icons.solidLinkDirect}
-              </Link>
-            </td>
-          </tr>
-        </tbody>
+        <tbody className="text-gray-600 divide-y">{renderAllProducts()}</tbody>
       </table>
     </div>
   );

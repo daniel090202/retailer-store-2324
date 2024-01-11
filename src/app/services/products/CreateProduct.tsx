@@ -9,7 +9,7 @@ import {
   allProductUnits,
   allStorageLocation,
   allProductCategories,
-} from "@/utils/productProperties";
+} from "@/utils";
 
 const CreateProduct = ({
   createProductModal,

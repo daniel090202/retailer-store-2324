@@ -2,8 +2,8 @@ import Link from "next/link";
 
 import icons from "@/assets/Icons/index";
 
+import { renderUserGender } from "@/utils";
 import { customerProfilePath } from "@/config/pathConfig";
-import { renderUserGender } from "@/utils/userProperties";
 
 import Filter from "./Filter";
 
