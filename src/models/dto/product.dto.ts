@@ -16,9 +16,14 @@ class Product implements IProduct {
   public minimumInventory: number;
   public maximumInventory: number;
   public remainInventory: number;
-  public soldAmount: number;
+  public soldQuantity: number;
   public storageLocation: Array<number>;
   public displayLocation: Array<number>;
+  public active: boolean;
+  public archived: boolean;
+  public verified: boolean;
+  public createdAt: string;
+  public updatedAt: string;
 
   constructor(
     SKU: string,
@@ -36,9 +41,14 @@ class Product implements IProduct {
     minimumInventory: number,
     maximumInventory: number,
     remainInventory: number,
-    soldAmount: number,
+    soldQuantity: number,
     storageLocation: Array<number>,
-    displayLocation: Array<number>
+    displayLocation: Array<number>,
+    active: boolean,
+    archived: boolean,
+    verified: boolean,
+    createdAt: string,
+    updatedAt: string
   ) {
     this.SKU = SKU;
     this.UPC = UPC;
@@ -55,9 +65,14 @@ class Product implements IProduct {
     this.minimumInventory = minimumInventory;
     this.maximumInventory = maximumInventory;
     this.remainInventory = remainInventory;
-    this.soldAmount = soldAmount;
+    this.soldQuantity = soldQuantity;
     this.storageLocation = storageLocation;
     this.displayLocation = displayLocation;
+    this.active = active;
+    this.archived = archived;
+    this.verified = verified;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 }
 

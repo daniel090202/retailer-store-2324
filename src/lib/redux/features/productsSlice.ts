@@ -8,7 +8,7 @@ const initialState = {
     allProducts: undefined,
     isFetching: false,
   } as ProductsState,
-};
+} as ProductInitialState;
 
 const productsSlice = createSlice({
   name: "products",

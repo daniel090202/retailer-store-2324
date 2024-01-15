@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import icons from "@/assets/Icons";
-import Button from "@/components/Button";
+import Button from "@/components/Button"; 
 
 import { getAllProducts } from "@/api";
 import { useAppDispatch } from "@/lib/redux/store";

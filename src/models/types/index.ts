@@ -5,6 +5,27 @@ declare global {
     login: AuthState;
   };
 
+  type ProductInitialState = {
+    products: ProductsState;
+  };
+
+  type UsersInitialState = {
+    users: UsersState;
+  };
+
+  type UsersState = {
+    error: boolean;
+    allUsers:
+      | {
+          statusCode: number;
+          message: string;
+          data: Array<User> | undefined;
+        }
+      | undefined;
+    isFetching: boolean;
+    isModerator: boolean;
+  };
+
   type ProductsState = {
     error: boolean;
     allProducts:

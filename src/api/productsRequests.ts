@@ -6,7 +6,7 @@ import {
 
 import { getProducts } from "@/services";
 
-import { Product } from "@/models/dto";
+import { Product } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
 
 const getAllProducts = async (dispatch: AppDispatch) => {

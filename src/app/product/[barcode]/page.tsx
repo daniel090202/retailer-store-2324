@@ -1,27 +1,65 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
 import Image from "next/image";
 
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { renderProductCategory } from "@/utils/productProperties";
+import { getProduct } from "@/services";
+import { renderProductCategory, renderProductStorageLocation, renderProductDisplayLocation } from "@/utils";
+import { Product as ProductDTO } from "@/models";
 
-const Product = ({ params }: { params: { id: string } }) => {
-  const product = {
-    barcode: "SWEATER0001",
-    name: "Christmas Eve cardigan 2023",
-    category: 2,
-    color: ["#E0BBE4", "#957DAD", "#D291BC"],
-    size: ["XS", "S", "L", "XL", "2XL", "3XL", "4XL"],
-    originalPrice: 300000,
-    salePrice: 350000,
-    remainStock: 3,
-    soldAmount: 6,
+const Product = ({ params }: { params: { barcode: string } }) => {
+  const [product, setProduct] = useState<ProductDTO>({
+    SKU: "",
+    UPC: "",
+    name: "",
+    brand: "",
+    forGender: 0,
+    category: [],
+    size: [],
+    color: [],
+    originalPrice: 0,
+    salePrice: 0,
+    unit: 0,
+    initialInventory: 0,
+    minimumInventory: 0,
+    maximumInventory: 0,
+    remainInventory: 0,
+    soldQuantity: 0,
+    storageLocation: [],
+    displayLocation: [],
+    active: false,
+    archived: false,
+    verified: false,
+    createdAt: "",
+    updatedAt: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log(params);
+      const product: ProductDTO | undefined = await getProduct(params.barcode);
+
+      console.log(product);
+      if (product !== undefined) {
+        setProduct(product);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const normalizeDateTime = (dateTime: string): React.ReactNode => {
+    const newDateTime = new Date(dateTime);
+
+    return <p>{newDateTime.toLocaleDateString()}</p>;
   };
 
   return (
-    <div className="flex-1 h-[600px] mx-2 my-4 p-4 bg-white rounded-xl overflow-y-scroll">
+    <div className="flex-1 mx-2 my-4 p-4 bg-white rounded-xl overflow-y-scroll">
       <span
         onClick={() => window.history.back()}
         className="px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
@@ -39,23 +77,41 @@ const Product = ({ params }: { params: { id: string } }) => {
         </div>
         <h1 className="mx-4 text-2xl font-bold">{product.name}</h1>
       </div>
-      <div className="mx-auto py-3 space-y-3 grid grid-cols-2 gap-x-4">
+      <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
         <div className="my-4">
-          <label htmlFor="barcode">Stock keeping unit barcode</label>
+          <label htmlFor="SKU">Stock keeping unit</label>
           <p
-            id="barcode"
+            id="SKU"
             className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
           >
-            {product.barcode}
+            {product.SKU}
           </p>
         </div>
         <div className="my-4">
-          <label htmlFor="category">Category</label>
+          <label htmlFor="UPC">Universal product code</label>
           <p
-            id="category"
+            id="UPC"
             className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
           >
-            {renderProductCategory(product.category)}
+            {product.UPC}
+          </p>
+        </div>
+        <div className="my-4">
+          <label htmlFor="name">Name</label>
+          <p
+            id="name"
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          >
+            {product.name}
+          </p>
+        </div>
+        <div className="my-4">
+          <label htmlFor="brand">Brand</label>
+          <p
+            id="brand"
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          >
+            {product.brand}
           </p>
         </div>
         <div className="my-4">
@@ -77,51 +133,132 @@ const Product = ({ params }: { params: { id: string } }) => {
           </p>
         </div>
         <div className="my-4">
-          <label htmlFor="remainStock">Remain stock</label>
+          <label htmlFor="initialInventory">Remain inventory</label>
           <p
-            id="remainStock"
+            id="initialInventory"
             className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
           >
-            {product.remainStock}
+            {product.initialInventory}
           </p>
         </div>
         <div className="my-4">
-          <label htmlFor="soldAmount">Sold amount</label>
+          <label htmlFor="minimumInventory">Minimum inventory</label>
           <p
-            id="soldAmount"
+            id="minimumInventory"
             className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
           >
-            {product.soldAmount}
+            {product.minimumInventory}
           </p>
         </div>
         <div className="my-4">
-          <label htmlFor="size">Size</label>
-          <div id="size" className="mt-2 flex items-center">
-            {product.size.map((size, index) => {
-              return (
-                <div
-                  key={index}
-                  className="mr-4 p-4 border rounded-xl shadow-xl hover:bg-gray-200"
-                >
-                  {size}
-                </div>
-              );
-            })}
+          <label htmlFor="maximumInventory">Maximum inventory</label>
+          <p
+            id="maximumInventory"
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          >
+            {product.minimumInventory}
+          </p>
+        </div>
+        <div className="my-4">
+          <label htmlFor="createdAt">Created at</label>
+          <div
+            id="createdAt"
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          >
+            {normalizeDateTime(product.createdAt)}
           </div>
         </div>
         <div className="my-4">
-          <label htmlFor="color">Color</label>
-          <div id="color" className="mt-4 flex items-center">
-            {product.color.map((color, index) => {
-              return (
-                <div
-                  key={index}
-                  style={{ backgroundColor: color }}
-                  className={"mr-4 p-4 border rounded-full shadow-xl"}
-                ></div>
-              );
-            })}
+          <label htmlFor="updatedAt">Updated at</label>
+          <div
+            id="updatedAt"
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          >
+            {normalizeDateTime(product.updatedAt)}
           </div>
+        </div>
+        <div className="my-4">
+          <label htmlFor="soldQuantity">Sold quantity</label>
+          <p
+            id="soldQuantity"
+            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+          >
+            {product.soldQuantity}
+          </p>
+        </div>
+      </div>
+      <div className="my-4">
+        <label htmlFor="category">Category</label>
+        <div id="category" className="mt-2 flex items-center">
+          {product.category.map((category, index) => {
+            return (
+              <div
+                key={index}
+                className="mr-4 p-4 border rounded-xl shadow-xl hover:bg-gray-200"
+              >
+                {renderProductCategory(category)}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="my-4">
+        <label htmlFor="size">Size</label>
+        <div id="size" className="mt-2 flex items-center">
+          {product.size.map((size, index) => {
+            return (
+              <div
+                key={index}
+                className="mr-4 p-4 border rounded-xl shadow-xl hover:bg-gray-200"
+              >
+                {size}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="my-4">
+        <label htmlFor="color">Color</label>
+        <div id="color" className="mt-4 flex items-center">
+          {product.color.map((color, index) => {
+            return (
+              <div
+                key={index}
+                style={{ backgroundColor: color }}
+                className={"mr-4 p-4 border rounded-full shadow-xl"}
+              ></div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="my-4">
+        <label htmlFor="storageLocation">Storage location</label>
+        <div id="storageLocation" className="mt-4 flex items-center">
+          {product.storageLocation.map((storageLocation, index) => {
+            return (
+              <div
+                key={index}
+                className="mr-4 p-4 border rounded-xl shadow-xl hover:bg-gray-200"
+              >
+                {renderProductStorageLocation(storageLocation)}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="my-4">
+        <label htmlFor="displayLocation">Storage location</label>
+        <div id="displayLocation" className="mt-4 flex items-center">
+          {product.displayLocation.map((displayLocation, index) => {
+            return (
+              <div
+                key={index}
+                className="mr-4 p-4 border rounded-xl shadow-xl hover:bg-gray-200"
+              >
+                {renderProductDisplayLocation(displayLocation)}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

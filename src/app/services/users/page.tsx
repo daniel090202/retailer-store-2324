@@ -1,15 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
+
+import { getAllUsers } from "@/api";
+import { useAppDispatch } from "@/lib/redux/store";
 
 import Table from "./Table";
 import CreateUser from "./CreateUser";
 
 const Users = () => {
+  const dispatch = useAppDispatch();
+
   const [createUserModal, setCreateUserModal] = useState(false);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      await getAllUsers(dispatch);
+    };
+
+    fetchProducts();
+  }, []);
 
   const handleCreateUser = () => {
     setCreateUserModal(true);

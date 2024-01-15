@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 
 import authReducer from "./features/authSlice";
+import usersReducer from "./features/usersSlice";
 import productsReducer from "./features/productsSlice";
 
 const makeStore = () => {
   return configureStore({
     reducer: {
       authReducer,
+      usersReducer,
       productsReducer,
     },
   });

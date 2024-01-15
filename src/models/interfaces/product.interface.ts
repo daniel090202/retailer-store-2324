@@ -14,9 +14,14 @@ interface IProduct {
   minimumInventory: number;
   maximumInventory: number;
   remainInventory: number;
-  soldAmount: number;
+  soldQuantity: number;
   storageLocation: Array<number>;
   displayLocation: Array<number>;
+  active: boolean;
+  archived: boolean;
+  verified: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type { IProduct };
