@@ -11,6 +11,8 @@ interface IUser {
   middleName: string;
   admin: boolean;
   active: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface IUserConstructor {

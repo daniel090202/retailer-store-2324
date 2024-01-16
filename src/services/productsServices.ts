@@ -15,8 +15,6 @@ const getProduct = async (SKU: string) => {
       data: Product;
     } = response;
 
-    console.log(productData);
-
     if (productData.statusCode === 200) {
       return productData.data;
     }

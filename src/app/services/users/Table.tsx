@@ -26,7 +26,7 @@ const Table = () => {
           <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
           <td>
             <Link
-              href={userProfilePath + "/daniel.nguyen"}
+              href={userProfilePath + `/${user.userName}`}
               className="flex items-center transition ease-in-out delay-150 hover:-translate-y-1"
             >
               {icons.solidLinkDirect}

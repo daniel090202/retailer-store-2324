@@ -118,6 +118,39 @@ const renderProductDisplayLocation = (displayLocation: number): string => {
   }
 };
 
+const renderProductActiveStatus = (status: boolean): string => {
+  switch (status) {
+    case true:
+      return "On sale";
+    case false:
+      return "Not on sale";
+    default:
+      return "Error";
+  }
+};
+
+const renderProductArchivedStatus = (status: boolean): string => {
+  switch (status) {
+    case true:
+      return "Archived";
+    case false:
+      return "Unarchived";
+    default:
+      return "Error";
+  }
+};
+
+const renderProductVerifiedStatus = (status: boolean): string => {
+  switch (status) {
+    case true:
+      return "Verified";
+    case false:
+      return "Unverified";
+    default:
+      return "Error";
+  }
+};
+
 export {
   allProductUnits,
   allStorageLocation,
@@ -127,4 +160,7 @@ export {
   renderProductForGender,
   renderProductStorageLocation,
   renderProductDisplayLocation,
+  renderProductActiveStatus,
+  renderProductArchivedStatus,
+  renderProductVerifiedStatus,
 };

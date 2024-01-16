@@ -5,7 +5,7 @@ import Image from "next/image";
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-const Customer = ({ params }: { params: { slug: string } }) => {
+const Customer = ({ params }: { params: { userName: string } }) => {
   const user = {
     fullName: "Daniel Nguyen",
     age: 21,
@@ -15,6 +15,8 @@ const Customer = ({ params }: { params: { slug: string } }) => {
     email: "minhkhanh090202@gmail.com",
     customerSegment: 0,
   };
+
+  console.log(params.userName);
 
   return (
     <div className="flex-1 h-[500px] mx-2 my-4 p-4 bg-white rounded-xl overflow-y-scroll">

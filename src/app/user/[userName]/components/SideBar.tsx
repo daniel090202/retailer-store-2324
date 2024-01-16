@@ -3,44 +3,60 @@
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
-const SideBar = () => {
-  const handleArchiveProduct = () => {
+import {
+  renderUserActiveStatus,
+  renderUserBlockedStatus,
+  renderUserVerifiedStatus,
+} from "@/utils";
+
+const SideBar = ({
+  active = false,
+  admin = false,
+  block = false,
+  verified = false,
+}: {
+  active?: boolean;
+  admin?: boolean;
+  block?: boolean;
+  verified?: boolean;
+}) => {
+  const handleBlockUser = () => {
     return;
   };
 
-  const handleReviewImportation = () => {
+  const handleResendVerification = () => {
     return;
   };
 
-  const handleReviewSalesHistory = () => {
+  const handleReviewSalesPerformance = () => {
     return;
   };
 
   return (
     <aside className="md:w-1/4 md:mx-2 md:my-4 text-xl font-medium rounded-xl">
       <div className="p-4 rounded-xl border-2">
-        <h1 className="text-center">Product status</h1>
+        <h1 className="text-center">Account status</h1>
         <hr className="my-2" />
         <div className="my-2 flex justify-between">
           <span>Active status:</span>
           <div>
-            <span>on sale</span>
+            <span>{renderUserActiveStatus(active)}</span>
             <span className="mx-2 w-2.5 h-2.5 text-sm">
               {icons.solidCircle}
             </span>
           </div>
         </div>
         <div className="my-2 flex justify-between">
-          <span>Archived status:</span>
+          <span>Block status:</span>
           <div>
-            <span>unarchive</span>
+            <span>{renderUserBlockedStatus(block)}</span>
             <span className="mx-2 w-2.5 h-2.5 text-sm">{icons.lockOpened}</span>
           </div>
         </div>
         <div className="my-2 flex justify-between">
           <span>Verified status:</span>
           <div>
-            <span>verified</span>
+            <span>{renderUserVerifiedStatus(verified)}</span>
             <span className="mx-2 w-2.5 h-2.5 text-lg">{icons.check}</span>
           </div>
         </div>
@@ -49,25 +65,25 @@ const SideBar = () => {
         leftIcon=""
         rightIcon=""
         className="w-full mt-4 mb-2 p-4 text-xl"
-        onClick={() => handleArchiveProduct()}
+        onClick={() => handleBlockUser()}
       >
-        Archive product
+        Block user
       </Button>
       <Button
         leftIcon=""
         rightIcon=""
         className="w-full my-2 p-4 text-xl"
-        onClick={() => handleReviewImportation()}
+        onClick={() => handleResendVerification()}
       >
-        Review importation
+        Resend verification
       </Button>
       <Button
         leftIcon=""
         rightIcon=""
         className="w-full my-2 p-4 text-xl"
-        onClick={() => handleReviewSalesHistory()}
+        onClick={() => handleReviewSalesPerformance()}
       >
-        Review sales history
+        Review sales performance
       </Button>
     </aside>
   );

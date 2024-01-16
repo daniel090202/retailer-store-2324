@@ -15,6 +15,9 @@ class User implements IUser {
   public admin: boolean;
   public active: boolean;
 
+  public createdAt: string;
+  public updatedAt: string;
+
   constructor();
   constructor(
     email?: string,
@@ -28,20 +31,24 @@ class User implements IUser {
     lastName?: string,
     middleName?: string,
     admin?: boolean,
-    active?: boolean
+    active?: boolean,
+    createdAt?: string,
+    updatedAt?: string
   ) {
-    this.email = email || "";
-    this.gender = gender || 0;
-    this.age = age || 0;
-    this.phone = phone || "";
-    this.address = address || "";
-    this.position = position || 0;
-    this.userName = userName || "";
-    this.firstName = firstName || "";
-    this.lastName = lastName || "";
-    this.middleName = middleName || "";
-    this.admin = admin || false;
-    this.active = active || false;
+    this.email = email ?? "";
+    this.gender = gender ?? 0;
+    this.age = age ?? 0;
+    this.phone = phone ?? "";
+    this.address = address ?? "";
+    this.position = position ?? 0;
+    this.userName = userName ?? "";
+    this.firstName = firstName ?? "";
+    this.lastName = lastName ?? "";
+    this.middleName = middleName ?? "";
+    this.admin = admin ?? false;
+    this.active = active ?? false;
+    this.createdAt = createdAt ?? "";
+    this.updatedAt = updatedAt ?? "";
   }
 }
 
