@@ -1,4 +1,4 @@
-import { User, Product } from "../dto";
+import { User, Customer, Product } from "../dto";
 
 declare global {
   type AuthInitialState = {
@@ -13,6 +13,22 @@ declare global {
     users: UsersState;
   };
 
+  type CustomersInitialState = {
+    customers: CustomersState;
+  };
+
+  type CustomersState = {
+    error: boolean;
+    allCustomers?:
+      | {
+          statusCode: number;
+          message: string;
+          data?: Array<Customer> | undefined;
+        }
+      | undefined;
+    isFetching: boolean;
+  };
+
   type UsersState = {
     error: boolean;
     allUsers:
@@ -23,7 +39,6 @@ declare global {
         }
       | undefined;
     isFetching: boolean;
-    isModerator: boolean;
   };
 
   type ProductsState = {
@@ -36,7 +51,6 @@ declare global {
         }
       | undefined;
     isFetching: boolean;
-    isModerator: boolean;
   };
 
   type AuthState = {
@@ -53,5 +67,3 @@ declare global {
     isFetching: boolean;
   };
 }
-
-export type { AuthState, AuthInitialState };
