@@ -11,6 +11,8 @@ class Customer implements ICustomer {
   public active: boolean = false;
   public block: boolean = false;
   public verified: boolean = false;
+  public createdAt: string;
+  public updatedAt: string;
 
   constructor(
     email: string,
@@ -20,6 +22,8 @@ class Customer implements ICustomer {
     address: string,
     customerName: string,
     accountLevel: number,
+    createdAt: string,
+    updatedAt: string,
     active: boolean = false,
     block: boolean = false,
     verified: boolean = false
@@ -34,6 +38,8 @@ class Customer implements ICustomer {
     this.active = active;
     this.block = block;
     this.verified = verified;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 }
 

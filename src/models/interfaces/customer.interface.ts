@@ -10,6 +10,8 @@ declare global {
     active: boolean;
     block: boolean;
     verified: boolean;
+    createdAt: string;
+    updatedAt: string;
   }
 }
 

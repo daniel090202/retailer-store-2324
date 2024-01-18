@@ -9,16 +9,6 @@ import { customerProfilePath } from "@/config/pathConfig";
 import Filter from "./Filter";
 
 const Table = () => {
-  const customer = {
-    slug: "daniel.nguyen",
-    fullName: "Daniel Nguyen",
-    age: 21,
-    gender: 0,
-    address: "Ho Chi Minh",
-    phone: "0936730339",
-    email: "minhkhanh090202@gmail.com",
-  };
-
   const customers = useAppSelector((state) => {
     return state.customersReducer.customers.allCustomers?.data;
   });
@@ -50,7 +40,6 @@ const Table = () => {
       );
     });
   };
-  console.log(customers);
 
   return (
     <div>

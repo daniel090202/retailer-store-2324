@@ -3,9 +3,24 @@
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
-import { renderCustomerLevel } from "@/utils";
+import {
+  renderCustomerLevel,
+  renderCustomerActiveStatus,
+  renderCustomerBlockedStatus,
+  renderCustomerVerifiedStatus,
+} from "@/utils";
 
-const SideBar = () => {
+const SideBar = ({
+  accountLevel,
+  active,
+  block,
+  verified,
+}: {
+  accountLevel: number;
+  active: boolean;
+  block: boolean;
+  verified: boolean;
+}) => {
   const customer = {
     fullName: "Daniel Nguyen",
     age: 21,
@@ -32,7 +47,7 @@ const SideBar = () => {
         <div className="my-2 flex justify-between">
           <span>Active status:</span>
           <div>
-            <span>active</span>
+            <span>{renderCustomerActiveStatus(active)}</span>
             <span className="mx-2 w-2.5 h-2.5 text-sm">
               {icons.solidCircle}
             </span>
@@ -41,7 +56,7 @@ const SideBar = () => {
         <div className="my-2 flex justify-between">
           <span>Block status:</span>
           <div>
-            <span>unblock</span>
+            <span>{renderCustomerBlockedStatus(block)}</span>
             <span className="mx-2 w-2.5 h-2.5 text-sm">{icons.lockOpened}</span>
           </div>
         </div>
@@ -57,7 +72,7 @@ const SideBar = () => {
         <div className="my-2 flex justify-between">
           <span>Verified status:</span>
           <div>
-            <span>verified</span>
+            <span>{renderCustomerVerifiedStatus(verified)}</span>
             <span className="mx-2 w-2.5 h-2.5 text-lg">{icons.check}</span>
           </div>
         </div>
