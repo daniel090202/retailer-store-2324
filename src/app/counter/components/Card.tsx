@@ -1,20 +1,42 @@
 import icons from "@/assets/Icons/index";
+import { useAppDispatch } from "@/lib/redux/store";
+import {
+  removeCartItem,
+  increaseCartItem,
+  decreaseCartItem,
+} from "@/lib/redux/features";
 
-const Card = () => {
-  const product = {
-    barcode: "SWEATER0001",
-    name: "Christmas Cardigan",
-    category: 2,
-    color: ["#9AC8EB"],
-    size: ["XS"],
-    salePrice: 350000,
-    purchaseAmount: 6,
+import { Product } from "@/models";
+
+const Card = ({
+  productData,
+}: {
+  productData: {
+    product: Product;
+    purchasedAmount: number;
+  };
+}) => {
+  const dispatch = useAppDispatch();
+
+  const product = productData.product;
+  const purchasedAmount = productData.purchasedAmount;
+
+  const totalPriceEachItem = product.salePrice * purchasedAmount;
+
+  const handleAddItem = () => {
+    dispatch(increaseCartItem(product.SKU));
   };
 
-  const totalPriceEachItem = product.salePrice * product.purchaseAmount;
+  const handleMinusItem = () => {
+    if (purchasedAmount <= 1) {
+      return;
+    }
 
-  const handleRemoveCartItem = () => {
-    return;
+    dispatch(decreaseCartItem(product.SKU));
+  };
+
+  const handleRemoveItem = () => {
+    dispatch(removeCartItem(product.SKU));
   };
 
   return (
@@ -23,7 +45,7 @@ const Card = () => {
         <span
           className="px-2 py-1 text-sm rounded-full hover:bg-gray-200"
           onClick={() => {
-            handleRemoveCartItem();
+            handleRemoveItem();
           }}
         >
           {icons.cross}
@@ -45,7 +67,7 @@ const Card = () => {
       </div>
       <div className="my-2 flex justify-between font-normal text-gray-500 dark:text-gray-400">
         <span>Amount:</span>
-        <span>{product.purchaseAmount}</span>
+        <span>{purchasedAmount}</span>
       </div>
       <div className="my-2 flex justify-between font-normal text-gray-500 dark:text-gray-400">
         <span>Unit:</span>
@@ -55,13 +77,32 @@ const Card = () => {
         <span>Total:</span>
         <span>{totalPriceEachItem.toLocaleString()} VND</span>
       </div>
-      <a
-        href="#"
-        className="inline-flex items-center mt-4 text-gray-400 cursor-pointer hover:underline hover:text-gray-600"
-      >
-        <span>See more details</span>
-        <span className="mx-2">{icons.solidLinkDirect}</span>
-      </a>
+      <div className="mt-6 w-full flex justify-center">
+        <span
+          className="mx-2 px-2 py-1 text-sm border rounded-full hover:bg-gray-200"
+          onClick={() => {
+            handleAddItem();
+          }}
+        >
+          {icons.plus}
+        </span>
+        <span
+          className="mx-2 px-2 py-1 text-sm border rounded-full hover:bg-gray-200"
+          onClick={() => {
+            handleMinusItem();
+          }}
+        >
+          {icons.minus}
+        </span>
+        <span
+          className="mx-2 px-2 py-1 text-sm border rounded-full hover:bg-gray-200"
+          onClick={() => {
+            handleRemoveItem();
+          }}
+        >
+          {icons.cross}
+        </span>
+      </div>
     </div>
   );
 };

@@ -17,53 +17,54 @@ declare global {
     customers: CustomersState;
   };
 
+  type CartInitialState = {
+    cart: CartState;
+  };
+
+  type CartState = {
+    customer?: string;
+    allProducts: Array<{ product: Product; purchasedAmount: number }>;
+  };
+
   type CustomersState = {
     error: boolean;
-    allCustomers?:
-      | {
-          statusCode: number;
-          message: string;
-          data?: Array<Customer> | undefined;
-        }
-      | undefined;
+    allCustomers?: {
+      statusCode: number;
+      message: string;
+      data?: Array<Customer>;
+    };
     isFetching: boolean;
   };
 
   type UsersState = {
     error: boolean;
-    allUsers:
-      | {
-          statusCode: number;
-          message: string;
-          data: Array<User> | undefined;
-        }
-      | undefined;
+    allUsers: {
+      statusCode: number;
+      message: string;
+      data: Array<User>;
+    };
     isFetching: boolean;
   };
 
   type ProductsState = {
     error: boolean;
-    allProducts:
-      | {
-          statusCode: number;
-          message: string;
-          data: Array<Product> | undefined;
-        }
-      | undefined;
+    allProducts: {
+      statusCode: number;
+      message: string;
+      data: Array<Product>;
+    };
     isFetching: boolean;
   };
 
   type AuthState = {
     isAuth: boolean;
     error: boolean;
-    currentUser:
-      | {
-          statusCode: number;
-          message: string;
-          data: User | undefined;
-          accessToken: string;
-        }
-      | undefined;
+    currentUser?: {
+      statusCode: number;
+      message: string;
+      data?: User;
+      accessToken: string;
+    };
     isFetching: boolean;
   };
 }

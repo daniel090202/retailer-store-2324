@@ -3,11 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import React, { useEffect, useState } from "react";
-
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
@@ -96,10 +94,7 @@ const NavBar = () => {
           <ul className="justify-center items-center space-y-4 text-sm md:text-lg md:flex md:space-x-6 md:space-y-0 lg:text-xl">
             {renderNavBarElements()}
             <li className="relative shadow-lg border rounded-xl p-3 hidden cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 md:block">
-              <UserTippy
-                profileButtonClicked={profileButtonClicked}
-                setProfileButtonClicked={setProfileButtonClicked}
-              >
+              <UserTippy profileButtonClicked={profileButtonClicked}>
                 <Image
                   src={images.maleDefaultProfilePicture}
                   width={40}

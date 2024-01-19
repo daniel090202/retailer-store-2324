@@ -46,9 +46,12 @@ const Product = ({ params }: { params: { SKU: string } }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const product: ProductDTO | undefined = await getProduct(params.SKU);
+      const products: Array<ProductDTO> | undefined = await getProduct(
+        params.SKU
+      );
 
-      if (product !== undefined) {
+      if (products !== undefined) {
+        const product = products[0];
         setProduct(product);
       }
     };

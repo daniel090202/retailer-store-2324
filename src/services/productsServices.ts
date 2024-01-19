@@ -2,21 +2,24 @@ import * as request from "@/utils/http";
 
 import { Product } from "@/models";
 
-const getProduct = async (SKU: string) => {
+const getProduct = async (SKU: string = "", name: string = "") => {
   try {
     const url = "/products";
-    const params = new URLSearchParams([["SKU", SKU]]);
+    const params = new URLSearchParams([
+      ["SKU", SKU],
+      ["name", name],
+    ]);
 
     const response = await request.get(url, { params });
 
-    const productData: {
+    const productsData: {
       statusCode: number;
       message: string;
-      data: Product;
+      data: Array<Product>;
     } = response;
 
-    if (productData.statusCode === 200) {
-      return productData.data;
+    if (productsData.statusCode === 200) {
+      return productsData.data;
     }
   } catch (error) {
     console.log(error);

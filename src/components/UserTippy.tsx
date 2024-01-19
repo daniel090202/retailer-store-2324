@@ -13,7 +13,6 @@ const UserTippy = ({
   children,
 }: {
   profileButtonClicked: boolean;
-  setProfileButtonClicked: (value: boolean) => void;
   children: React.ReactElement;
 }) => {
   const router = useRouter();
