@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import icons from "@/assets/Icons/index";
-
+ 
 import { renderProductCategory } from "@/utils";
 import { useAppSelector } from "@/lib/redux/store";
 import { productDetailsPath } from "@/config/pathConfig";

@@ -6,7 +6,7 @@ import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
 import { getAllUsers } from "@/api";
-import { useAppDispatch } from "@/lib/redux/store";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import Table from "./Table";
 import CreateUser from "./CreateUser";
@@ -15,6 +15,10 @@ const Users = () => {
   const dispatch = useAppDispatch();
 
   const [createUserModal, setCreateUserModal] = useState(false);
+
+  const users = useAppSelector((state) => {
+    return state.usersReducer.users.allUsers?.data;
+  });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -40,7 +44,7 @@ const Users = () => {
       <div className="flex justify-between">
         <div className="my-2">
           <span>Total available users in the store:</span>
-          <span className="mx-4 text-lg">12</span>
+          <span className="mx-4 text-lg">{users?.length.toLocaleString()}</span>
           <span>user(s)</span>
         </div>
         <div>

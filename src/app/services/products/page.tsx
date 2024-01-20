@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 
 import icons from "@/assets/Icons";
-import Button from "@/components/Button"; 
+import Button from "@/components/Button";
 
 import { getAllProducts } from "@/api";
-import { useAppDispatch } from "@/lib/redux/store";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import Table from "./Table";
 import CreateProduct from "./CreateProduct";
@@ -15,6 +15,10 @@ const Products = () => {
   const dispatch = useAppDispatch();
 
   const [createProductModal, setCreateProductModal] = useState(false);
+
+  const products = useAppSelector((state) => {
+    return state.productsReducer.products.allProducts?.data;
+  });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -40,7 +44,9 @@ const Products = () => {
       <div className="flex justify-between">
         <div className="my-2">
           <span>Total available products in the store:</span>
-          <span className="mx-4 text-lg">12</span>
+          <span className="mx-4 text-lg">
+            {products?.length.toLocaleString()}
+          </span>
           <span>item(s)</span>
         </div>
         <div>

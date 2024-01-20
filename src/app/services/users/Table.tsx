@@ -20,7 +20,9 @@ const Table = () => {
           <td className="px-6 py-4 whitespace-nowrap">{index}</td>
           <td className="px-6 py-4 whitespace-nowrap">{user.userName}</td>
           <td className="px-6 py-4 whitespace-nowrap">{user.age}</td>
-          <td className="px-6 py-4 whitespace-nowrap">{renderUserGender(user.gender)}</td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            {renderUserGender(user.gender)}
+          </td>
           <td className="px-6 py-4 whitespace-nowrap">{user.address}</td>
           <td className="px-6 py-4 whitespace-nowrap">{user.phone}</td>
           <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>

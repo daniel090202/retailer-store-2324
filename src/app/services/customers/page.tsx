@@ -6,12 +6,16 @@ import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
 import { getAllCustomers } from "@/api";
-import { useAppDispatch } from "@/lib/redux/store";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import Table from "./Table";
 
 const Customers = () => {
   const dispatch = useAppDispatch();
+
+  const customers = useAppSelector((state) => {
+    return state.customersReducer.customers.allCustomers?.data;
+  });
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -33,7 +37,9 @@ const Customers = () => {
       <div className="flex justify-between">
         <div className="my-2">
           <span>Total available customers in the store:</span>
-          <span className="mx-4 text-lg">12</span>
+          <span className="mx-4 text-lg">
+            {customers?.length.toLocaleString()}
+          </span>
           <span>person(s)</span>
         </div>
         <div>
