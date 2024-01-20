@@ -1,17 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
-import { getAllProducts } from "@/api";
+import { appRoutes } from "@/config/pathConfig";
+import { getAllProducts, getAllArchivedProducts } from "@/api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
-import Table from "./Table";
-import CreateProduct from "./CreateProduct";
+import Table from "../components/Table";
+import CreateProduct from "../components/CreateProduct";
 
-const Products = () => {
+const AllProducts = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const [createProductModal, setCreateProductModal] = useState(false);
@@ -20,9 +23,15 @@ const Products = () => {
     return state.productsReducer.products.allProducts?.data;
   });
 
+  const archivedProducts = useAppSelector((state) => {
+    return state.archivedProductsReducer.archivedProducts.allArchivedProducts
+      ?.data;
+  });
+
   useEffect(() => {
     const fetchProducts = async () => {
       await getAllProducts(dispatch);
+      await getAllArchivedProducts(dispatch);
     };
 
     fetchProducts();
@@ -33,11 +42,11 @@ const Products = () => {
   };
 
   const handleViewArchivedProducts = () => {
-    return;
+    router.push(appRoutes.products.archived);
   };
 
   return (
-    <div className="flex-1 mx-2 my-4 p-4 h-[680px] bg-white rounded-xl">
+    <div className="mx-2 my-4 p-4 h-[680px] bg-white rounded-xl">
       <h1 className="my-2 text-2xl font-bold flex justify-center">
         Products catalog management
       </h1>
@@ -64,11 +73,11 @@ const Products = () => {
             className=""
             onClick={() => handleViewArchivedProducts()}
           >
-            Archive (10)
+            Archive ({archivedProducts?.length.toLocaleString()})
           </Button>
         </div>
       </div>
-      <Table />
+      <Table products={products} />
       <CreateProduct
         createProductModal={createProductModal}
         setCreateProductModal={setCreateProductModal}
@@ -77,4 +86,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default AllProducts;

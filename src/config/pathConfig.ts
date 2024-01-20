@@ -15,10 +15,13 @@ const appRoutes = {
   user: "/user",
   users: "/user",
   login: "/login",
-  product: "product",
-  products: "products",
-  customer: "customer",
-  customers: "customers",
+  product: "/product",
+  products: {
+    all: "/services/products/all",
+    archived: "/services/products/archived"
+  },
+  customer: "/customer",
+  customers: "/customers",
 };
 
 const navigationRoutes: routeProperties = [
@@ -47,7 +50,7 @@ const servicesSidebarRoutes: routeProperties = [
   },
   {
     title: "Product catalog",
-    path: "/services/products",
+    path: "/services/products/all",
     icon: icons.shirt,
   },
   {

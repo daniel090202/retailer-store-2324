@@ -44,4 +44,25 @@ const getUsers = async () => {
   }
 };
 
-export { getUser, getUsers };
+const getArchivedUsers = async () => {
+  try {
+    const url = "/users/get-all-archived-users";
+
+    const response = await request.get(url);
+
+    const archivedUsersData: {
+      statusCode: number;
+      message: string;
+      data: Array<User>;
+      accessToken: string;
+    } = response;
+
+    if (archivedUsersData.statusCode === 200) {
+      return archivedUsersData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getUser, getUsers, getArchivedUsers };

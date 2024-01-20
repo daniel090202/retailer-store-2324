@@ -2,9 +2,11 @@ import {
   getAllUsersStart,
   getAllUsersSuccess,
   getAllUsersFailed,
+  getAllArchivedUsersStart,
+  getAllArchivedUsersSuccess,
+  getAllArchivedUsersFailed,
 } from "@/lib/redux/features";
-
-import { getUsers } from "@/services";
+import { getUsers, getArchivedUsers } from "@/services";
 
 import { User } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
@@ -13,18 +15,34 @@ const getAllUsers = async (dispatch: AppDispatch) => {
   dispatch(getAllUsersStart());
 
   try {
-    const productsData = (await getUsers()) as {
+    const usersData = (await getUsers()) as {
       statusCode: number;
       message: string;
       data: Array<User>;
-      accessToken: string;
     };
 
-    dispatch(getAllUsersSuccess(productsData));
+    dispatch(getAllUsersSuccess(usersData));
   } catch (error) {
     console.log(error);
     dispatch(getAllUsersFailed());
   }
 };
 
-export { getAllUsers };
+const getAllArchivedUsers = async (dispatch: AppDispatch) => {
+  dispatch(getAllArchivedUsersStart());
+
+  try {
+    const archivedUsersData = (await getArchivedUsers()) as {
+      statusCode: number;
+      message: string;
+      data: Array<User>;
+    };
+
+    dispatch(getAllArchivedUsersSuccess(archivedUsersData));
+  } catch (error) {
+    console.log(error);
+    dispatch(getAllArchivedUsersFailed());
+  }
+};
+
+export { getAllUsers, getAllArchivedUsers };

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
-import { getAllUsers } from "@/api";
+import { getAllUsers, getAllArchivedUsers } from "@/api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import Table from "./Table";
@@ -20,9 +20,14 @@ const Users = () => {
     return state.usersReducer.users.allUsers?.data;
   });
 
+  const archivedUsers = useAppSelector((state) => {
+    return state.archivedUsersReducer.archivedUsers.allArchivedUsers?.data;
+  });
+
   useEffect(() => {
     const fetchProducts = async () => {
       await getAllUsers(dispatch);
+      await getAllArchivedUsers(dispatch);
     };
 
     fetchProducts();
@@ -62,7 +67,7 @@ const Users = () => {
             className=""
             onClick={() => handleViewArchivedUsers()}
           >
-            Archive (10)
+            Archive ({archivedUsers?.length.toLocaleString()})
           </Button>
         </div>
       </div>

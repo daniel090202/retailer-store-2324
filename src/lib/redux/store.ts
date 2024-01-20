@@ -6,6 +6,9 @@ import authReducer from "./features/authSlice";
 import usersReducer from "./features/usersSlice";
 import productsReducer from "./features/productsSlice";
 import customersReducer from "./features/customersSlice";
+import archivedUsersReducer from "./features/archivedUsersSlice";
+import archivedProductsReducer from "./features/archivedProductsSlice";
+import archivedCustomersReducer from "./features/archivedCustomersSlice";
 
 const makeStore = () => {
   return configureStore({
@@ -15,6 +18,9 @@ const makeStore = () => {
       usersReducer,
       productsReducer,
       customersReducer,
+      archivedUsersReducer,
+      archivedProductsReducer,
+      archivedCustomersReducer,
     },
   });
 };

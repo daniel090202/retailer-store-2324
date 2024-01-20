@@ -2,9 +2,12 @@ import {
   getAllProductsStart,
   getAllProductsSuccess,
   getAllProductsFailed,
+  getAllArchivedProductsStart,
+  getAllArchivedProductsSuccess,
+  getAllArchivedProductsFailed,
 } from "@/lib/redux/features";
 
-import { getProducts } from "@/services";
+import { getProducts, getArchivedProducts } from "@/services";
 
 import { Product } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
@@ -17,7 +20,6 @@ const getAllProducts = async (dispatch: AppDispatch) => {
       statusCode: number;
       message: string;
       data: Array<Product>;
-      accessToken: string;
     };
 
     dispatch(getAllProductsSuccess(productsData));
@@ -27,4 +29,21 @@ const getAllProducts = async (dispatch: AppDispatch) => {
   }
 };
 
-export { getAllProducts };
+const getAllArchivedProducts = async (dispatch: AppDispatch) => {
+  dispatch(getAllArchivedProductsStart());
+
+  try {
+    const archivedProductsData = (await getArchivedProducts()) as {
+      statusCode: number;
+      message: string;
+      data: Array<Product>;
+    };
+
+    dispatch(getAllArchivedProductsSuccess(archivedProductsData));
+  } catch (error) {
+    console.log(error);
+    dispatch(getAllArchivedProductsFailed());
+  }
+};
+
+export { getAllProducts, getAllArchivedProducts };

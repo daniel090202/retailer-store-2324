@@ -2,9 +2,12 @@ import {
   getAllCustomersStart,
   getAllCustomersSuccess,
   getAllCustomersFailed,
+  getAllArchivedCustomersStart,
+  getAllArchivedCustomersSuccess,
+  getAllArchivedCustomersFailed,
 } from "@/lib/redux/features";
 
-import { getCustomers } from "@/services";
+import { getCustomers, getArchivedCustomers } from "@/services";
 
 import { Customer } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
@@ -17,7 +20,6 @@ const getAllCustomers = async (dispatch: AppDispatch) => {
       statusCode: number;
       message: string;
       data: Array<Customer>;
-      accessToken: string;
     };
 
     dispatch(getAllCustomersSuccess(customersData));
@@ -27,4 +29,21 @@ const getAllCustomers = async (dispatch: AppDispatch) => {
   }
 };
 
-export { getAllCustomers };
+const getAllArchivedCustomers = async (dispatch: AppDispatch) => {
+  dispatch(getAllArchivedCustomersStart());
+
+  try {
+    const archivedCustomersData = (await getArchivedCustomers()) as {
+      statusCode: number;
+      message: string;
+      data: Array<Customer>;
+    };
+
+    dispatch(getAllArchivedCustomersSuccess(archivedCustomersData));
+  } catch (error) {
+    console.log(error);
+    dispatch(getAllArchivedCustomersFailed());
+  }
+};
+
+export { getAllCustomers, getAllArchivedCustomers };

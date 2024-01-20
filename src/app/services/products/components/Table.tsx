@@ -1,17 +1,16 @@
 import Link from "next/link";
 
 import icons from "@/assets/Icons/index";
- 
+
 import { renderProductCategory } from "@/utils";
 import { useAppSelector } from "@/lib/redux/store";
 import { productDetailsPath } from "@/config/pathConfig";
 
+import { Product } from "@/models";
+
 import Filter from "./Filter";
 
-const Table = () => {
-  const products = useAppSelector((state) => {
-    return state.productsReducer.products.allProducts?.data;
-  });
+const Table = ({ products }: { products?: Array<Product> }) => {
 
   const renderAllProducts = (): React.ReactNode => {
     return products?.map((product, index) => {

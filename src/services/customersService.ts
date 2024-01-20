@@ -44,4 +44,25 @@ const getCustomers = async () => {
   }
 };
 
-export { getCustomer, getCustomers };
+const getArchivedCustomers = async () => {
+  try {
+    const url = "/customers/get-all-archived-customers";
+
+    const response = await request.get(url);
+
+    const archivedCustomersData: {
+      statusCode: number;
+      message: string;
+      data: Array<Customer>;
+      accessToken: string;
+    } = response;
+
+    if (archivedCustomersData.statusCode === 200) {
+      return archivedCustomersData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getCustomer, getCustomers, getArchivedCustomers };

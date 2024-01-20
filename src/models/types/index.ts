@@ -9,12 +9,24 @@ declare global {
     products: ProductsState;
   };
 
+  type ArchivedProductInitialState = {
+    archivedProducts: ArchivedProductsState;
+  };
+
   type UsersInitialState = {
     users: UsersState;
   };
 
+  type ArchivedUsersInitialState = {
+    archivedUsers: ArchivedUsersState;
+  };
+
   type CustomersInitialState = {
     customers: CustomersState;
+  };
+
+  type ArchivedCustomersInitialState = {
+    archivedCustomers: ArchivedCustomersState;
   };
 
   type CartInitialState = {
@@ -36,22 +48,52 @@ declare global {
     isFetching: boolean;
   };
 
-  type UsersState = {
+  type ArchivedCustomersState = {
     error: boolean;
-    allUsers: {
+    allArchivedCustomers?: {
       statusCode: number;
       message: string;
-      data: Array<User>;
+      data?: Array<Customer>;
+    };
+    isFetching: boolean;
+  };
+
+  type UsersState = {
+    error: boolean;
+    allUsers?: {
+      statusCode: number;
+      message: string;
+      data?: Array<User>;
+    };
+    isFetching: boolean;
+  };
+
+  type ArchivedUsersState = {
+    error: boolean;
+    allArchivedUsers?: {
+      statusCode: number;
+      message: string;
+      data?: Array<User>;
     };
     isFetching: boolean;
   };
 
   type ProductsState = {
     error: boolean;
-    allProducts: {
+    allProducts?: {
       statusCode: number;
       message: string;
-      data: Array<Product>;
+      data?: Array<Product>;
+    };
+    isFetching: boolean;
+  };
+
+  type ArchivedProductsState = {
+    error: boolean;
+    allArchivedProducts?: {
+      statusCode: number;
+      message: string;
+      data?: Array<Product>;
     };
     isFetching: boolean;
   };

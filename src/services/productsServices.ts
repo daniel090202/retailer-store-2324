@@ -46,4 +46,24 @@ const getProducts = async () => {
   }
 };
 
-export { getProduct, getProducts };
+const getArchivedProducts = async () => {
+  try {
+    const url = "/products/get-all-archived-products";
+
+    const response = await request.get(url);
+
+    const archivedProductsData: {
+      statusCode: number;
+      message: string;
+      data: Array<Product>;
+    } = response;
+
+    if (archivedProductsData.statusCode === 200) {
+      return archivedProductsData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getProduct, getProducts, getArchivedProducts };
