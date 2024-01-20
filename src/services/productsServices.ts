@@ -66,4 +66,42 @@ const getArchivedProducts = async () => {
   }
 };
 
-export { getProduct, getProducts, getArchivedProducts };
+const createProduct = async (product: {
+  SKU: string;
+  UPC: string;
+  name: string;
+  brand: string;
+  forGender: string;
+  category: Array<string>;
+  size: Array<string>;
+  color: Array<string>;
+  originalPrice: string;
+  salePrice: string;
+  unit: string;
+  initialInventory: string;
+  minimumInventory: string;
+  maximumInventory: string;
+  storageLocation: Array<string>;
+}) => {
+  try {
+    const url = "/products/create-product";
+
+    const response = await request.post(url, product);
+
+    const createdProductData: {
+      statusCode: number;
+      message: string;
+      data: Array<Product>;
+    } = response.data;
+
+    console.log(createdProductData);
+
+    if (createdProductData.statusCode === 200) {
+      return createdProductData.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getProduct, getProducts, getArchivedProducts, createProduct };

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import Modal from "@/components/Modal";
@@ -7,9 +6,6 @@ import Button from "@/components/Button";
 
 import { createUser } from "@/services";
 import { appRoutes } from "@/config/pathConfig";
-import { success, error } from "@/lib/hot-toast";
-
-import { User } from "@/models";
 
 const CreateUser = ({
   createUserModal,
@@ -18,8 +14,6 @@ const CreateUser = ({
   createUserModal: boolean;
   setCreateUserModal: (value: boolean) => void;
 }) => {
-  const router = useRouter();
-
   const [address, setAddress] = useState("-1");
   const [position, setPosition] = useState("-1");
 

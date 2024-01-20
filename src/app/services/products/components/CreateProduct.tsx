@@ -10,6 +10,8 @@ import {
   allStorageLocation,
   allProductCategories,
 } from "@/utils";
+import { createProduct } from "@/services";
+import { appRoutes } from "@/config/pathConfig";
 
 const CreateProduct = ({
   createProductModal,
@@ -20,16 +22,16 @@ const CreateProduct = ({
 }) => {
   const [sizeAmount, setSizeAmount] = useState(1);
   const [colorAmount, setColorAmount] = useState(1);
-  const [salePriceAmount, setSalePriceAmount] = useState(1);
-  const [originalPriceAmount, setOriginalPriceAmount] = useState(1);
 
   const [unit, setUnit] = useState("-1");
-  const [category, setCategory] = useState("-1");
   const [forGender, setForGender] = useState("-1");
-  const [storageLocation, setStorageLocation] = useState("-1");
 
-  const [sizeList, setSizeList] = useState<string[]>([]);
-  const [colorList, setColorList] = useState<string[]>([]);
+  const [sizeList, setSizeList] = useState<Array<string>>([]);
+  const [colorList, setColorList] = useState<Array<string>>([]);
+  const [categoryList, setCategoryList] = useState<Array<string>>([]);
+  const [storageLocationList, setStorageLocationList] = useState<Array<string>>(
+    []
+  );
 
   const [product, setProduct] = useState<{
     SKU: string;
@@ -37,23 +39,23 @@ const CreateProduct = ({
     name: string;
     brand: string;
     forGender: string;
-    category: string;
-    size: string[];
-    color: string[];
+    category: Array<string>;
+    size: Array<string>;
+    color: Array<string>;
     originalPrice: string;
     salePrice: string;
     unit: string;
     initialInventory: string;
     minimumInventory: string;
     maximumInventory: string;
-    storageLocation: string;
+    storageLocation: Array<string>;
   }>({
     SKU: "",
     UPC: "",
     name: "",
     brand: "",
     forGender: "",
-    category: "",
+    category: [],
     size: [],
     color: [],
     originalPrice: "",
@@ -62,7 +64,7 @@ const CreateProduct = ({
     initialInventory: "",
     minimumInventory: "",
     maximumInventory: "",
-    storageLocation: "",
+    storageLocation: [],
   });
 
   const handleColorInputProduct = (
@@ -195,8 +197,8 @@ const CreateProduct = ({
   const handleCategorySelectProduct = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setCategory(event.target.value);
-    setProduct({ ...product, [event.target.name]: event.target.value });
+    setCategoryList([...categoryList, event.target.value]);
+    setProduct({ ...product, [event.target.name]: [event.target.value] });
   };
 
   const handleUnitSelectProduct = (
@@ -209,12 +211,16 @@ const CreateProduct = ({
   const handleStorageLocationSelectProduct = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setStorageLocation(event.target.value);
-    setProduct({ ...product, [event.target.name]: event.target.value });
+    setStorageLocationList([...storageLocationList, event.target.value]);
+    setProduct({ ...product, [event.target.name]: [event.target.value] });
   };
 
-  const handleCreateProduct = () => {
-    return;
+  const handleCreateProduct = async () => {
+    await createProduct(product);
+
+    setCreateProductModal(!createProductModal);
+
+    window.location.href = appRoutes.products.all;
   };
 
   return createProductModal ? (
@@ -340,7 +346,7 @@ const CreateProduct = ({
           <select
             id="storageLocation"
             name="storageLocation"
-            value={storageLocation}
+            value={storageLocationList[0]}
             onChange={(event) => handleStorageLocationSelectProduct(event)}
             className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
           >
@@ -373,7 +379,7 @@ const CreateProduct = ({
           <select
             id="category"
             name="category"
-            value={category}
+            value={categoryList[0]}
             onChange={(event) => handleCategorySelectProduct(event)}
             className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
           >
