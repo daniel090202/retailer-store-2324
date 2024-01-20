@@ -1,22 +1,25 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
+import { appRoutes } from "@/config/pathConfig";
 import { getAllUsers, getAllArchivedUsers } from "@/api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
-import Table from "./Table";
-import CreateUser from "./CreateUser";
+import Table from "../components/Table";
+import CreateUser from "../components/CreateUser";
 
 const Users = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const [createUserModal, setCreateUserModal] = useState(false);
 
-  const users = useAppSelector((state) => {
+  const allUsers = useAppSelector((state) => {
     return state.usersReducer.users.allUsers?.data;
   });
 
@@ -38,7 +41,7 @@ const Users = () => {
   };
 
   const handleViewArchivedUsers = () => {
-    return;
+    router.push(appRoutes.users.archived);
   };
 
   return (
@@ -49,7 +52,9 @@ const Users = () => {
       <div className="flex justify-between">
         <div className="my-2">
           <span>Total available users in the store:</span>
-          <span className="mx-4 text-lg">{users?.length.toLocaleString()}</span>
+          <span className="mx-4 text-lg">
+            {allUsers?.length.toLocaleString()}
+          </span>
           <span>user(s)</span>
         </div>
         <div>
@@ -71,7 +76,7 @@ const Users = () => {
           </Button>
         </div>
       </div>
-      <Table />
+      <Table users={allUsers} />
       <CreateUser
         createUserModal={createUserModal}
         setCreateUserModal={setCreateUserModal}

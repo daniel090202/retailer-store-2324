@@ -2,9 +2,9 @@ import Link from "next/link";
 
 import icons from "@/assets/Icons/index";
 
+import { appRoutes } from "@/config/pathConfig";
 import { renderProductCategory } from "@/utils";
 import { useAppSelector } from "@/lib/redux/store";
-import { productDetailsPath } from "@/config/pathConfig";
 
 import { Product } from "@/models";
 
@@ -60,7 +60,7 @@ const Table = ({ products }: { products?: Array<Product> }) => {
           </td>
           <td>
             <Link
-              href={productDetailsPath + `/${product.SKU}`}
+              href={appRoutes.product + `/${product.SKU}`}
               className="flex items-center transition ease-in-out delay-150 hover:-translate-y-1"
             >
               {icons.solidLinkDirect}

@@ -3,16 +3,14 @@ import Link from "next/link";
 import icons from "@/assets/Icons/index";
 
 import { renderUserGender } from "@/utils";
+import { appRoutes } from "@/config/pathConfig";
 import { useAppSelector } from "@/lib/redux/store";
-import { userProfilePath } from "@/config/pathConfig";
+
+import { User } from "@/models";
 
 import Filter from "./Filter";
 
-const Table = () => {
-  const users = useAppSelector((state) => {
-    return state.usersReducer.users.allUsers?.data;
-  });
-
+const Table = ({ users }: { users?: Array<User> }) => {
   const renderAllUsers = (): React.ReactNode => {
     return users?.map((user, index) => {
       return (
@@ -28,7 +26,7 @@ const Table = () => {
           <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
           <td>
             <Link
-              href={userProfilePath + `/${user.userName}`}
+              href={appRoutes.user + `/${user.userName}`}
               className="flex items-center transition ease-in-out delay-150 hover:-translate-y-1"
             >
               {icons.solidLinkDirect}

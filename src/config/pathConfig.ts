@@ -1,30 +1,27 @@
 import icons from "@/assets/Icons/index";
 
-const userProfilePath = "/user";
-const productDetailsPath = "/product";
-const customerProfilePath = "/customer";
-
-type routeProperties = Array<{
-  title: string;
-  path: string;
-  icon: React.ReactNode | undefined;
-}>;
-
 const appRoutes = {
   home: "/",
   user: "/user",
-  users: "/user",
+  users: {
+    all: "/services/users/all",
+    archived: "/services/users/archived",
+  },
   login: "/login",
   product: "/product",
   products: {
     all: "/services/products/all",
-    archived: "/services/products/archived"
+    archived: "/services/products/archived",
   },
   customer: "/customer",
   customers: "/customers",
 };
 
-const navigationRoutes: routeProperties = [
+const navigationRoutes: Array<{
+  title: string;
+  path: string;
+  icon: React.ReactNode | undefined;
+}> = [
   {
     title: "Home",
     path: "/",
@@ -32,7 +29,7 @@ const navigationRoutes: routeProperties = [
   },
   {
     title: "Services",
-    path: "/services/users",
+    path: "/services/users/all",
     icon: undefined,
   },
   {
@@ -42,10 +39,14 @@ const navigationRoutes: routeProperties = [
   },
 ];
 
-const servicesSidebarRoutes: routeProperties = [
+const servicesSidebarRoutes: Array<{
+  title: string;
+  path: string;
+  icon: React.ReactNode | undefined;
+}> = [
   {
     title: "Human resources",
-    path: "/services/users",
+    path: "/services/users/all",
     icon: icons.userGroup,
   },
   {
@@ -61,9 +62,6 @@ const servicesSidebarRoutes: routeProperties = [
 ];
 
 export {
-  userProfilePath,
-  productDetailsPath,
-  customerProfilePath,
   appRoutes,
   navigationRoutes,
   servicesSidebarRoutes,

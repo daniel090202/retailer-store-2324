@@ -3,8 +3,8 @@ import Link from "next/link";
 import icons from "@/assets/Icons/index";
 
 import { renderUserGender } from "@/utils";
+import { appRoutes } from "@/config/pathConfig";
 import { useAppSelector } from "@/lib/redux/store";
-import { customerProfilePath } from "@/config/pathConfig";
 
 import Filter from "./Filter";
 
@@ -30,7 +30,7 @@ const Table = () => {
           <td className="px-6 py-4 whitespace-nowrap">{customer.email}</td>
           <td>
             <Link
-              href={customerProfilePath + `/${customer.phone}`}
+              href={appRoutes.customer + `/${customer.phone}`}
               className="flex items-center transition ease-in-out delay-150 hover:-translate-y-1"
             >
               {icons.solidLinkDirect}
