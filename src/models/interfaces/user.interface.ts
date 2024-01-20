@@ -3,7 +3,7 @@ interface IUser {
   gender: number;
   age: number;
   phone: string;
-  address: string;
+  address: number;
   position: number;
   userName: string;
   firstName: string;
@@ -22,7 +22,7 @@ interface IUserConstructor {
     gender: number,
     age: number,
     phone: string,
-    address: string,
+    address: number,
     position: number,
     userName: string,
     firstName: string,

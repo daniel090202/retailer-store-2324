@@ -1,9 +1,15 @@
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import icons from "@/assets/Icons";
-
 import Modal from "@/components/Modal";
 import Button from "@/components/Button";
+
+import { createUser } from "@/services";
+import { appRoutes } from "@/config/pathConfig";
+import { success, error } from "@/lib/hot-toast";
+
+import { User } from "@/models";
 
 const CreateUser = ({
   createUserModal,
@@ -12,6 +18,8 @@ const CreateUser = ({
   createUserModal: boolean;
   setCreateUserModal: (value: boolean) => void;
 }) => {
+  const router = useRouter();
+
   const [address, setAddress] = useState("-1");
   const [position, setPosition] = useState("-1");
 
@@ -61,8 +69,12 @@ const CreateUser = ({
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
-  const handleCreateUser = () => {
-    return;
+  const handleCreateUser = async () => {
+    await createUser(user);
+
+    setCreateUserModal(!createUserModal);
+
+    window.location.href = appRoutes.users.all;
   };
 
   return createUserModal ? (
@@ -177,7 +189,7 @@ const CreateUser = ({
             </option>
             <option value="0">Administrator</option>
             <option value="1">Accountant</option>
-            <option value="2">Seller</option>
+            <option value="2">Sales assistant</option>
           </select>
         </div>
       </div>

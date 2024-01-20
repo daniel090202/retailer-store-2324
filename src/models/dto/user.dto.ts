@@ -5,7 +5,7 @@ class User implements IUser {
   public gender: number;
   public age: number;
   public phone: string;
-  public address: string;
+  public address: number;
   public position: number;
   public userName: string;
   public firstName: string;
@@ -24,7 +24,7 @@ class User implements IUser {
     gender?: number,
     age?: number,
     phone?: string,
-    address?: string,
+    address?: number,
     position?: number,
     userName?: string,
     firstName?: string,
@@ -39,7 +39,7 @@ class User implements IUser {
     this.gender = gender ?? 0;
     this.age = age ?? 0;
     this.phone = phone ?? "";
-    this.address = address ?? "";
+    this.address = address ?? 0;
     this.position = position ?? 0;
     this.userName = userName ?? "";
     this.firstName = firstName ?? "";

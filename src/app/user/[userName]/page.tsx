@@ -8,7 +8,11 @@ import images from "@/assets/Images";
 
 import { getUser } from "@/services";
 import { User as UserDTO } from "@/models";
-import { renderUserGender, renderUserPosition } from "@/utils";
+import {
+  renderUserGender,
+  renderUserAddress,
+  renderUserPosition,
+} from "@/utils";
 
 import SideBar from "./components/SideBar";
 
@@ -18,7 +22,7 @@ const User = ({ params }: { params: { userName: string } }) => {
     gender: 0,
     age: 0,
     phone: "",
-    address: "",
+    address: 0,
     position: 0,
     userName: "",
     firstName: "",
@@ -50,24 +54,26 @@ const User = ({ params }: { params: { userName: string } }) => {
 
   return (
     <div className="md:flex">
-      <SideBar active={user.active} admin={user.admin}/>
+      <SideBar active={user.active} admin={user.admin} />
       <div className="flex-1 mx-2 my-4 p-4 bg-white rounded-xl">
-        <span
-          onClick={() => window.history.back()}
-          className="px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
-        >
-          {icons.arrowLeft}
-        </span>
-        <div className="flex justify-center items-center">
-          <div className="shadow-lg border rounded-xl p-3 cursor-pointer">
-            <Image
-              src={images.maleDefaultProfilePicture}
-              width={40}
-              height={40}
-              alt="User's profile picture."
-            />
+        <div className="flex justify-start items-center">
+          <span
+            onClick={() => window.history.back()}
+            className="mr-4 px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
+          >
+            {icons.arrowLeft}
+          </span>
+          <div className="flex justify-center items-center">
+            <div className="shadow-lg border rounded-xl p-3 cursor-pointer">
+              <Image
+                src={images.maleDefaultProfilePicture}
+                width={40}
+                height={40}
+                alt="User's profile picture."
+              />
+            </div>
+            <h1 className="mx-4 text-2xl font-bold">{user.userName}</h1>
           </div>
-          <h1 className="mx-4 text-2xl font-bold">{user.userName}</h1>
         </div>
         <div className="mx-auto py-3 space-y-3 grid grid-cols-3 gap-x-3">
           <div className="my-4">
@@ -112,7 +118,7 @@ const User = ({ params }: { params: { userName: string } }) => {
               id="address"
               className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
             >
-              {user.address}
+              {renderUserAddress(user.address)}
             </p>
           </div>
           <div className="my-4">

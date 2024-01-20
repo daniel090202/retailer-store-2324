@@ -8,10 +8,10 @@ import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import Table from "../components/Table";
 
-const ArchivedProducts = () => {
+const AllArchivedProducts = () => {
   const dispatch = useAppDispatch();
 
-  const archivedProducts = useAppSelector((state) => {
+  const allArchivedProducts = useAppSelector((state) => {
     return state.archivedProductsReducer.archivedProducts.allArchivedProducts
       ?.data;
   });
@@ -34,21 +34,19 @@ const ArchivedProducts = () => {
           {icons.arrowLeft}
         </span>
         <h1 className="my-2 text-2xl font-bold flex justify-center">
-          All archived products catalog
+          All archived products
         </h1>
       </div>
-      <div className="flex justify-between">
-        <div className="my-2">
-          <span>Total archived products in the store:</span>
-          <span className="mx-4 text-lg">
-            {archivedProducts?.length.toLocaleString()}
-          </span>
-          <span>item(s)</span>
-        </div>
+      <div className="my-2 flex justify-start">
+        <span>Total archived products in the store:</span>
+        <span className="mx-4 text-lg">
+          {allArchivedProducts?.length.toLocaleString()}
+        </span>
+        <span>item(s)</span>
       </div>
-      <Table products={archivedProducts} />
+      <Table products={allArchivedProducts} />
     </div>
   );
 };
 
-export default ArchivedProducts;
+export default AllArchivedProducts;

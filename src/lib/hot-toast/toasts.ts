@@ -5,7 +5,7 @@ const success = (message: string) => {
     toast.success(message, {
       id: "success",
     });
-  }, 1000);
+  }, 2000);
 };
 
 const error = (message: string) => {
@@ -13,7 +13,7 @@ const error = (message: string) => {
     toast.error(message, {
       id: "error",
     });
-  }, 1000);
+  }, 2000);
 };
 
 export { error, success };

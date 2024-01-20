@@ -2,9 +2,8 @@ import Link from "next/link";
 
 import icons from "@/assets/Icons/index";
 
-import { renderUserGender } from "@/utils";
 import { appRoutes } from "@/config/pathConfig";
-import { useAppSelector } from "@/lib/redux/store";
+import { renderUserGender, renderUserAddress } from "@/utils";
 
 import { User } from "@/models";
 
@@ -21,7 +20,9 @@ const Table = ({ users }: { users?: Array<User> }) => {
           <td className="px-6 py-4 whitespace-nowrap">
             {renderUserGender(user.gender)}
           </td>
-          <td className="px-6 py-4 whitespace-nowrap">{user.address}</td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            {renderUserAddress(user.address)}
+          </td>
           <td className="px-6 py-4 whitespace-nowrap">{user.phone}</td>
           <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
           <td>

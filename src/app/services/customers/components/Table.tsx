@@ -6,13 +6,11 @@ import { renderUserGender } from "@/utils";
 import { appRoutes } from "@/config/pathConfig";
 import { useAppSelector } from "@/lib/redux/store";
 
+import { Customer } from "@/models";
+
 import Filter from "./Filter";
 
-const Table = () => {
-  const customers = useAppSelector((state) => {
-    return state.customersReducer.customers.allCustomers?.data;
-  });
-
+const Table = ({ customers }: { customers?: Array<Customer> }) => {
   const renderAllCustomers = (): React.ReactNode => {
     return customers?.map((customer, index) => {
       return (

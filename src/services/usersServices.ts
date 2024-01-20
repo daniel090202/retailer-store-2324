@@ -12,7 +12,7 @@ const getUser = async (userName: string) => {
     const userData: {
       statusCode: number;
       message: string;
-      data: User;
+      data?: User;
     } = response;
 
     if (userData.statusCode === 200) {
@@ -32,8 +32,7 @@ const getUsers = async () => {
     const usersData: {
       statusCode: number;
       message: string;
-      data: Array<User>;
-      accessToken: string;
+      data?: Array<User>;
     } = response;
 
     if (usersData.statusCode === 200) {
@@ -53,8 +52,7 @@ const getArchivedUsers = async () => {
     const archivedUsersData: {
       statusCode: number;
       message: string;
-      data: Array<User>;
-      accessToken: string;
+      data?: Array<User>;
     } = response;
 
     if (archivedUsersData.statusCode === 200) {
@@ -65,4 +63,34 @@ const getArchivedUsers = async () => {
   }
 };
 
-export { getUser, getUsers, getArchivedUsers };
+const createUser = async (user: {
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  email: string;
+  age: string;
+  address: string;
+  gender: string;
+  position: string;
+  phone: string;
+}): Promise<User | undefined> => {
+  try {
+    const url = "/users/create-user";
+
+    const response = await request.post(url, user);
+
+    const userData: {
+      statusCode: number;
+      message: string;
+      data?: User;
+    } = response.data;
+
+    if (userData.statusCode === 200) {
+      return userData.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getUser, getUsers, getArchivedUsers, createUser };

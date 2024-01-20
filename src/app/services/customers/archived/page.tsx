@@ -3,24 +3,25 @@
 import { useEffect } from "react";
 
 import icons from "@/assets/Icons";
-import { getAllArchivedUsers } from "@/api";
+import { getAllArchivedCustomers } from "@/api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import Table from "../components/Table";
 
-const AllArchivedUsers = () => {
+const AllArchivedCustomers = () => {
   const dispatch = useAppDispatch();
 
-  const allArchivedUsers = useAppSelector((state) => {
-    return state.archivedUsersReducer.archivedUsers.allArchivedUsers?.data;
+  const allArchivedCustomers = useAppSelector((state) => {
+    return state.archivedCustomersReducer.archivedCustomers.allArchivedCustomers
+      ?.data;
   });
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      await getAllArchivedUsers(dispatch);
+    const fetchCustomers = async () => {
+      await getAllArchivedCustomers(dispatch);
     };
 
-    fetchProducts();
+    fetchCustomers();
   }, []);
 
   return (
@@ -33,19 +34,19 @@ const AllArchivedUsers = () => {
           {icons.arrowLeft}
         </span>
         <h1 className="my-2 text-2xl font-bold flex justify-center">
-          All archived users
+          All archived customers
         </h1>
       </div>
-      <div className="my-2 flex justify-between">
-        <span>Total archived users in the store:</span>
+      <div className="my-2 flex justify-start">
+        <span>Total available customers in the store:</span>
         <span className="mx-4 text-lg">
-          {allArchivedUsers?.length.toLocaleString()}
+          {allArchivedCustomers?.length.toLocaleString()}
         </span>
-        <span>user(s)</span>
+        <span>person(s)</span>
       </div>
-      <Table users={allArchivedUsers} />
+      <Table customers={allArchivedCustomers} />
     </div>
   );
 };
 
-export default AllArchivedUsers;
+export default AllArchivedCustomers;

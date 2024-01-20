@@ -1,16 +1,19 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
+import { appRoutes } from "@/config/pathConfig";
 import { getAllCustomers, getAllArchivedCustomers } from "@/api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
-import Table from "./Table";
+import Table from "../components/Table";
 
-const Customers = () => {
+const AllCustomers = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const customers = useAppSelector((state) => {
@@ -32,7 +35,7 @@ const Customers = () => {
   }, []);
 
   const handleViewArchivedUsers = () => {
-    return;
+    router.push(appRoutes.customers.archived);
   };
 
   return (
@@ -59,9 +62,9 @@ const Customers = () => {
           </Button>
         </div>
       </div>
-      <Table />
+      <Table customers={customers} />
     </div>
   );
 };
 
-export default Customers;
+export default AllCustomers;

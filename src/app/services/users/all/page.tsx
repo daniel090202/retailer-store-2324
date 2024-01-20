@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import Table from "../components/Table";
 import CreateUser from "../components/CreateUser";
 
-const Users = () => {
+const AllUsers = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -85,4 +85,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default AllUsers;

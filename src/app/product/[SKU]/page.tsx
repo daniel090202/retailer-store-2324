@@ -73,22 +73,24 @@ const Product = ({ params }: { params: { SKU: string } }) => {
         verified={product.verified}
       />
       <div className="flex-1 mx-2 my-4 p-4 bg-white rounded-xl overflow-y-scroll">
-        <span
-          onClick={() => window.history.back()}
-          className="px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
-        >
-          {icons.arrowLeft}
-        </span>
-        <div className="flex justify-center items-center">
-          <div className="shadow-lg border rounded-xl p-3 cursor-pointer">
-            <Image
-              src={images.logo}
-              width={40}
-              height={40}
-              alt="User's profile picture."
-            />
+        <div className="flex justify-start items-center">
+          <span
+            onClick={() => window.history.back()}
+            className="mr-4 px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
+          >
+            {icons.arrowLeft}
+          </span>
+          <div className="flex justify-center items-center">
+            <div className="shadow-lg border rounded-xl p-3 cursor-pointer">
+              <Image
+                src={images.logo}
+                width={40}
+                height={40}
+                alt="User's profile picture."
+              />
+            </div>
+            <h1 className="mx-4 text-2xl font-bold">{product.name}</h1>
           </div>
-          <h1 className="mx-4 text-2xl font-bold">{product.name}</h1>
         </div>
         <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
           <div className="my-4">

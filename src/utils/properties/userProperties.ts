@@ -9,12 +9,27 @@ const renderUserGender = (gender: number) => {
   }
 };
 
+const renderUserAddress = (address: number) => {
+  switch (address) {
+    case 0:
+      return "Ho Chi Minh";
+    case 1:
+      return "Binh Duong";
+    case 2:
+      return "Dong Nai";
+    default:
+      return "Unknown";
+  }
+};
+
 const renderUserPosition = (position: number) => {
   switch (position) {
     case 0:
-      return "Sales assistant";
-    case 1:
       return "Administrator";
+    case 1:
+      return "Accountant";
+    case 2:
+      return "Sales assistant";
     default:
       return "Anonymous";
   }
@@ -55,6 +70,7 @@ const renderUserVerifiedStatus = (status: boolean): string => {
 
 export {
   renderUserGender,
+  renderUserAddress,
   renderUserPosition,
   renderUserActiveStatus,
   renderUserBlockedStatus,

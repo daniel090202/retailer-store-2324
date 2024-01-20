@@ -14,7 +14,11 @@ const appRoutes = {
     archived: "/services/products/archived",
   },
   customer: "/customer",
-  customers: "/customers",
+  customers: {
+    all: "/services/customers/all",
+    archived: "/services/customers/archived",
+  },
+  counter: "/counter",
 };
 
 const navigationRoutes: Array<{
@@ -24,17 +28,17 @@ const navigationRoutes: Array<{
 }> = [
   {
     title: "Home",
-    path: "/",
+    path: appRoutes.home,
     icon: undefined,
   },
   {
     title: "Services",
-    path: "/services/users/all",
+    path: appRoutes.users.all,
     icon: undefined,
   },
   {
     title: "Counter",
-    path: "/counter",
+    path: appRoutes.counter,
     icon: undefined,
   },
 ];
@@ -46,23 +50,19 @@ const servicesSidebarRoutes: Array<{
 }> = [
   {
     title: "Human resources",
-    path: "/services/users/all",
+    path: appRoutes.users.all,
     icon: icons.userGroup,
   },
   {
     title: "Product catalog",
-    path: "/services/products/all",
+    path: appRoutes.products.all,
     icon: icons.shirt,
   },
   {
     title: "Customer relationship",
-    path: "/services/customers",
+    path: appRoutes.customers.all,
     icon: icons.users,
   },
 ];
 
-export {
-  appRoutes,
-  navigationRoutes,
-  servicesSidebarRoutes,
-};
+export { appRoutes, navigationRoutes, servicesSidebarRoutes };
