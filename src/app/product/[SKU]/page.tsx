@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { getProduct } from "@/services";
+import { getProductsWithQuery } from "@/services";
 import {
   renderProductUnit,
   renderProductCategory,
@@ -46,13 +46,16 @@ const Product = ({ params }: { params: { SKU: string } }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const products: Array<ProductDTO> | undefined = await getProduct(
-        params.SKU
-      );
+      const productsData:
+        | {
+            statusCode: number;
+            message: string;
+            data?: Array<ProductDTO>;
+          }
+        | undefined = await getProductsWithQuery(params.SKU);
 
-      if (products !== undefined) {
-        const product = products[0];
-        setProduct(product);
+      if (productsData !== undefined && productsData.data !== undefined) {
+        setProduct(productsData.data[0]);
       }
     };
 

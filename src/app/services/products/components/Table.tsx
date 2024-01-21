@@ -78,7 +78,7 @@ const Table = ({ products }: { products?: Array<Product> }) => {
         <thead className="bg-gray-100 text-gray-600 font-medium border-b">
           <tr>
             <th className="py-3 px-6">No.</th>
-            <th className="py-3 px-6">Barcode</th>
+            <th className="py-3 px-6">SKU</th>
             <th className="py-3 px-6">Name</th>
             <th className="py-3 px-6">Category</th>
             <th className="py-3 px-6">Color</th>

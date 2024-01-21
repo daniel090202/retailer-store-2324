@@ -2,10 +2,16 @@ import * as request from "@/utils/http";
 
 import { User } from "@/models";
 
-const getUsersWithQuery = async (userName: string) => {
+const getUsersWithQuery = async (
+  userName: string = "",
+  filter: string = ""
+) => {
   try {
     const url = "/users";
-    const params = new URLSearchParams([["userName", userName]]);
+    const params = new URLSearchParams([
+      ["userName", userName],
+      ["filter", filter],
+    ]);
 
     const response = await request.get(url, { params });
 

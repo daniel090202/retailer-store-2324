@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { getCustomer } from "@/services";
+import { getCustomersWithQuery } from "@/services";
 import { renderCustomerGender } from "@/utils";
 import { Customer as CustomerDTO } from "@/models";
 
@@ -30,10 +30,16 @@ const Customer = ({ params }: { params: { phone: string } }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const customer: CustomerDTO | undefined = await getCustomer(params.phone);
+      const customersData:
+        | {
+            statusCode: number;
+            message: string;
+            data?: Array<CustomerDTO>;
+          }
+        | undefined = await getCustomersWithQuery(params.phone);
 
-      if (customer !== undefined) {
-        setCustomer(customer);
+      if (customersData !== undefined && customersData.data !== undefined) {
+        setCustomer(customersData.data[0]);
       }
     };
 

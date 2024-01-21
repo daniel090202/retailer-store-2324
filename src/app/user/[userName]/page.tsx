@@ -36,7 +36,7 @@ const User = ({ params }: { params: { userName: string } }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const users:
+      const usersData:
         | {
             statusCode: number;
             message: string;
@@ -44,8 +44,8 @@ const User = ({ params }: { params: { userName: string } }) => {
           }
         | undefined = await getUsersWithQuery(params.userName);
 
-      if (users !== undefined && users.data !== undefined) {
-        setUser(users.data[0]);
+      if (usersData !== undefined && usersData.data !== undefined) {
+        setUser(usersData.data[0]);
       }
     };
 

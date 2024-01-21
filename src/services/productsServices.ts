@@ -2,10 +2,16 @@ import * as request from "@/utils/http";
 
 import { Product } from "@/models";
 
-const getProductsWithQuery = async (SKU: string = "") => {
+const getProductsWithQuery = async (
+  SKU: string = "",
+  filter: string = "all"
+) => {
   try {
     const url = "/products";
-    const params = new URLSearchParams([["SKU", SKU]]);
+    const params = new URLSearchParams([
+      ["SKU", SKU],
+      ["filter", filter],
+    ]);
 
     const response = await request.get(url, { params });
 

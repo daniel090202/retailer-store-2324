@@ -1,17 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import Button from "@/components/Button";
 
 import { Product } from "@/models";
 
-import { getProduct } from "@/services";
+import { appRoutes } from "@/config/pathConfig";
+import { getProductsWithQuery } from "@/services";
 import { useAppSelector } from "@/lib/redux/store";
 
 import SearchTippy from "./SearchTippy";
 
 const SideBar = () => {
+  const router = useRouter();
+
   const [searchProduct, setSearchProduct] = useState("");
   const [customerPayment, setCustomerPayment] = useState(200000);
   const [productsResult, setProductsResult] = useState<Array<Product>>();
@@ -39,12 +43,21 @@ const SideBar = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const products: Array<Product> | undefined = await getProduct(
-        searchProduct
-      );
+      const productsData:
+        | {
+            statusCode: number;
+            message: string;
+            data?: Array<Product>;
+          }
+        | undefined = await getProductsWithQuery(searchProduct);
 
-      if (products !== undefined) {
-        setProductsResult(products);
+      if (
+        productsData !== undefined &&
+        productsData.data !== undefined &&
+        productsData.data.length > 0 &&
+        searchProduct.length > 0
+      ) {
+        setProductsResult(productsData.data);
       }
     };
 
@@ -59,7 +72,7 @@ const SideBar = () => {
   };
 
   const handleForwardOrder = () => {
-    return;
+    router.push(appRoutes.checkout.inStore.confirmOrder);
   };
 
   return (

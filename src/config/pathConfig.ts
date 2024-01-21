@@ -18,7 +18,15 @@ const appRoutes = {
     all: "/services/customers/all",
     archived: "/services/customers/archived",
   },
-  counter: "/counter",
+  checkout: {
+    inStore: {
+      checkout: "/checkout-in-store/add-to-cart-in-store",
+      confirmOrder: "/checkout-in-store/confirm-order-in-store",
+    },
+    onlineOrders: {
+      orders: "/website-orders",
+    },
+  },
 };
 
 const navigationRoutes: Array<{
@@ -38,7 +46,7 @@ const navigationRoutes: Array<{
   },
   {
     title: "Counter",
-    path: appRoutes.counter,
+    path: appRoutes.checkout.inStore.checkout,
     icon: undefined,
   },
 ];

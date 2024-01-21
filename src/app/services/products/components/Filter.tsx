@@ -11,16 +11,40 @@ const Filter = () => {
   const dispatch = useAppDispatch();
 
   const [searchSKU, setSearchSKU] = useState("");
+  const [filterOption, setFilterOption] = useState("-1");
 
   useEffect(() => {
     const fetchData = async () => {
+      let filter;
+
+      switch (filterOption) {
+        case "1":
+          filter = "alphabetical";
+          break;
+        case "2":
+          filter = "ascending-sale-price";
+          break;
+        case "3":
+          filter = "descending-sale-price";
+          break;
+        case "4":
+          filter = "ascending-stock";
+          break;
+        case "5":
+          filter = "descending-stock";
+          break;
+        default:
+          filter = "all";
+          break;
+      }
+
       const productsData:
         | {
             statusCode: number;
             message: string;
             data?: Array<Product>;
           }
-        | undefined = await getProductsWithQuery(searchSKU);
+        | undefined = await getProductsWithQuery(searchSKU, filter);
 
       if (productsData !== undefined && productsData.data !== undefined) {
         console.log(productsData);
@@ -29,24 +53,31 @@ const Filter = () => {
     };
 
     fetchData();
-  }, [searchSKU]);
+  }, [filterOption, searchSKU]);
+
+  const handleSelectFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterOption(event.target.value);
+  };
 
   return (
     <div className="my-4 text-base flex justify-start items-center">
-      <div className="p-2 border rounded-xl shadow-lg bg-white">
-        <label htmlFor="filter" className="mx-2">
+      <div className="p-2 border rounded-xl shadow-lg bg-white cursor-pointer">
+        <label htmlFor="filter" className="mx-2 cursor-pointer">
           {icons.filter}
         </label>
         <select
-          name="filter"
           id="filter"
-          className="cursor-pointer appearance-none outline-none"
+          name="filter"
+          value={filterOption}
+          onChange={(event) => handleSelectFilter(event)}
+          className="appearance-none outline-none cursor-pointer"
         >
           <option value="0">All</option>
-          <option value="1">Name</option>
-          <option value="2">Color</option>
-          <option value="3">Size</option>
-          <option value="4">Price</option>
+          <option value="1">Alphabetical name</option>
+          <option value="2">Ascending price</option>
+          <option value="3">Descending price</option>
+          <option value="4">Ascending stock</option>
+          <option value="5">Descending stock</option>
         </select>
       </div>
       <input

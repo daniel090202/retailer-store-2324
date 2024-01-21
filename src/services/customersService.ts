@@ -2,10 +2,17 @@ import * as request from "@/utils/http";
 
 import { Customer } from "@/models";
 
-const getCustomersWithQuery = async (phone: string = "") => {
+const getCustomersWithQuery = async (
+  phone: string = "",
+  filter: string = ""
+) => {
   try {
     const url = "/customers";
-    const params = new URLSearchParams([["phone", phone]]);
+
+    const params = new URLSearchParams([
+      ["phone", phone],
+      ["filter", filter],
+    ]);
 
     const response = await request.get(url, { params });
 
