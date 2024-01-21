@@ -2,28 +2,28 @@ import * as request from "@/utils/http";
 
 import { User } from "@/models";
 
-const getUser = async (userName: string) => {
+const getUsersWithQuery = async (userName: string) => {
   try {
     const url = "/users";
     const params = new URLSearchParams([["userName", userName]]);
 
     const response = await request.get(url, { params });
 
-    const userData: {
+    const usersData: {
       statusCode: number;
       message: string;
-      data?: User;
+      data?: Array<User>;
     } = response;
 
-    if (userData.statusCode === 200) {
-      return userData.data;
+    if (usersData.statusCode === 200) {
+      return usersData;
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-const getUsers = async () => {
+const getAllUsers = async () => {
   try {
     const url = "/users/get-all-users";
 
@@ -43,7 +43,7 @@ const getUsers = async () => {
   }
 };
 
-const getArchivedUsers = async () => {
+const getAllArchivedUsers = async () => {
   try {
     const url = "/users/get-all-archived-users";
 
@@ -63,7 +63,7 @@ const getArchivedUsers = async () => {
   }
 };
 
-const createUser = async (user: {
+const postUser = async (user: {
   firstName: string;
   lastName: string;
   middleName: string;
@@ -93,4 +93,4 @@ const createUser = async (user: {
   }
 };
 
-export { getUser, getUsers, getArchivedUsers, createUser };
+export { getUsersWithQuery, getAllUsers, getAllArchivedUsers, postUser };

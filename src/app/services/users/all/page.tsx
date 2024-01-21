@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
+import { readAllArchivedUsers } from "@/api";
 import { appRoutes } from "@/config/pathConfig";
-import { getAllUsers, getAllArchivedUsers } from "@/api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import Table from "../components/Table";
@@ -23,14 +23,13 @@ const AllUsers = () => {
     return state.usersReducer.users.allUsers?.data;
   });
 
-  const archivedUsers = useAppSelector((state) => {
+  const allArchivedUsers = useAppSelector((state) => {
     return state.archivedUsersReducer.archivedUsers.allArchivedUsers?.data;
   });
 
   useEffect(() => {
     const fetchProducts = async () => {
-      await getAllUsers(dispatch);
-      await getAllArchivedUsers(dispatch);
+      await readAllArchivedUsers(dispatch);
     };
 
     fetchProducts();
@@ -72,7 +71,7 @@ const AllUsers = () => {
             className=""
             onClick={() => handleViewArchivedUsers()}
           >
-            Archive ({archivedUsers?.length.toLocaleString()})
+            Archive ({allArchivedUsers?.length.toLocaleString()})
           </Button>
         </div>
       </div>

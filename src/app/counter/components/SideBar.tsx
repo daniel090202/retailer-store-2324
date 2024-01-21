@@ -12,10 +12,8 @@ import { useAppSelector } from "@/lib/redux/store";
 import SearchTippy from "./SearchTippy";
 
 const SideBar = () => {
-  const [totalAmount, setTotalAmount] = useState(12);
-  const [customerPayment, setCustomerPayment] = useState(200000);
-
   const [searchProduct, setSearchProduct] = useState("");
+  const [customerPayment, setCustomerPayment] = useState(200000);
   const [productsResult, setProductsResult] = useState<Array<Product>>();
 
   const productsData:

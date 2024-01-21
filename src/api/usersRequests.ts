@@ -6,16 +6,36 @@ import {
   getAllArchivedUsersSuccess,
   getAllArchivedUsersFailed,
 } from "@/lib/redux/features";
-import { getUsers, getArchivedUsers } from "@/services";
+import { getAllUsers, getAllArchivedUsers, postUser } from "@/services";
 
 import { User } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
 
-const getAllUsers = async (dispatch: AppDispatch) => {
+const createUser = async (createdUser: {
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  email: string;
+  age: string;
+  address: string;
+  gender: string;
+  position: string;
+  phone: string;
+}): Promise<User | undefined> => {
+  try {
+    const user: User | undefined = await postUser(createdUser);
+
+    return user;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const readAllUsers = async (dispatch: AppDispatch) => {
   dispatch(getAllUsersStart());
 
   try {
-    const usersData = (await getUsers()) as {
+    const usersData = (await getAllUsers()) as {
       statusCode: number;
       message: string;
       data: Array<User>;
@@ -28,11 +48,11 @@ const getAllUsers = async (dispatch: AppDispatch) => {
   }
 };
 
-const getAllArchivedUsers = async (dispatch: AppDispatch) => {
+const readAllArchivedUsers = async (dispatch: AppDispatch) => {
   dispatch(getAllArchivedUsersStart());
 
   try {
-    const archivedUsersData = (await getArchivedUsers()) as {
+    const archivedUsersData = (await getAllArchivedUsers()) as {
       statusCode: number;
       message: string;
       data: Array<User>;
@@ -45,4 +65,4 @@ const getAllArchivedUsers = async (dispatch: AppDispatch) => {
   }
 };
 
-export { getAllUsers, getAllArchivedUsers };
+export { createUser, readAllUsers, readAllArchivedUsers };

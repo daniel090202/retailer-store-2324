@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { getUser } from "@/services";
+import { getUsersWithQuery } from "@/services";
 import { User as UserDTO } from "@/models";
 import {
   renderUserGender,
@@ -36,10 +36,16 @@ const User = ({ params }: { params: { userName: string } }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const user: UserDTO | undefined = await getUser(params.userName);
+      const users:
+        | {
+            statusCode: number;
+            message: string;
+            data?: Array<UserDTO>;
+          }
+        | undefined = await getUsersWithQuery(params.userName);
 
-      if (user !== undefined) {
-        setUser(user);
+      if (users !== undefined && users.data !== undefined) {
+        setUser(users.data[0]);
       }
     };
 

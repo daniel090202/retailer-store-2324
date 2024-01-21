@@ -22,7 +22,7 @@ const usersSlice = createSlice({
       action: PayloadAction<{
         statusCode: number;
         message: string;
-        data: Array<User>;
+        data?: Array<User>;
       }>
     ) => {
       state.users.error = false;
