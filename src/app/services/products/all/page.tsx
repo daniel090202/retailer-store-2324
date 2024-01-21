@@ -30,7 +30,6 @@ const AllProducts = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      await getAllProducts(dispatch);
       await getAllArchivedProducts(dispatch);
     };
 

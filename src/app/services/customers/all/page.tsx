@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
+import { getAllArchivedCustomers } from "@/api";
 import { appRoutes } from "@/config/pathConfig";
-import { getAllCustomers, getAllArchivedCustomers } from "@/api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import Table from "../components/Table";
@@ -27,7 +27,6 @@ const AllCustomers = () => {
 
   useEffect(() => {
     const fetchCustomers = async () => {
-      await getAllCustomers(dispatch);
       await getAllArchivedCustomers(dispatch);
     };
 

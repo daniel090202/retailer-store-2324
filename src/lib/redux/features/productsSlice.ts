@@ -22,7 +22,7 @@ const productsSlice = createSlice({
       action: PayloadAction<{
         statusCode: number;
         message: string;
-        data: Array<Product>;
+        data?: Array<Product>;
       }>
     ) => {
       state.products.error = false;

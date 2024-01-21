@@ -1,6 +1,35 @@
+import { useState, useEffect } from "react";
+
 import icons from "@/assets/Icons/index";
+import { getCustomersWithQuery } from "@/services";
+import { useAppDispatch } from "@/lib/redux/store";
+import { getAllCustomersSuccess } from "@/lib/redux/features";
+
+import { Customer } from "@/models";
 
 const Filter = () => {
+  const dispatch = useAppDispatch();
+
+  const [searchCustomerPhone, setSearchCustomerPhone] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const customersData:
+        | {
+            statusCode: number;
+            message: string;
+            data?: Array<Customer>;
+          }
+        | undefined = await getCustomersWithQuery(searchCustomerPhone);
+
+      if (customersData !== undefined && customersData.data !== undefined) {
+        dispatch(getAllCustomersSuccess(customersData));
+      }
+    };
+
+    fetchData();
+  }, [searchCustomerPhone]);
+
   return (
     <div className="my-4 text-base flex justify-start items-center">
       <div className="p-2 border rounded-xl shadow-lg bg-white">
@@ -21,8 +50,12 @@ const Filter = () => {
       </div>
       <input
         type="text"
-        placeholder="Search"
-        className="p-2 mx-2 border rounded-xl shadow-lg outline-none"
+        placeholder="Search for phone number"
+        value={searchCustomerPhone}
+        onChange={(event) => {
+          setSearchCustomerPhone(event.target.value);
+        }}
+        className="p-2 mx-2 w-72 border rounded-xl shadow-lg outline-none"
       />
     </div>
   );

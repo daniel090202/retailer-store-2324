@@ -2,7 +2,7 @@ import * as request from "@/utils/http";
 
 import { Customer } from "@/models";
 
-const getCustomer = async (phone: string) => {
+const getCustomersWithQuery = async (phone: string = "") => {
   try {
     const url = "/customers";
     const params = new URLSearchParams([["phone", phone]]);
@@ -12,11 +12,11 @@ const getCustomer = async (phone: string) => {
     const customerData: {
       statusCode: number;
       message: string;
-      data: Customer;
+      data?: Array<Customer>;
     } = response;
 
     if (customerData.statusCode === 200) {
-      return customerData.data;
+      return customerData;
     }
   } catch (error) {
     console.log(error);
@@ -65,4 +65,4 @@ const getArchivedCustomers = async () => {
   }
 };
 
-export { getCustomer, getCustomers, getArchivedCustomers };
+export { getCustomersWithQuery, getCustomers, getArchivedCustomers };

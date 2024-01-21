@@ -1,6 +1,36 @@
+import { useState, useEffect } from "react";
+
 import icons from "@/assets/Icons/index";
+import { getProductsWithQuery } from "@/services";
+import { useAppDispatch } from "@/lib/redux/store";
+import { getAllProductsSuccess } from "@/lib/redux/features";
+
+import { Product } from "@/models";
 
 const Filter = () => {
+  const dispatch = useAppDispatch();
+
+  const [searchSKU, setSearchSKU] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const productsData:
+        | {
+            statusCode: number;
+            message: string;
+            data?: Array<Product>;
+          }
+        | undefined = await getProductsWithQuery(searchSKU);
+
+      if (productsData !== undefined && productsData.data !== undefined) {
+        console.log(productsData);
+        dispatch(getAllProductsSuccess(productsData));
+      }
+    };
+
+    fetchData();
+  }, [searchSKU]);
+
   return (
     <div className="my-4 text-base flex justify-start items-center">
       <div className="p-2 border rounded-xl shadow-lg bg-white">
@@ -21,8 +51,12 @@ const Filter = () => {
       </div>
       <input
         type="text"
-        placeholder="Search"
-        className="p-2 mx-2 border rounded-xl shadow-lg outline-none"
+        value={searchSKU}
+        placeholder="Search for stock keeping unit"
+        onChange={(event) => {
+          setSearchSKU(event.target.value);
+        }}
+        className="p-2 mx-2 w-72 border rounded-xl shadow-lg outline-none"
       />
     </div>
   );

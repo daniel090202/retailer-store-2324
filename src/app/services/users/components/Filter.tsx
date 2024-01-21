@@ -50,11 +50,11 @@ const Filter = () => {
       <input
         type="text"
         value={searchUsername}
-        placeholder="Search username"
+        placeholder="Search for username"
         onChange={(event) => {
           setSearchUsername(event.target.value);
         }}
-        className="p-2 mx-2 border rounded-xl shadow-lg outline-none"
+        className="p-2 mx-2 w-72 border rounded-xl shadow-lg outline-none"
       />
     </div>
   );
