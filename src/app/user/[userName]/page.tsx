@@ -163,23 +163,15 @@ const User = ({ params }: { params: { userName: string } }) => {
               {renderUserPosition(user.position)}
             </p>
           </div>
-          <div className="my-4">
-            <label htmlFor="createdAt">Created at</label>
-            <div
-              id="createdAt"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {normalizeDateTime(user.createdAt)}
-            </div>
+        </div>
+        <div className="flex flex-col items-end">
+          <div className="flex mt-2">
+            <span className="mx-4">Created at:</span>
+            <span className="">{normalizeDateTime(user.createdAt)}</span>
           </div>
-          <div className="my-4">
-            <label htmlFor="updatedAt">Updated at</label>
-            <div
-              id="updatedAt"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {normalizeDateTime(user.updatedAt)}
-            </div>
+          <div className="flex mt-2">
+            <span className="mx-4">Updated at:</span>
+            <span>{normalizeDateTime(user.updatedAt)}</span>
           </div>
         </div>
       </div>

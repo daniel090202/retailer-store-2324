@@ -80,7 +80,7 @@ const Customer = ({ params }: { params: { phone: string } }) => {
             <h1 className="mx-4 text-2xl font-bold">{customer.customerName}</h1>
           </div>
         </div>
-        <div className="mx-auto py-3 space-y-3 grid grid-cols-3 gap-x-3">
+        <div className="mx-auto py-3 space-y-4 grid grid-cols-2 gap-x-2">
           <div className="my-4">
             <label htmlFor="email">Email address</label>
             <p
@@ -127,24 +127,14 @@ const Customer = ({ params }: { params: { phone: string } }) => {
             </p>
           </div>
         </div>
-        <div className="mx-auto py-3 space-y-3 grid grid-cols-2 gap-x-4">
-          <div className="my-4">
-            <label htmlFor="createdAt">Created at</label>
-            <div
-              id="createdAt"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {normalizeDateTime(customer.createdAt)}
-            </div>
+        <div className="flex flex-col items-end">
+          <div className="flex mt-2">
+            <span className="mx-4">Created at:</span>
+            <span className="">{normalizeDateTime(customer.createdAt)}</span>
           </div>
-          <div className="my-4">
-            <label htmlFor="updatedAt">Updated at</label>
-            <div
-              id="updatedAt"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {normalizeDateTime(customer.updatedAt)}
-            </div>
+          <div className="flex mt-2">
+            <span className="mx-4">Updated at:</span>
+            <span>{normalizeDateTime(customer.updatedAt)}</span>
           </div>
         </div>
       </div>

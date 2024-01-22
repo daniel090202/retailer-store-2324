@@ -20,18 +20,11 @@ const CreateProduct = ({
   createProductModal: boolean;
   setCreateProductModal: (value: boolean) => void;
 }) => {
-  const [sizeAmount, setSizeAmount] = useState(1);
-  const [colorAmount, setColorAmount] = useState(1);
-
   const [unit, setUnit] = useState("-1");
   const [forGender, setForGender] = useState("-1");
+  const [rowInputAmount, setRowInputAmount] = useState(1);
 
-  const [sizeList, setSizeList] = useState<Array<string>>([]);
-  const [colorList, setColorList] = useState<Array<string>>([]);
   const [categoryList, setCategoryList] = useState<Array<string>>([]);
-  const [storageLocationList, setStorageLocationList] = useState<Array<string>>(
-    []
-  );
 
   const [product, setProduct] = useState<{
     SKU: string;
@@ -40,15 +33,9 @@ const CreateProduct = ({
     brand: string;
     forGender: string;
     category: Array<string>;
-    size: Array<string>;
-    color: Array<string>;
     originalPrice: string;
     salePrice: string;
     unit: string;
-    initialInventory: string;
-    minimumInventory: string;
-    maximumInventory: string;
-    storageLocation: Array<string>;
   }>({
     SKU: "",
     UPC: "",
@@ -56,46 +43,30 @@ const CreateProduct = ({
     brand: "",
     forGender: "",
     category: [],
-    size: [],
-    color: [],
     originalPrice: "",
     salePrice: "",
     unit: "",
-    initialInventory: "",
-    minimumInventory: "",
-    maximumInventory: "",
-    storageLocation: [],
   });
 
-  const handleColorInputProduct = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const startIndex = parseInt(event.target.name.split("_")[1]);
-
-    if (startIndex < colorList.length) {
-      colorList.splice(startIndex, 1, event.target.value);
-    } else {
-      colorList.splice(startIndex, 0, event.target.value);
-    }
-
-    setColorList([...colorList]);
-    setProduct({ ...product, color: [...colorList] });
-  };
-
-  const handleSizeInputProduct = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const startIndex = parseInt(event.target.name.split("_")[1]);
-
-    if (startIndex < sizeList.length) {
-      sizeList.splice(startIndex, 1, event.target.value);
-    } else {
-      sizeList.splice(startIndex, 0, event.target.value);
-    }
-
-    setSizeList([...sizeList]);
-    setProduct({ ...product, size: [...sizeList] });
-  };
+  const [productDetails, setProductDetails] = useState<
+    Array<{
+      size: string;
+      color: string;
+      initialInventory: string;
+      minimumInventory: string;
+      maximumInventory: string;
+      storageLocation: Array<string>;
+    }>
+  >([
+    {
+      size: "",
+      color: "",
+      initialInventory: "",
+      minimumInventory: "",
+      maximumInventory: "",
+      storageLocation: [],
+    },
+  ]);
 
   const renderUnits = () => {
     const units = [];
@@ -139,48 +110,104 @@ const CreateProduct = ({
     return storageLocation;
   };
 
-  const renderAddColorInput = () => {
-    const colorInputs = [];
+  const renderProductDetails = () => {
+    const rowInputs = [];
 
-    for (let i: number = 0; i < colorAmount; i++) {
-      colorInputs.push(
-        <input
-          key={i}
-          type="text"
-          id={`color${i}`}
-          name={`color_${i}`}
-          placeholder="Color"
-          onChange={(event) => {
-            handleColorInputProduct(event);
-          }}
-          className="w-1/6 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none"
-        />
+    for (let i: number = 0; i < rowInputAmount; i++) {
+      rowInputs.push(
+        <tr key={i} className="text-left">
+          <td className="w-1/6 p-2 whitespace-nowrap">
+            <input
+              key={i}
+              type="text"
+              id={`color_${i}`}
+              name={`color_${i}`}
+              placeholder="Color"
+              onChange={(event) => {
+                handleProductDetailsInputProduct(event);
+              }}
+              className="w-full p-2 border rounded-xl outline-none"
+            />
+          </td>
+          <td className="p-2 whitespace-nowrap">
+            <input
+              key={i}
+              type="text"
+              id={`size_${i}`}
+              name={`size_${i}`}
+              placeholder="Size"
+              onChange={(event) => {
+                handleProductDetailsInputProduct(event);
+              }}
+              className="w-full p-2 border rounded-xl outline-none"
+            />
+          </td>
+          <td className="p-2 whitespace-nowrap">
+            <input
+              key={i}
+              type="text"
+              id={`initialInventory_${i}`}
+              name={`initialInventory_${i}`}
+              placeholder="Initial inventory"
+              onChange={(event) => {
+                handleProductDetailsInputProduct(event);
+              }}
+              className="w-full p-2 border rounded-xl outline-none"
+            />
+          </td>
+          <td className="p-2 whitespace-nowrap">
+            <input
+              key={i}
+              type="text"
+              id={`minimumInventory_${i}`}
+              name={`minimumInventory_${i}`}
+              placeholder="Minimum inventory"
+              onChange={(event) => {
+                handleProductDetailsInputProduct(event);
+              }}
+              className="w-full p-2 border rounded-xl outline-none"
+            />
+          </td>
+          <td className="p-2 whitespace-nowrap">
+            <input
+              key={i}
+              type="text"
+              id={`maximumInventory_${i}`}
+              name={`maximumInventory_${i}`}
+              placeholder="Maximum inventory"
+              onChange={(event) => {
+                handleProductDetailsInputProduct(event);
+              }}
+              className="w-full p-2 border rounded-xl outline-none"
+            />
+          </td>
+          <td className="p-2 whitespace-nowrap">
+            <select
+              id={`storageLocation_${i}`}
+              name={`storageLocation_${i}`}
+              // value={storageLocationList[0]}
+              onChange={(event) => handleStorageLocationSelectProduct(event)}
+              className="w-full p-2 border rounded-xl cursor-pointer outline-none appearance-none"
+            >
+              <option value="-1" hidden>
+                Select a location
+              </option>
+              {renderStorageLocation()}
+            </select>
+          </td>
+          <td>
+            <div
+              onClick={() => handleDecreaseRowInputsAmount()}
+              className="w-8 h-8 px-2 py-1 border rounded-full text-gray-400 cursor-pointer hover:bg-gray-200 hover:text-gray-600"
+            >
+              {icons.minus}
+            </div>
+          </td>
+        </tr>
       );
     }
 
-    return colorInputs;
-  };
-
-  const renderAddSizeInput = () => {
-    const sizeInputs = [];
-
-    for (let i: number = 0; i < sizeAmount; i++) {
-      sizeInputs.push(
-        <input
-          key={i}
-          type="text"
-          id={`size${i}`}
-          name={`size_${i}`}
-          placeholder="Size"
-          onChange={(event) => {
-            handleSizeInputProduct(event);
-          }}
-          className="w-1/6 p-4 my-2 mr-4 border rounded-xl shadow-xl outline-none"
-        />
-      );
-    }
-
-    return sizeInputs;
+    return rowInputs;
   };
 
   const handleInputProduct = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -208,20 +235,92 @@ const CreateProduct = ({
     setProduct({ ...product, [event.target.name]: event.target.value });
   };
 
+  const handleIncreaseRowInputsAmount = () => {
+    productDetails.push({
+      size: "",
+      color: "",
+      initialInventory: "",
+      minimumInventory: "",
+      maximumInventory: "",
+      storageLocation: [],
+    });
+
+    setRowInputAmount(rowInputAmount + 1);
+  };
+
+  const handleDecreaseRowInputsAmount = () => {
+    if (rowInputAmount <= 1) {
+      return;
+    }
+
+    productDetails.pop();
+    setRowInputAmount(rowInputAmount - 1);
+  };
+
   const handleStorageLocationSelectProduct = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setStorageLocationList([...storageLocationList, event.target.value]);
-    setProduct({ ...product, [event.target.name]: [event.target.value] });
+    const startIndex: number = parseInt(event.target.name.split("_")[1]);
+
+    if (startIndex > productDetails.length) {
+      return;
+    }
+
+    productDetails[startIndex].storageLocation.push(event.target.value);
+    setProductDetails([...productDetails]);
+  };
+
+  const handleProductDetailsInputProduct = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const targetProductDetail: string = event.target.name.split("_")[0];
+    const startIndex: number = parseInt(event.target.name.split("_")[1]);
+
+    if (startIndex > productDetails.length) {
+      return;
+    }
+
+    switch (targetProductDetail) {
+      case "color":
+        productDetails[startIndex].color = event.target.value;
+        setProductDetails([...productDetails]);
+
+        return;
+      case "size":
+        productDetails[startIndex].size = event.target.value;
+        setProductDetails([...productDetails]);
+
+        return;
+      case "initialInventory":
+        productDetails[startIndex].initialInventory = event.target.value;
+        setProductDetails([...productDetails]);
+
+        return;
+      case "minimumInventory":
+        productDetails[startIndex].minimumInventory = event.target.value;
+        setProductDetails([...productDetails]);
+
+        return;
+      case "maximumInventory":
+        productDetails[startIndex].maximumInventory = event.target.value;
+        setProductDetails([...productDetails]);
+
+        return;
+      default:
+        return;
+    }
   };
 
   const handleCreateProduct = async () => {
-    await createProduct(product);
+    await createProduct({ ...product, details: [...productDetails] });
 
     setCreateProductModal(!createProductModal);
 
     window.location.href = appRoutes.products.all;
   };
+
+  console.log(productDetails);
+  console.log(product);
 
   return createProductModal ? (
     <Modal modal={createProductModal} setCloseModal={setCreateProductModal}>
@@ -235,7 +334,7 @@ const CreateProduct = ({
         </span>
       </div>
       <hr />
-      <div className="mx-auto py-3 space-y-3 grid grid-cols-5 gap-x-5">
+      <div className="mx-auto py-3 space-y-3 grid grid-cols-3 gap-x-3">
         <div className="my-4">
           <label htmlFor="sku">Stock keeping unit</label>
           <input
@@ -306,58 +405,9 @@ const CreateProduct = ({
             />
           </div>
         </div>
-        <div className="my-4">
-          <label htmlFor="initialInventory">Initial inventory</label>
-          <input
-            type="number"
-            id="initialInventory"
-            name="initialInventory"
-            placeholder="Initial inventory"
-            onChange={(event) => handleInputProduct(event)}
-            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-          />
-        </div>
-        <div className="my-4">
-          <label htmlFor="minimumInventory">Minimum inventory</label>
-          <input
-            type="number"
-            id="minimumInventory"
-            name="minimumInventory"
-            placeholder="Minimum inventory"
-            onChange={(event) => handleInputProduct(event)}
-            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-          />
-        </div>
-        <div className="my-4">
-          <label htmlFor="maximumInventory">Maximum inventory</label>
-          <input
-            type="number"
-            id="maximumInventory"
-            name="maximumInventory"
-            placeholder="Maximum inventory"
-            onChange={(event) => handleInputProduct(event)}
-            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-          />
-        </div>
       </div>
-      <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
-        <div className="my-4 flex flex-col">
-          <label htmlFor="storageLocation">Storage location</label>
-          <select
-            id="storageLocation"
-            name="storageLocation"
-            value={storageLocationList[0]}
-            onChange={(event) => handleStorageLocationSelectProduct(event)}
-            className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
-          >
-            <option value="-1" hidden>
-              Select a location
-            </option>
-
-            {renderStorageLocation()}
-          </select>
-        </div>
-        <div className="my-4 flex flex-col">
+      <div className="flex">
+        <div className="mr-4 my-4 flex flex-col">
           <label htmlFor="category">For gender</label>
           <select
             id="forGender"
@@ -374,7 +424,7 @@ const CreateProduct = ({
             <option value="2">Unisex</option>
           </select>
         </div>
-        <div className="my-4 flex flex-col">
+        <div className="mr-4 my-4 flex flex-col">
           <label htmlFor="category">Category</label>
           <select
             id="category"
@@ -390,7 +440,7 @@ const CreateProduct = ({
             {renderCategories()}
           </select>
         </div>
-        <div className="my-4 flex flex-col">
+        <div className="mr-4 my-4 flex flex-col">
           <label htmlFor="unit">Unit</label>
           <select
             id="unit"
@@ -407,30 +457,28 @@ const CreateProduct = ({
           </select>
         </div>
       </div>
-      <div className="mx-auto py-3 space-y-3">
-        <div className="my-4 w-full flex flex-col">
-          <label htmlFor="color">Color</label>
-          <div className="flex justify-start items-center">
-            {renderAddColorInput()}
-            <div
-              onClick={() => setColorAmount(colorAmount + 1)}
-              className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
-            >
-              {icons.plus}
-            </div>
-          </div>
-        </div>
-        <div className="my-4 flex flex-col">
-          <label htmlFor="size">Size</label>
-          <div className="flex justify-start items-center">
-            {renderAddSizeInput()}
-            <div
-              onClick={() => setSizeAmount(sizeAmount + 1)}
-              className="px-2 py-1 border rounded-full text-gray-200 cursor-pointer hover:bg-gray-200 hover:text-gray-400"
-            >
-              {icons.plus}
-            </div>
-          </div>
+      <table className="w-full h-full my-4 table-auto text-sm text-left">
+        <thead className="bg-gray-100 text-gray-600 font-medium border-b">
+          <tr>
+            <th className="py-2 px-4">Color</th>
+            <th className="py-2 px-4">Size</th>
+            <th className="py-2 px-4">Initial inventory</th>
+            <th className="py-2 px-4">Minimum inventory</th>
+            <th className="py-2 px-4">Maximum inventory</th>
+            <th className="py-2 px-4">Storage location</th>
+            <th className="py-2 px-4"></th>
+          </tr>
+        </thead>
+        <tbody className="text-gray-600 divide-y">
+          {renderProductDetails()}
+        </tbody>
+      </table>
+      <div className="my-4 flex justify-center">
+        <div
+          onClick={() => handleIncreaseRowInputsAmount()}
+          className="w-8 h-8 px-2 py-1 border rounded-full text-gray-400 cursor-pointer hover:bg-gray-200 hover:text-gray-600"
+        >
+          {icons.plus}
         </div>
       </div>
       <hr />

@@ -14,7 +14,7 @@ const Modal = ({
         onClick={() => setCloseModal(!modal)}
       ></div>
       <div className="flex items-center min-h-screen p-8">
-        <div className="relative w-fit max-w-6xl p-4 mx-auto my-auto bg-white rounded-xl shadow-lg">
+        <div className="relative w-auto max-w-8xl p-4 mx-auto my-auto bg-white rounded-xl shadow-lg">
           {children}
         </div>
       </div>

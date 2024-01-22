@@ -7,12 +7,8 @@ import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
 import { getProductsWithQuery } from "@/services";
-import {
-  renderProductUnit,
-  renderProductCategory,
-  renderProductStorageLocation,
-  renderProductDisplayLocation,
-} from "@/utils";
+import { renderProductUnit, renderProductCategory } from "@/utils";
+
 import { Product as ProductDTO } from "@/models";
 
 import Table from "./components/Table";
@@ -101,7 +97,7 @@ const Product = ({ params }: { params: { SKU: string } }) => {
             <h1 className="mx-4 text-2xl font-bold">{product.name}</h1>
           </div>
         </div>
-        <div className="mx-auto py-4 space-y-4 grid grid-cols-4 gap-x-4">
+        <div className="mx-auto py-4 space-y-3 grid grid-cols-3 gap-x-3">
           <div className="my-4">
             <label htmlFor="SKU">Stock keeping unit</label>
             <p

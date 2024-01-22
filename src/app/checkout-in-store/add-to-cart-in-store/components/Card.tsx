@@ -61,7 +61,7 @@ const Card = ({
       <div className="my-2 flex justify-between font-normal text-gray-500 dark:text-gray-400">
         <span>Color:</span>
         <span
-          style={{ backgroundColor: product.color[0] }}
+          style={{ backgroundColor: product.productDetail[0].color }}
           className={"w-6 h-6 rounded-full"}
         ></span>
       </div>

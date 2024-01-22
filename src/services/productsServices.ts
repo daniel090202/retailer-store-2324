@@ -76,15 +76,17 @@ const createProduct = async (product: {
   brand: string;
   forGender: string;
   category: Array<string>;
-  size: Array<string>;
-  color: Array<string>;
   originalPrice: string;
   salePrice: string;
   unit: string;
-  initialInventory: string;
-  minimumInventory: string;
-  maximumInventory: string;
-  storageLocation: Array<string>;
+  details: Array<{
+    size: string;
+    color: string;
+    initialInventory: string;
+    minimumInventory: string;
+    maximumInventory: string;
+    storageLocation: Array<string>;
+  }>;
 }) => {
   try {
     const url = "/products/create-product";
