@@ -1,4 +1,5 @@
 import { IProduct } from "../interfaces";
+import { ProductDetail } from "./productDetail.dto";
 
 class Product implements IProduct {
   public SKU: string;
@@ -7,18 +8,10 @@ class Product implements IProduct {
   public brand: string;
   public forGender: number;
   public category: Array<number>;
-  public size: Array<string>;
-  public color: Array<string>;
   public originalPrice: number;
   public salePrice: number;
   public unit: number;
-  public initialInventory: number;
-  public minimumInventory: number;
-  public maximumInventory: number;
-  public remainInventory: number;
-  public soldQuantity: number;
-  public storageLocation: Array<number>;
-  public displayLocation: Array<number>;
+  public productDetail: Array<ProductDetail>;
   public active: boolean;
   public archived: boolean;
   public verified: boolean;
@@ -32,18 +25,10 @@ class Product implements IProduct {
     brand: string,
     forGender: number,
     category: Array<number>,
-    size: Array<string>,
-    color: Array<string>,
     originalPrice: number,
     salePrice: number,
     unit: number,
-    initialInventory: number,
-    minimumInventory: number,
-    maximumInventory: number,
-    remainInventory: number,
-    soldQuantity: number,
-    storageLocation: Array<number>,
-    displayLocation: Array<number>,
+    productDetail: Array<ProductDetail>,
     active: boolean,
     archived: boolean,
     verified: boolean,
@@ -56,18 +41,10 @@ class Product implements IProduct {
     this.brand = brand;
     this.forGender = forGender;
     this.category = category;
-    this.size = size;
-    this.color = color;
     this.originalPrice = originalPrice;
     this.salePrice = salePrice;
     this.unit = unit;
-    this.initialInventory = initialInventory;
-    this.minimumInventory = minimumInventory;
-    this.maximumInventory = maximumInventory;
-    this.remainInventory = remainInventory;
-    this.soldQuantity = soldQuantity;
-    this.storageLocation = storageLocation;
-    this.displayLocation = displayLocation;
+    this.productDetail = productDetail;
     this.active = active;
     this.archived = archived;
     this.verified = verified;

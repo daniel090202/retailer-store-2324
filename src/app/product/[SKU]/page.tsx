@@ -15,6 +15,7 @@ import {
 } from "@/utils";
 import { Product as ProductDTO } from "@/models";
 
+import Table from "./components/Table";
 import SideBar from "./components/SideBar";
 
 const Product = ({ params }: { params: { SKU: string } }) => {
@@ -25,18 +26,23 @@ const Product = ({ params }: { params: { SKU: string } }) => {
     brand: "",
     forGender: 0,
     category: [],
-    size: [],
-    color: [],
     originalPrice: 0,
     salePrice: 0,
     unit: 0,
-    initialInventory: 0,
-    minimumInventory: 0,
-    maximumInventory: 0,
-    remainInventory: 0,
-    soldQuantity: 0,
-    storageLocation: [],
-    displayLocation: [],
+    productDetail: [
+      {
+        SKU: "",
+        size: "",
+        color: "",
+        initialInventory: 0,
+        minimumInventory: 0,
+        maximumInventory: 0,
+        remainInventory: 0,
+        soldQuantity: 0,
+        storageLocation: [],
+        displayLocation: [],
+      },
+    ],
     active: false,
     archived: false,
     verified: false,
@@ -95,7 +101,7 @@ const Product = ({ params }: { params: { SKU: string } }) => {
             <h1 className="mx-4 text-2xl font-bold">{product.name}</h1>
           </div>
         </div>
-        <div className="mx-auto py-3 space-y-3 grid grid-cols-4 gap-x-4">
+        <div className="mx-auto py-4 space-y-4 grid grid-cols-4 gap-x-4">
           <div className="my-4">
             <label htmlFor="SKU">Stock keeping unit</label>
             <p
@@ -112,15 +118,6 @@ const Product = ({ params }: { params: { SKU: string } }) => {
               className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
             >
               {product.UPC}
-            </p>
-          </div>
-          <div className="my-4">
-            <label htmlFor="name">Name</label>
-            <p
-              id="name"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {product.name}
             </p>
           </div>
           <div className="my-4">
@@ -159,135 +156,31 @@ const Product = ({ params }: { params: { SKU: string } }) => {
               {product.salePrice.toLocaleString()} VND
             </p>
           </div>
-          <div className="my-4">
-            <label htmlFor="initialInventory">Remain inventory</label>
-            <p
-              id="initialInventory"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {product.initialInventory}
-            </p>
-          </div>
-          <div className="my-4">
-            <label htmlFor="minimumInventory">Minimum inventory</label>
-            <p
-              id="minimumInventory"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {product.minimumInventory}
-            </p>
-          </div>
-          <div className="my-4">
-            <label htmlFor="maximumInventory">Maximum inventory</label>
-            <p
-              id="maximumInventory"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {product.minimumInventory}
-            </p>
-          </div>
-          <div className="my-4">
-            <label htmlFor="createdAt">Created at</label>
-            <div
-              id="createdAt"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {normalizeDateTime(product.createdAt)}
-            </div>
-          </div>
-          <div className="my-4">
-            <label htmlFor="updatedAt">Updated at</label>
-            <div
-              id="updatedAt"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {normalizeDateTime(product.updatedAt)}
-            </div>
-          </div>
-          <div className="my-4">
-            <label htmlFor="soldQuantity">Sold quantity</label>
-            <p
-              id="soldQuantity"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {product.soldQuantity}
-            </p>
-          </div>
         </div>
-        <div className="mx-auto py-3 space-y-3 grid grid-cols-3 gap-x-3">
-          <div className="my-4">
-            <label htmlFor="category">Category</label>
-            <div id="category" className="mt-2 flex items-center">
-              {product.category.map((category, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="mr-4 p-4 border rounded-xl shadow-xl hover:bg-gray-200"
-                  >
-                    {renderProductCategory(category)}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="my-4">
-            <label htmlFor="size">Size</label>
-            <div id="size" className="mt-2 flex items-center">
-              {product.size.map((size, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="mr-4 p-4 border rounded-xl shadow-xl hover:bg-gray-200"
-                  >
-                    {size}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="my-4">
-            <label htmlFor="color">Color</label>
-            <div id="color" className="mt-4 flex items-center">
-              {product.color.map((color, index) => {
-                return (
-                  <div
-                    key={index}
-                    style={{ backgroundColor: color }}
-                    className={"mr-4 p-4 border rounded-full shadow-xl"}
-                  ></div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-        <div className="my-4">
-          <label htmlFor="storageLocation">Storage location</label>
-          <div id="storageLocation" className="mt-4 flex items-center">
-            {product.storageLocation.map((storageLocation, index) => {
+        <div className="space-y-3">
+          <label htmlFor="category">Category</label>
+          <div id="category" className="mt-2 flex items-center">
+            {product.category.map((category, index) => {
               return (
                 <div
                   key={index}
-                  className="mr-4 p-4 border rounded-xl shadow-xl hover:bg-gray-200"
+                  className="mr-4 p-4 border rounded-xl shadow-xl bg-gray-100"
                 >
-                  {renderProductStorageLocation(storageLocation)}
+                  {renderProductCategory(category)}
                 </div>
               );
             })}
           </div>
         </div>
-        <div className="my-4">
-          <label htmlFor="displayLocation">Storage location</label>
-          <div id="displayLocation" className="mt-4 flex items-center">
-            {product.displayLocation.map((displayLocation, index) => {
-              return (
-                <div
-                  key={index}
-                  className="mr-4 p-4 border rounded-xl shadow-xl hover:bg-gray-200"
-                >
-                  {renderProductDisplayLocation(displayLocation)}
-                </div>
-              );
-            })}
+        <Table product={product} />
+        <div className="flex flex-col items-end">
+          <div className="flex mt-2">
+            <span className="mx-4">Created at:</span>
+            <span className="">{normalizeDateTime(product.createdAt)}</span>
+          </div>
+          <div className="flex mt-2">
+            <span className="mx-4">Updated at:</span>
+            <span>{normalizeDateTime(product.updatedAt)}</span>
           </div>
         </div>
       </div>

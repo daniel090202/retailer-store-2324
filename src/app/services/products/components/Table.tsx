@@ -4,14 +4,12 @@ import icons from "@/assets/Icons/index";
 
 import { appRoutes } from "@/config/pathConfig";
 import { renderProductCategory } from "@/utils";
-import { useAppSelector } from "@/lib/redux/store";
 
 import { Product } from "@/models";
 
 import Filter from "./Filter";
 
 const Table = ({ products }: { products?: Array<Product> }) => {
-
   const renderAllProducts = (): React.ReactNode => {
     return products?.map((product, index) => {
       return (
@@ -31,22 +29,22 @@ const Table = ({ products }: { products?: Array<Product> }) => {
             </select>
           </td>
           <td className="px-6 py-4 whitespace-nowrap">
-            <select name="color" id="color">
-              {product.color.map((color, index) => {
+            <select id="color" name="color">
+              {product.productDetail.map((productDetail, index) => {
                 return (
                   <option key={index} value={index}>
-                    {color}
+                    {productDetail.color}
                   </option>
                 );
               })}
             </select>
           </td>
           <td className="px-6 py-4 whitespace-nowrap">
-            <select name="size" id="size">
-              {product.size.map((size, index) => {
+            <select id="size" name="size">
+              {product.productDetail.map((productDetail, index) => {
                 return (
                   <option key={index} value={index}>
-                    {size}
+                    {productDetail.size}
                   </option>
                 );
               })}
@@ -54,9 +52,6 @@ const Table = ({ products }: { products?: Array<Product> }) => {
           </td>
           <td className="px-6 py-4 whitespace-nowrap">
             {product.salePrice.toLocaleString()}
-          </td>
-          <td className="px-6 py-4 text-center whitespace-nowrap">
-            {product.remainInventory}
           </td>
           <td>
             <Link
@@ -78,13 +73,12 @@ const Table = ({ products }: { products?: Array<Product> }) => {
         <thead className="bg-gray-100 text-gray-600 font-medium border-b">
           <tr>
             <th className="py-3 px-6">No.</th>
-            <th className="py-3 px-6">SKU</th>
+            <th className="py-3 px-6">Stock barcode</th>
             <th className="py-3 px-6">Name</th>
             <th className="py-3 px-6">Category</th>
             <th className="py-3 px-6">Color</th>
             <th className="py-3 px-6">Size</th>
             <th className="py-3 px-6">Sale price</th>
-            <th className="py-3 px-6">Stock</th>
             <th className="py-3 px-6"></th>
           </tr>
         </thead>

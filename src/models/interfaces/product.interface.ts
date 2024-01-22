@@ -1,3 +1,5 @@
+import { ProductDetail } from "../dto";
+
 interface IProduct {
   SKU: string;
   UPC: string;
@@ -5,18 +7,10 @@ interface IProduct {
   brand: string;
   forGender: number;
   category: Array<number>;
-  size: Array<string>;
-  color: Array<string>;
   originalPrice: number;
   salePrice: number;
   unit: number;
-  initialInventory: number;
-  minimumInventory: number;
-  maximumInventory: number;
-  remainInventory: number;
-  soldQuantity: number;
-  storageLocation: Array<number>;
-  displayLocation: Array<number>;
+  productDetail: Array<ProductDetail>;
   active: boolean;
   archived: boolean;
   verified: boolean;

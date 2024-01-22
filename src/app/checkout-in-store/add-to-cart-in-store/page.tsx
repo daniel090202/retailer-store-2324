@@ -7,7 +7,7 @@ import { Product } from "@/models";
 import Card from "./components/Card";
 
 const Counter = () => {
-  const productsData:
+  const productsInCartData:
     | {
         product: Product;
         purchasedAmount: number;
@@ -17,7 +17,7 @@ const Counter = () => {
   });
 
   const renderEmptyCart = () => {
-    if (productsData.length <= 0) {
+    if (productsInCartData.length <= 0) {
       return (
         <div className="h-full flex justify-center items-center">
           <span className="text-6xl font-medium text-white">Empty cart...</span>
@@ -26,8 +26,8 @@ const Counter = () => {
     }
   };
   const renderCartProducts = () => {
-    return productsData?.map((productData, index) => {
-      return <Card key={index} productData={productData} />;
+    return productsInCartData?.map((productInCartData, index) => {
+      return <Card key={index} productData={productInCartData} />;
     });
   };
 
