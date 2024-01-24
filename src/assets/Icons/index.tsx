@@ -1,6 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faFaceSmile } from "@fortawesome/free-regular-svg-icons";
+import {
+  faFaceSmile,
+  faFaceSadTear,
+} from "@fortawesome/free-regular-svg-icons";
 
 import {
   faShopify,
@@ -29,6 +32,7 @@ import {
   faListCheck,
   faBoxArchive,
   faAddressCard,
+  faHandsBubbles,
   IconDefinition,
   faRightFromBracket,
   faArrowUpRightFromSquare,
@@ -62,7 +66,9 @@ const icons = {
   instagram: wrapIcon(faInstagram),
   caretDown: wrapIcon(faCaretDown),
   userGroup: wrapIcon(faUserGroup),
+  faceTear: wrapIcon(faFaceSadTear),
   addressCard: wrapIcon(faAddressCard),
+  handsWaving: wrapIcon(faHandsBubbles),
   entering: wrapIcon(faRightFromBracket),
   solidLinkDirect: wrapIcon(faArrowUpRightFromSquare),
 };

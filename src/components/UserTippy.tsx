@@ -18,26 +18,6 @@ const UserTippy = ({
   const router = useRouter();
   const session = useSession();
 
-  const handleViewProfile = () => {
-    return;
-  };
-
-  const handleViewTasks = () => {
-    return;
-  };
-
-  const handleViewSettings = () => {
-    return;
-  };
-
-  const handleLogIn = () => {
-    router.push("/api/auth/signin");
-  };
-
-  const handleLogOut = () => {
-    router.push("/api/auth/signout");
-  };
-
   const tippyContents: Array<{
     icon: React.ReactNode;
     title: string;
@@ -102,6 +82,26 @@ const UserTippy = ({
         {renderAuthSelection()}
       </div>
     );
+  };
+
+  const handleViewProfile = () => {
+    return;
+  };
+
+  const handleViewTasks = () => {
+    return;
+  };
+
+  const handleViewSettings = () => {
+    return;
+  };
+
+  const handleLogIn = () => {
+    router.push("/api/auth/signin");
+  };
+
+  const handleLogOut = () => {
+    router.push("/api/auth/signout");
   };
 
   return (

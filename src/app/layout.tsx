@@ -18,11 +18,7 @@ const metadata: Metadata = {
   description: "A cloth website management for retailers.",
 };
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const RootLayout = async (props: Props) => {
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
@@ -32,7 +28,7 @@ const RootLayout = async (props: Props) => {
             <Header>
               <NavBar />
             </Header>
-            {props.children}
+            {children}
             <Footer />
           </StoreProvider>
         </NextAuthProviders>

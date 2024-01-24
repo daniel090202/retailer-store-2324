@@ -1,21 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 
-import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 import icons from "@/assets/Icons";
 
 import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 
-import { loginUser } from "@/api/authRequests";
-
 const Login = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-
   const [loginUserModal, setLoginUserModal] = useState(false);
   const [account, setAccount] = useState({
     userName: "",
@@ -26,8 +20,12 @@ const Login = () => {
     setAccount({ ...account, [event.target.name]: event.target.value });
   };
 
-  const handleUserLogin = () => {
-    loginUser(router, dispatch, account);
+  const handleUserLogin = async () => {
+    await signIn("credentials", {
+      userName: account.userName,
+      password: account.password,
+      callbackUrl: "/",
+    });
   };
 
   return (

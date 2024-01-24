@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 import icons from "@/assets/Icons";
-import { getAllArchivedProducts } from "@/api";
+import { getAllArchivedProducts } from "@/redux-api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import Table from "../components/Table";

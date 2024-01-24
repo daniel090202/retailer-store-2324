@@ -26,7 +26,7 @@ const NavBar = () => {
     if (session.status === "unauthenticated") {
       router.replace("/api/auth/signin");
     }
-  }, []);
+  }, [router, session.status]);
 
   const renderNavBarElements = () => {
     if (session.status !== "unauthenticated") {

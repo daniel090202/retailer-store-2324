@@ -53,8 +53,7 @@ const SideBar = () => {
         | undefined = await getProductsWithQuery(searchProduct);
 
       if (
-        productsData !== undefined &&
-        productsData.data !== undefined &&
+        productsData?.data !== undefined &&
         productsData.data.length > 0 &&
         searchProduct.length > 0
       ) {

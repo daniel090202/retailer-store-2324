@@ -4,7 +4,7 @@ import icons from "@/assets/Icons";
 import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 
-import { createUser } from "@/api";
+import { createUser } from "@/redux-api";
 import { appRoutes } from "@/config/pathConfig";
 
 const CreateUser = ({

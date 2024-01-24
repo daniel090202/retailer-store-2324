@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -8,7 +10,7 @@ const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        username: {
+        userName: {
           label: "Username",
           type: "text",
           placeholder: "Username",
@@ -31,16 +33,12 @@ const authOptions: NextAuthOptions = {
           refreshToken: string;
         };
       } | null> {
-        if (!credentials?.username || !credentials?.password) {
-          return null;
-        }
-
         const response = await fetch(
           process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/user/login",
           {
             method: "POST",
             body: JSON.stringify({
-              userName: credentials?.username,
+              userName: credentials?.userName,
               password: credentials?.password,
             }),
             headers: { "Content-Type": "application/json" },
@@ -58,21 +56,25 @@ const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ token, session }) {
-      session.accessToken = token.accessToken as string;
       session.refreshToken = token.refreshToken as string;
+      session.accessToken = token.accessToken as string;
       session.user = token.user as User;
 
       return session;
     },
     async jwt({ token, user }) {
       if (user) {
-        token.accessToken = user.serverTokens.accessToken;
         token.refreshToken = user.serverTokens.refreshToken;
+        token.accessToken = user.serverTokens.accessToken;
         token.user = user.data;
       }
 
       return token;
     },
+  },
+  pages: {
+    signIn: "/auth/login",
+    signOut: "/auth/logout",
   },
 };
 

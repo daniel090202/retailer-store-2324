@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import icons from "@/assets/Icons";
 import Button from "@/components/Button";
 
+import { getAllArchivedProducts } from "@/redux-api";
 import { appRoutes } from "@/config/pathConfig";
-import { getAllProducts, getAllArchivedProducts } from "@/api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import Table from "../components/Table";

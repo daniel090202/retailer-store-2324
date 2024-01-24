@@ -1,16 +1,7 @@
-import {
-  logInFail,
-  logOutFail,
-  logInStart,
-  logOutStart,
-  logInSuccess,
-  logOutSuccess,
-} from "@/lib/redux/features";
-
 import { login } from "@/services";
-import { appRoutes } from "@/config";
+import { logInFail, logInStart, logInSuccess } from "@/lib/redux/features";
 
-import { User } from "@/models/dto";
+import { User } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
 
 const loginUser = async (
@@ -29,11 +20,11 @@ const loginUser = async (
     };
 
     dispatch(logInSuccess(userData));
-
-    router.push(appRoutes.home);
   } catch (error) {
     dispatch(logInFail());
   }
 };
+
+
 
 export { loginUser };
