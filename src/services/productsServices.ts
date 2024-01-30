@@ -1,15 +1,36 @@
 import * as request from "@/utils/http";
 
-import { Product } from "@/models";
+import { Product, ProductDetail } from "@/models";
 
-const getProductsWithQuery = async (
-  SKU: string = "",
-  filter: string = "all"
-) => {
+const getProductsWithSKU = async (SKU: string = "", filter: string = "all") => {
   try {
-    const url = "/products";
+    const url = "/products/get-product-with-sku";
     const params = new URLSearchParams([
       ["SKU", SKU],
+      ["filter", filter],
+    ]);
+
+    const response = await request.get(url, { params });
+
+    const productsData: {
+      statusCode: number;
+      message: string;
+      data?: Array<ProductDetail>;
+    } = response;
+
+    if (productsData.statusCode === 200) {
+      return productsData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getProductsWithUPC = async (UPC: string = "", filter: string = "all") => {
+  try {
+    const url = "/products/get-product-with-upc";
+    const params = new URLSearchParams([
+      ["UPC", UPC],
       ["filter", filter],
     ]);
 
@@ -110,7 +131,8 @@ const createProduct = async (product: {
 };
 
 export {
-  getProductsWithQuery,
+  getProductsWithSKU,
+  getProductsWithUPC,
   getProducts,
   getArchivedProducts,
   createProduct,

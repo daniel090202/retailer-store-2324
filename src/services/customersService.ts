@@ -72,4 +72,37 @@ const getArchivedCustomers = async () => {
   }
 };
 
-export { getCustomersWithQuery, getCustomers, getArchivedCustomers };
+const createCustomer = async (user: {
+  email: string;
+  phone: string;
+  age: number;
+  address: string;
+  gender: number;
+  customerName: string;
+  accountLevel: number;
+}): Promise<Customer | undefined> => {
+  try {
+    const url = "/customers/create-customer";
+
+    const response = await request.post(url, user);
+
+    const userData: {
+      statusCode: number;
+      message: string;
+      data?: Customer;
+    } = response.data;
+
+    if (userData.statusCode === 200) {
+      return userData.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  getCustomersWithQuery,
+  getCustomers,
+  getArchivedCustomers,
+  createCustomer,
+};

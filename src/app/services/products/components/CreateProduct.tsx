@@ -319,9 +319,6 @@ const CreateProduct = ({
     window.location.href = appRoutes.products.all;
   };
 
-  console.log(productDetails);
-  console.log(product);
-
   return createProductModal ? (
     <Modal modal={createProductModal} setCloseModal={setCreateProductModal}>
       <div className="my-2 flex justify-between">

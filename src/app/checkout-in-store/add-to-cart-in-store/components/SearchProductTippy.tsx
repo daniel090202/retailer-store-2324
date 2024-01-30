@@ -4,37 +4,50 @@ import HeadlessTippy from "@tippyjs/react/headless";
 import { useAppDispatch } from "@/lib/redux/store";
 import { setCartItem } from "@/lib/redux/features";
 
-import { Product } from "@/models";
+import { Product, ProductDetail } from "@/models";
 
-import SearchTippyElement from "./SearchTippyElement";
+import SearchTippyElement from "./SearchProductTippyElement";
 
-const SearchTippy = ({
-  productsResult,
+const SearchProductTippy = ({
+  productResult,
+  productDetailsResult,
   children,
 }: {
-  productsResult?: Array<Product>;
+  productResult?: Product;
+  productDetailsResult?: Array<ProductDetail>;
   children: React.ReactElement;
 }) => {
   const dispatch = useAppDispatch();
 
-  const handleClickTippyContent = (product: Product) => {
-    dispatch(setCartItem(product));
+  const handleClickTippyContent = (
+    productResult?: Product,
+    productDetail?: ProductDetail
+  ) => {
+    if (productResult !== undefined && productDetail !== undefined) {
+      dispatch(
+        setCartItem({
+          product: productResult,
+          productDetail: productDetail,
+        })
+      );
+    }
   };
 
   const renderTippyContent = ({ ...attrs }) => {
     return (
-      productsResult !== undefined && (
+      productDetailsResult !== undefined && (
         <div
           className="z-10 w-96 absolute translate-x-[-50%] py-2 border text-base shadow-xl bg-white rounded-xl"
           {...attrs}
         >
-          {productsResult.map((product, index) => {
+          {productDetailsResult.map((productDetail, index) => {
             return (
               <SearchTippyElement
                 key={index}
-                title={product.name}
+                SKU={productResult ? productDetail.SKU : "0000000000"}
+                title={productResult ? productResult.name : "Not Found"}
                 onClick={() => {
-                  handleClickTippyContent(product);
+                  handleClickTippyContent(productResult, productDetail);
                 }}
               />
             );
@@ -56,4 +69,4 @@ const SearchTippy = ({
   );
 };
 
-export default SearchTippy;
+export default SearchProductTippy;

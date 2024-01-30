@@ -6,13 +6,14 @@ import {
 import { Product } from "@/models";
 
 const Table = ({ product }: { product?: Product }) => {
-  const productDetails = product?.productDetail;
+  const productDetails = product?.productDetails;
 
+  console.log(product)
   const renderProductDetails = (): React.ReactNode => {
     return productDetails?.map((productDetail, index) => {
       return (
         <tr key={index} className="text-center">
-          <td className="px-6 py-4 whitespace-nowrap">{index}</td>
+          <td className="px-6 py-4 whitespace-nowrap">{productDetail.SKU}</td>
           <td className="px-6 py-4 whitespace-nowrap">
             <div
               style={{ backgroundColor: productDetail.color }}
@@ -67,7 +68,7 @@ const Table = ({ product }: { product?: Product }) => {
     <table className="w-full my-4 table-auto text-sm text-center">
       <thead className="bg-gray-100 text-gray-600 font-medium border-b">
         <tr>
-          <th className="py-3 px-6">No.</th>
+          <th className="py-3 px-6">Stock barcode</th>
           <th className="py-3 px-6">Color</th>
           <th className="py-3 px-6">Size</th>
           <th className="py-3 px-6">Minimum</th>

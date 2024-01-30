@@ -4,7 +4,6 @@ import icons from "@/assets/Icons/index";
 
 import { renderUserGender } from "@/utils";
 import { appRoutes } from "@/config/pathConfig";
-import { useAppSelector } from "@/lib/redux/store";
 
 import { Customer } from "@/models";
 
@@ -15,7 +14,7 @@ const Table = ({ customers }: { customers?: Array<Customer> }) => {
     return customers?.map((customer, index) => {
       return (
         <tr key={index}>
-          <td className="px-6 py-4 whitespace-nowrap">0</td>
+          <td className="px-6 py-4 whitespace-nowrap">{index}</td>
           <td className="px-6 py-4 whitespace-nowrap">
             {customer.customerName}
           </td>

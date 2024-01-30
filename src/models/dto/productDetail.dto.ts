@@ -1,6 +1,7 @@
 import { IProductDetail } from "../interfaces";
 
 class ProductDetail implements IProductDetail {
+  public UPC: string;
   public SKU: string;
   public size: string;
   public color: string;
@@ -13,6 +14,7 @@ class ProductDetail implements IProductDetail {
   public displayLocation: Array<number>;
 
   constructor(
+    UPC: string,
     SKU: string,
     size: string,
     color: string,
@@ -24,6 +26,7 @@ class ProductDetail implements IProductDetail {
     storageLocation: Array<number>,
     displayLocation: Array<number>
   ) {
+    this.UPC = UPC;
     this.SKU = SKU;
     this.size = size;
     this.color = color;

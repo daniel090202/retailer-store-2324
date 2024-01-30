@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import icons from "@/assets/Icons/index";
-import { getProductsWithQuery } from "@/services";
+import { getProductsWithUPC } from "@/services";
 import { useAppDispatch } from "@/lib/redux/store";
 import { getAllProductsSuccess } from "@/lib/redux/features";
 
@@ -44,16 +44,15 @@ const Filter = () => {
             message: string;
             data?: Array<Product>;
           }
-        | undefined = await getProductsWithQuery(searchSKU, filter);
+        | undefined = await getProductsWithUPC(searchSKU, filter);
 
       if (productsData !== undefined && productsData.data !== undefined) {
-        console.log(productsData);
         dispatch(getAllProductsSuccess(productsData));
       }
     };
 
     fetchData();
-  }, [filterOption, searchSKU]);
+  }, [dispatch, searchSKU, filterOption]);
 
   const handleSelectFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterOption(event.target.value);

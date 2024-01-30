@@ -6,7 +6,7 @@ import {
   decreaseCartItem,
 } from "@/lib/redux/features";
 
-import { Product } from "@/models";
+import { Product, ProductDetail } from "@/models";
 
 const Card = ({
   productData,
@@ -14,17 +14,19 @@ const Card = ({
   productData: {
     product: Product;
     purchasedAmount: number;
+    productDetail: ProductDetail;
   };
 }) => {
   const dispatch = useAppDispatch();
 
   const product = productData.product;
+  const productDetail = productData.productDetail;
   const purchasedAmount = productData.purchasedAmount;
 
   const totalPriceEachItem = product.salePrice * purchasedAmount;
 
   const handleAddItem = () => {
-    dispatch(increaseCartItem(product.SKU));
+    dispatch(increaseCartItem(productDetail.SKU));
   };
 
   const handleMinusItem = () => {
@@ -32,11 +34,11 @@ const Card = ({
       return;
     }
 
-    dispatch(decreaseCartItem(product.SKU));
+    dispatch(decreaseCartItem(productDetail.SKU));
   };
 
   const handleRemoveItem = () => {
-    dispatch(removeCartItem(product.SKU));
+    dispatch(removeCartItem(productDetail.SKU));
   };
 
   return (
@@ -53,17 +55,25 @@ const Card = ({
       </div>
       <hr className="my-2" />
       <a href="#">
-        <span className="my-2 text-xl font-semibold capitalize tracking-tight text-gray-600 flex justify-center dark:text-white">
+        <span className="my-2 text-xl font-semibold capitalize tracking-tight text-center text-gray-600 flex justify-center dark:text-white">
           {product.name}
         </span>
       </a>
       <hr className="my-2" />
       <div className="my-2 flex justify-between font-normal text-gray-500 dark:text-gray-400">
+        <span>Barcode:</span>
+        <span>{productDetail.SKU}</span>
+      </div>
+      <div className="my-2 flex justify-between font-normal text-gray-500 dark:text-gray-400">
         <span>Color:</span>
         <span
-          style={{ backgroundColor: product.productDetail[0].color }}
+          style={{ backgroundColor: productDetail.color }}
           className={"w-6 h-6 rounded-full"}
         ></span>
+      </div>
+      <div className="my-2 flex justify-between font-normal text-gray-500 dark:text-gray-400">
+        <span>Size:</span>
+        <span>{productDetail.size}</span>
       </div>
       <div className="my-2 flex justify-between font-normal text-gray-500 dark:text-gray-400">
         <span>Amount:</span>

@@ -11,7 +11,7 @@ class Product implements IProduct {
   public originalPrice: number;
   public salePrice: number;
   public unit: number;
-  public productDetail: Array<ProductDetail>;
+  public productDetails: Array<ProductDetail>;
   public active: boolean;
   public archived: boolean;
   public verified: boolean;
@@ -28,7 +28,7 @@ class Product implements IProduct {
     originalPrice: number,
     salePrice: number,
     unit: number,
-    productDetail: Array<ProductDetail>,
+    productDetails: Array<ProductDetail>,
     active: boolean,
     archived: boolean,
     verified: boolean,
@@ -44,7 +44,7 @@ class Product implements IProduct {
     this.originalPrice = originalPrice;
     this.salePrice = salePrice;
     this.unit = unit;
-    this.productDetail = productDetail;
+    this.productDetails = productDetails;
     this.active = active;
     this.archived = archived;
     this.verified = verified;

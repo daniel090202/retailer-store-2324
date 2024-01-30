@@ -10,7 +10,7 @@ interface IProduct {
   originalPrice: number;
   salePrice: number;
   unit: number;
-  productDetail: Array<ProductDetail>;
+  productDetails: Array<ProductDetail>;
   active: boolean;
   archived: boolean;
   verified: boolean;

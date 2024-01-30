@@ -1,4 +1,4 @@
-import { User, Customer, Product } from "../dto";
+import { User, Customer, Product, ProductDetail } from "../dto";
 
 declare global {
   type AuthInitialState = {
@@ -34,8 +34,12 @@ declare global {
   };
 
   type CartState = {
-    customer?: string;
-    allProducts: Array<{ product: Product; purchasedAmount: number }>;
+    customer?: Customer;
+    allProducts: Array<{
+      product: Product;
+      productDetail: ProductDetail;
+      purchasedAmount: number;
+    }>;
   };
 
   type CustomersState = {

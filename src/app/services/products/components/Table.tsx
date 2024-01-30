@@ -15,7 +15,7 @@ const Table = ({ products }: { products?: Array<Product> }) => {
       return (
         <tr key={index}>
           <td className="px-6 py-4 whitespace-nowrap">{index}</td>
-          <td className="px-6 py-4 whitespace-nowrap">{product.SKU}</td>
+          <td className="px-6 py-4 whitespace-nowrap">{product.UPC}</td>
           <td className="px-6 py-4">{product.name}</td>
           <td className="px-6 py-4 whitespace-nowrap">
             <select name="category" id="category">
@@ -30,7 +30,7 @@ const Table = ({ products }: { products?: Array<Product> }) => {
           </td>
           <td className="px-6 py-4 whitespace-nowrap">
             <select id="color" name="color">
-              {product.productDetail.map((productDetail, index) => {
+              {product.productDetails.map((productDetail, index) => {
                 return (
                   <option key={index} value={index}>
                     {productDetail.color}
@@ -41,7 +41,7 @@ const Table = ({ products }: { products?: Array<Product> }) => {
           </td>
           <td className="px-6 py-4 whitespace-nowrap">
             <select id="size" name="size">
-              {product.productDetail.map((productDetail, index) => {
+              {product.productDetails.map((productDetail, index) => {
                 return (
                   <option key={index} value={index}>
                     {productDetail.size}
@@ -55,7 +55,7 @@ const Table = ({ products }: { products?: Array<Product> }) => {
           </td>
           <td>
             <Link
-              href={appRoutes.product + `/${product.SKU}`}
+              href={appRoutes.product + `/${product.UPC}`}
               className="flex items-center transition ease-in-out delay-150 hover:-translate-y-1"
             >
               {icons.solidLinkDirect}
@@ -73,7 +73,7 @@ const Table = ({ products }: { products?: Array<Product> }) => {
         <thead className="bg-gray-100 text-gray-600 font-medium border-b">
           <tr>
             <th className="py-3 px-6">No.</th>
-            <th className="py-3 px-6">Stock barcode</th>
+            <th className="py-3 px-6">Universal barcode</th>
             <th className="py-3 px-6">Name</th>
             <th className="py-3 px-6">Category</th>
             <th className="py-3 px-6">Color</th>

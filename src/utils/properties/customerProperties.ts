@@ -1,3 +1,5 @@
+const allCustomerLevels = ["Entry-level", "Silver", "Platinum", "Elite"];
+
 const renderCustomerGender = (gender: number) => {
   switch (gender) {
     case 0:
@@ -10,14 +12,17 @@ const renderCustomerGender = (gender: number) => {
 };
 
 const renderCustomerLevel = (segment: number) => {
-  if (segment === 0) {
-    return "Entry-level";
-  } else if (segment === 1) {
-    return "Silver";
-  } else if (segment === 2) {
-    return "Platinum";
-  } else if (segment === 3) {
-    return "Elite";
+  switch (segment) {
+    case 0:
+      return "Entry-level";
+    case 1:
+      return "Silver";
+    case 2:
+      return "Platinum";
+    case 3:
+      return "Elite";
+    default:
+      return "Error";
   }
 };
 
@@ -55,6 +60,7 @@ const renderCustomerVerifiedStatus = (status: boolean): string => {
 };
 
 export {
+  allCustomerLevels,
   renderCustomerGender,
   renderCustomerLevel,
   renderCustomerActiveStatus,

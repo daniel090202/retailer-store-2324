@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { getProductsWithQuery } from "@/services";
+import { getProductsWithUPC } from "@/services";
 import { renderProductUnit, renderProductCategory } from "@/utils";
 
 import { Product as ProductDTO } from "@/models";
@@ -14,7 +14,7 @@ import { Product as ProductDTO } from "@/models";
 import Table from "./components/Table";
 import SideBar from "./components/SideBar";
 
-const Product = ({ params }: { params: { SKU: string } }) => {
+const Product = ({ params }: { params: { UPC: string } }) => {
   const [product, setProduct] = useState<ProductDTO>({
     SKU: "",
     UPC: "",
@@ -25,8 +25,9 @@ const Product = ({ params }: { params: { SKU: string } }) => {
     originalPrice: 0,
     salePrice: 0,
     unit: 0,
-    productDetail: [
+    productDetails: [
       {
+        UPC: "",
         SKU: "",
         size: "",
         color: "",
@@ -54,7 +55,7 @@ const Product = ({ params }: { params: { SKU: string } }) => {
             message: string;
             data?: Array<ProductDTO>;
           }
-        | undefined = await getProductsWithQuery(params.SKU);
+        | undefined = await getProductsWithUPC(params.UPC);
 
       if (productsData !== undefined && productsData.data !== undefined) {
         setProduct(productsData.data[0]);
@@ -98,15 +99,6 @@ const Product = ({ params }: { params: { SKU: string } }) => {
           </div>
         </div>
         <div className="mx-auto py-4 space-y-3 grid grid-cols-3 gap-x-3">
-          <div className="my-4">
-            <label htmlFor="SKU">Stock keeping unit</label>
-            <p
-              id="SKU"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {product.SKU}
-            </p>
-          </div>
           <div className="my-4">
             <label htmlFor="UPC">Universal product code</label>
             <p

@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/lib/redux/store";
 
-import { Product } from "@/models";
+import { Product, ProductDetail } from "@/models";
 
 import Card from "./components/Card";
 
@@ -10,6 +10,7 @@ const Counter = () => {
   const productsInCartData:
     | {
         product: Product;
+        productDetail: ProductDetail;
         purchasedAmount: number;
       }[]
     | [] = useAppSelector((state) => {
