@@ -60,8 +60,6 @@ const CreateCustomer = ({
     window.location.href = appRoutes.customers.all;
   };
 
-  console.log(customer);
-
   return createCustomerModal ? (
     <Modal modal={createCustomerModal} setCloseModal={setCreateCustomerModal}>
       <div className="my-2 flex justify-between">

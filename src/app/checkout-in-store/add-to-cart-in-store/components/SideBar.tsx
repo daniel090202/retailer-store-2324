@@ -3,13 +3,16 @@
 import Image from "next/image";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
+import { error } from "@/lib/hot-toast";
+import { createOrder } from "@/services";
 import { appRoutes } from "@/config/pathConfig";
 import { setCartCustomer } from "@/lib/redux/features";
+import { allPaymentMethods, renderPaymentMethod } from "@/utils";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/store";
 import {
   getProductsWithSKU,
@@ -17,18 +20,19 @@ import {
   getProductsWithUPC,
 } from "@/services";
 
-import { Product, Customer, ProductDetail } from "@/models";
 import Button from "@/components/Button";
+import { User, Product, Customer, ProductDetail } from "@/models";
 
 import CreateCustomer from "./CreateCustomer";
 import SearchProductTippy from "./SearchProductTippy";
 import SearchCustomerTippy from "./SearchCustomerTippy";
 
 const SideBar = () => {
-  const router = useRouter();
+  const session = useSession();
   const dispatch = useAppDispatch();
 
   const [searchProduct, setSearchProduct] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("0");
   const [searchCustomer, setSearchCustomer] = useState("");
   const [customerPayment, setCustomerPayment] = useState<string>("0");
   const [createCustomerModal, setCreateCustomerModal] = useState(false);
@@ -37,6 +41,10 @@ const SideBar = () => {
   const [customersResult, setCustomersResult] = useState<Array<Customer>>();
   const [productDetailsResult, setProductDetailsResult] =
     useState<Array<ProductDetail>>();
+
+  const counterID = "MTV9834009";
+
+  const user: User | undefined = session.data?.user;
 
   const cartProductsData:
     | {
@@ -51,6 +59,23 @@ const SideBar = () => {
   const customer: Customer | undefined = useAppSelector((state) => {
     return state.cartReducer.cart.customer;
   });
+
+  const productDetails = cartProductsData.map((cartProductData, index) => {
+    return {
+      productSKU: cartProductData.productDetail.SKU,
+      purchasedQuantity: cartProductData.purchasedAmount,
+      totalExpense:
+        cartProductData.product.salePrice * cartProductData.purchasedAmount,
+      notes: "",
+    };
+  });
+
+  const totalProductsInCart = cartProductsData.reduce(
+    (productTotalPrice, currentProduct) => {
+      return productTotalPrice + currentProduct.purchasedAmount;
+    },
+    0
+  );
 
   const totalExpense = cartProductsData.reduce(
     (productTotalPrice, currentProduct) => {
@@ -154,16 +179,79 @@ const SideBar = () => {
     }
   };
 
-  const handleForwardOrder = () => {
-    if (cartProductsData.length <= 0 || customerPayment === "0") {
+  const handlePaymentMethodSelectCheckout = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setPaymentMethod(event.target.value);
+  };
+
+  const handleForwardOrder = async () => {
+    if (cartProductsData.length <= 0) {
+      error("Your cart is empty!");
       return;
     }
 
-    router.push(appRoutes.checkout.inStore.confirmOrder);
+    if (customerPayment === "0") {
+      error("Customer payment is required.");
+      return;
+    }
+
+    if (parseInt(customerPayment) < totalExpense) {
+      error("Customer payment is not satisfied.");
+      return;
+    }
+
+    if (customer === undefined) {
+      error("Customer can not be empty.");
+      return;
+    }
+
+    const order: {
+      customerPhone: string;
+      customerPayment: number;
+      customerPaymentMethod: number;
+      counterID: string;
+      cashierUserName: string | undefined;
+      couponsAmount: number;
+      totalExpense: number;
+      totalAmount: number;
+      totalDiscount: number;
+      exchange: number;
+      notes: string;
+      paymentStatus: number;
+      shipmentBarcode: string;
+      coupons: Array<string>;
+      orderDetails: Array<{
+        productSKU: string;
+        purchasedQuantity: number;
+        totalExpense: number;
+        notes: string;
+      }>;
+    } = {
+      customerPhone: customer.phone,
+      customerPayment: parseInt(customerPayment),
+      customerPaymentMethod: parseInt(paymentMethod),
+      counterID: counterID,
+      cashierUserName: user?.userName,
+      couponsAmount: 0,
+      totalExpense: totalExpense,
+      totalAmount: totalProductsInCart,
+      totalDiscount: 0,
+      exchange: exchange,
+      notes: "",
+      paymentStatus: 1,
+      shipmentBarcode: "0000000000",
+      coupons: [],
+      orderDetails: [...productDetails],
+    };
+
+    const confirmedOrder = await createOrder(order);
+
+    window.location.href = appRoutes.customers.all;
   };
 
   return (
-    <aside className="md:w-1/4 md:mx-2 md:my-4 text-xl font-medium rounded-xl">
+    <aside className="md:w-1/4 md:mx-2 md:mb-4 text-xl font-medium rounded-xl">
       <SearchProductTippy
         productResult={productResult}
         productDetailsResult={productDetailsResult}
@@ -216,7 +304,7 @@ const SideBar = () => {
         )}
       </div>
       {customer !== undefined ? (
-        <div className="my-4 p-4 shadow-xl text-base bg-white rounded-xl flex flex-col">
+        <div className="my-2 p-4 shadow-xl text-base bg-white rounded-xl flex flex-col">
           <div className="mb-2 flex justify-between items-center">
             <span className="text-lg font-bold uppercase">
               Customer information
@@ -228,7 +316,7 @@ const SideBar = () => {
               {icons.cross}
             </span>
           </div>
-          <div className="flex">
+          <div className="flex items-center">
             <div className="mr-4 border rounded-full p-3 cursor-pointer">
               <Image
                 src={images.maleDefaultProfilePicture}
@@ -238,13 +326,18 @@ const SideBar = () => {
               />
             </div>
             <div className="mb-2 flex flex-col justify-between">
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-bold">
-                  {customer.customerName}
-                </span>
+              <div className="flex justify-between">
+                <span className="text-lg font-bold">Full name:</span>
+                <span>{customer.customerName}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-lg font-bold">Phone number:</span>
                 <span>{customer.phone}</span>
               </div>
-              <span>{customer.address}</span>
+              <div className="flex flex-col justify-between">
+                <span className="text-lg font-bold">Address:</span>
+                <span>{customer.address}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -256,7 +349,7 @@ const SideBar = () => {
           createCustomerModal={createCustomerModal}
           setCreateCustomerModal={setCreateCustomerModal}
         >
-          <div className="flex items-center my-4 px-2 bg-white border rounded-xl shadow-xl">
+          <div className="flex items-center my-2 px-2 bg-white border rounded-xl shadow-xl">
             <input
               id="product"
               name="product"
@@ -281,10 +374,29 @@ const SideBar = () => {
           </div>
         </SearchCustomerTippy>
       )}
-      <div className="p-4 rounded-xl border-2">
+      <select
+        id="accountLevel"
+        name="accountLevel"
+        value={paymentMethod}
+        onChange={(event) => handlePaymentMethodSelectCheckout(event)}
+        className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
+      >
+        <option value="-1" hidden>
+          Select a kind of payment method
+        </option>
+
+        {allPaymentMethods.map((paymentMethod, index) => {
+          return (
+            <option key={index} value={index}>
+              {paymentMethod}
+            </option>
+          );
+        })}
+      </select>
+      <div className="my-2 p-4 rounded-xl border-2">
         <div className="my-2 flex justify-between">
           <span>Total products:</span>
-          <span>{cartProductsData.length}</span>
+          <span>{totalProductsInCart}</span>
         </div>
         <div className="my-2 flex justify-between">
           <span>Total expense:</span>
@@ -298,6 +410,10 @@ const SideBar = () => {
           <span>Coupons:</span>
           <span>0</span>
         </div>
+        <div className="my-2 flex justify-between">
+          <span>Method:</span>
+          <span>{renderPaymentMethod(parseInt(paymentMethod))}</span>
+        </div>
         <hr className="my-2" />
         <div className="my-2 flex justify-between">
           <span>Exchange:</span>
@@ -310,7 +426,7 @@ const SideBar = () => {
         className="w-full my-4 p-4 text-xl"
         onClick={() => handleForwardOrder()}
       >
-        Forward
+        Confirm order
       </Button>
       <CreateCustomer
         createCustomerModal={createCustomerModal}

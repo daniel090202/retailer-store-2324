@@ -12,7 +12,7 @@ const SearchCustomerTippyElement = ({
   onClick: () => void;
 }) => {
   return (
-    <div className="p-2 hover:bg-slate-100 flex" onClick={onClick}>
+    <div className="px-4 py-2 flex hover:bg-slate-100" onClick={onClick}>
       <div className="mr-4 shadow-lg border rounded-full p-3 cursor-pointer">
         <Image
           src={images.maleDefaultProfilePicture}
@@ -21,9 +21,9 @@ const SearchCustomerTippyElement = ({
           alt="User's profile picture."
         />
       </div>
-      <div>
-        <div className="mb-2">
-          <span className="mr-8 text-lg font-bold">
+      <div className="flex-1">
+        <div className="mb-2 flex justify-between items-center">
+          <span className="text-lg font-bold">
             {customer.customerName}
           </span>
           <span>{customer.phone}</span>

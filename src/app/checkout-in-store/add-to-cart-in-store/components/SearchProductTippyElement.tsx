@@ -8,9 +8,15 @@ const SearchProductTippyElement = ({
   onClick: () => void;
 }) => {
   return (
-    <div className="p-4 hover:bg-slate-100" onClick={onClick}>
-      <p className="mx-2 text-lg font-bold ">{title}</p>
-      <p className="mx-2 italic">Stock barcode: {SKU}</p>
+    <div className="p-4 cursor-pointer hover:bg-slate-100" onClick={onClick}>
+      <div className="flex justify-between">
+        <span className="text-lg font-bold">Stock barcode:</span>
+        <span className="">{SKU}</span>
+      </div>
+      <div className="flex justify-between">
+        <span className="text-lg font-bold">Name:</span>
+        <span>{title}</span>
+      </div>
     </div>
   );
 };

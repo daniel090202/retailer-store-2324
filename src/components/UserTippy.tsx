@@ -6,6 +6,10 @@ import HeadlessTippy from "@tippyjs/react/headless";
 
 import icons from "@/assets/Icons";
 
+import { appRoutes } from "@/config/pathConfig";
+
+import { User } from "@/models";
+
 import UserTippyElement from "./UserTippyElement";
 
 const UserTippy = ({
@@ -17,6 +21,8 @@ const UserTippy = ({
 }) => {
   const router = useRouter();
   const session = useSession();
+
+  const user: User | undefined = session.data?.user;
 
   const tippyContents: Array<{
     icon: React.ReactNode;
@@ -85,7 +91,11 @@ const UserTippy = ({
   };
 
   const handleViewProfile = () => {
-    return;
+    if (user !== undefined) {
+      router.push(appRoutes.user + `/${user?.userName}`);
+    } else {
+      router.push("/api/auth/signin");
+    }
   };
 
   const handleViewTasks = () => {

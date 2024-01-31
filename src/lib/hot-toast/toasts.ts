@@ -5,15 +5,13 @@ const success = (message: string) => {
     toast.success(message, {
       id: "success",
     });
-  }, 2000);
+  }, 1000);
 };
 
 const error = (message: string) => {
-  setTimeout(() => {
-    toast.error(message, {
-      id: "error",
-    });
-  }, 2000);
+  toast.error(message, {
+    id: "error",
+  });
 };
 
 export { error, success };

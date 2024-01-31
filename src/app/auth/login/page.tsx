@@ -84,7 +84,7 @@ const Login = () => {
             className="mt-4 p-4"
             onClick={() => handleUserLogin()}
           >
-            Let me in
+            Log in
           </Button>
         </div>
       </div>

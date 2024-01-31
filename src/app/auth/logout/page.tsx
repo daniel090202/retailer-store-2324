@@ -37,7 +37,7 @@ const Login = () => {
         <Button
           leftIcon={icons.check}
           rightIcon=""
-          className="mt-4 p-4 bg-red-200"
+          className="mt-4 p-4"
           onClick={() => handleUserAgreeLogout()}
         >
           Yes
