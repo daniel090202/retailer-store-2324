@@ -1,5 +1,6 @@
 declare global {
   interface IOrderDetail {
+    orderID: number;
     productSKU: string;
     purchasedQuantity: number;
     totalExpense: number;

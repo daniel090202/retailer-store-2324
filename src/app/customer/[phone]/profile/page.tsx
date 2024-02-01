@@ -10,7 +10,7 @@ import { getCustomersWithQuery } from "@/services";
 import { renderCustomerGender } from "@/utils";
 import { Customer as CustomerDTO } from "@/models";
 
-import SideBar from "./components/SideBar";
+import SideBar from "../components/SideBar";
 
 const Customer = ({ params }: { params: { phone: string } }) => {
   const [customer, setCustomer] = useState<CustomerDTO>({
@@ -38,13 +38,13 @@ const Customer = ({ params }: { params: { phone: string } }) => {
           }
         | undefined = await getCustomersWithQuery(params.phone);
 
-      if (customersData !== undefined && customersData.data !== undefined) {
+      if (customersData?.data !== undefined) {
         setCustomer(customersData.data[0]);
       }
     };
 
     fetchData();
-  }, []);
+  }, [params.phone]);
 
   const normalizeDateTime = (dateTime: string): React.ReactNode => {
     const newDateTime = new Date(dateTime);
@@ -55,6 +55,7 @@ const Customer = ({ params }: { params: { phone: string } }) => {
   return (
     <div className="md:flex">
       <SideBar
+        customerPhone={customer.phone}
         accountLevel={customer.accountLevel}
         active={customer.active}
         block={customer.block}

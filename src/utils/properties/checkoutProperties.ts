@@ -5,7 +5,16 @@ const allPaymentMethods = [
   "Credit card",
 ];
 
-const renderPaymentMethod = (paymentMethod: number) => {
+const allPaymentStatus = [
+  "Cash on delivery",
+  "Successful",
+  "Pending",
+  "Failed",
+  "Refunded",
+  "Charged back",
+];
+
+const renderPaymentMethod = (paymentMethod: number): string => {
   switch (paymentMethod) {
     case -1:
       return "Unchecked";
@@ -22,4 +31,28 @@ const renderPaymentMethod = (paymentMethod: number) => {
   }
 };
 
-export { allPaymentMethods, renderPaymentMethod };
+const renderPaymentStatus = (status: number): string => {
+  switch (status) {
+    case 0:
+      return "Cash on delivery";
+    case 1:
+      return "Successful";
+    case 2:
+      return "Pending";
+    case 3:
+      return "Failed";
+    case 4:
+      return "Refunded";
+    case 5:
+      return "Charged back";
+    default:
+      return "Error";
+  }
+};
+
+export {
+  allPaymentMethods,
+  allPaymentStatus,
+  renderPaymentMethod,
+  renderPaymentStatus,
+};

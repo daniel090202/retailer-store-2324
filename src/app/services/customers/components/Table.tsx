@@ -27,7 +27,7 @@ const Table = ({ customers }: { customers?: Array<Customer> }) => {
           <td className="px-6 py-4 whitespace-nowrap">{customer.email}</td>
           <td>
             <Link
-              href={appRoutes.customer + `/${customer.phone}`}
+              href={appRoutes.getCustomerPath(customer.phone, 0)}
               className="flex items-center transition ease-in-out delay-150 hover:-translate-y-1"
             >
               {icons.solidLinkDirect}

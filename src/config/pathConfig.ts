@@ -13,7 +13,6 @@ const appRoutes = {
     all: "/services/products/all",
     archived: "/services/products/archived",
   },
-  customer: "/customer",
   customers: {
     all: "/services/customers/all",
     archived: "/services/customers/archived",
@@ -21,11 +20,27 @@ const appRoutes = {
   checkout: {
     inStore: {
       checkout: "/checkout-in-store/add-to-cart-in-store",
-      confirmOrder: "/checkout-in-store/confirm-order-in-store",
     },
     onlineOrders: {
       orders: "/website-orders",
     },
+  },
+
+  getCustomerPath: function (
+    phone: string = "",
+    option: number = 0,
+    orderID: number = 0,
+  ) {
+    switch (option) {
+      case 0:
+        return `/customer/${phone}/profile`;
+      case 1:
+        return `/customer/${phone}/purchased-history/all`;
+      case 2:
+        return `/customer/${phone}/purchased-history/${orderID}`;
+      default:
+        return this.customers.all;
+    }
   },
 };
 

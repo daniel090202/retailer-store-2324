@@ -2,6 +2,48 @@ import * as request from "@/utils/http";
 
 import { Order } from "@/models";
 
+const getOrdersWithID = async (orderID: string = "") => {
+  try {
+    const url = "/orders/get-orders-with-ID";
+    const params = new URLSearchParams([["ID", orderID]]);
+
+    const response = await request.get(url, { params });
+
+    const ordersData: {
+      statusCode: number;
+      message: string;
+      data?: Array<Order>;
+    } = response;
+
+    if (ordersData.statusCode === 200) {
+      return ordersData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getOrdersWithPhone = async (customerPhone: string = "") => {
+  try {
+    const url = "/orders/get-orders-with-phone";
+    const params = new URLSearchParams([["customerPhone", customerPhone]]);
+
+    const response = await request.get(url, { params });
+
+    const ordersData: {
+      statusCode: number;
+      message: string;
+      data?: Array<Order>;
+    } = response;
+
+    if (ordersData.statusCode === 200) {
+      return ordersData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const createOrder = async (order: {
   customerPhone: string;
   customerPayment: number;
@@ -43,4 +85,4 @@ const createOrder = async (order: {
   }
 };
 
-export { createOrder };
+export { getOrdersWithID, getOrdersWithPhone, createOrder };

@@ -9,15 +9,15 @@ import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
 import { error } from "@/lib/hot-toast";
-import { createOrder } from "@/services";
 import { appRoutes } from "@/config/pathConfig";
 import { setCartCustomer } from "@/lib/redux/features";
 import { allPaymentMethods, renderPaymentMethod } from "@/utils";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/store";
 import {
+  createOrder,
+  getProductsWithUPC,
   getProductsWithSKU,
   getCustomersWithQuery,
-  getProductsWithUPC,
 } from "@/services";
 
 import Button from "@/components/Button";

@@ -1,11 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import icons from "@/assets/Icons";
-import { appRoutes } from "@/config/pathConfig";
-
-import Button from "@/components/Button";
 
 import {
   renderCustomerLevel,
@@ -15,28 +10,16 @@ import {
 } from "@/utils";
 
 const SideBar = ({
-  customerPhone,
   accountLevel,
   active,
   block,
   verified,
 }: {
-  customerPhone: string;
   accountLevel: number;
   active: boolean;
   block: boolean;
   verified: boolean;
 }) => {
-  const router = useRouter();
-
-  const handleBlockCustomer = () => {
-    return;
-  };
-
-  const handleReviewPurchaseHistory = () => {
-    router.push(appRoutes.getCustomerPath(customerPhone, 1));
-  };
-
   return (
     <aside className="md:w-1/4 md:mx-2 md:my-4 text-xl font-medium rounded-xl">
       <div className="p-4 rounded-xl border-2">
@@ -75,22 +58,6 @@ const SideBar = ({
           </div>
         </div>
       </div>
-      <Button
-        leftIcon=""
-        rightIcon=""
-        className="w-full mt-4 mb-2 p-4 text-xl"
-        onClick={() => handleBlockCustomer()}
-      >
-        Block customer
-      </Button>
-      <Button
-        leftIcon=""
-        rightIcon=""
-        className="w-full my-2 p-4 text-xl"
-        onClick={() => handleReviewPurchaseHistory()}
-      >
-        Review purchase history
-      </Button>
     </aside>
   );
 };
