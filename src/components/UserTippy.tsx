@@ -14,9 +14,11 @@ import UserTippyElement from "./UserTippyElement";
 
 const UserTippy = ({
   profileButtonClicked = false,
+  setProfileButtonClicked,
   children,
 }: {
   profileButtonClicked: boolean;
+  setProfileButtonClicked: (value: boolean) => void;
   children: React.ReactElement;
 }) => {
   const router = useRouter();
@@ -91,6 +93,8 @@ const UserTippy = ({
   };
 
   const handleViewProfile = () => {
+    setProfileButtonClicked(!profileButtonClicked);
+
     if (user !== undefined) {
       router.push(appRoutes.user + `/${user?.userName}`);
     } else {
@@ -99,27 +103,36 @@ const UserTippy = ({
   };
 
   const handleViewTasks = () => {
-    return;
+    setProfileButtonClicked(!profileButtonClicked);
   };
 
   const handleViewSettings = () => {
-    return;
+    setProfileButtonClicked(!profileButtonClicked);
   };
 
   const handleLogIn = () => {
+    setProfileButtonClicked(!profileButtonClicked);
+
     router.push("/api/auth/signin");
   };
 
   const handleLogOut = () => {
+    setProfileButtonClicked(!profileButtonClicked);
+
     router.push("/api/auth/signout");
   };
 
   return (
     <HeadlessTippy
-      visible={profileButtonClicked}
-      interactive={true}
       placement="bottom"
+      interactive={true}
+      hideOnClick={true}
+      interactiveDebounce={1000}
+      visible={profileButtonClicked}
       render={(attrs) => renderTippyContent(attrs)}
+      onClickOutside={() => {
+        setProfileButtonClicked(!profileButtonClicked);
+      }}
     >
       {children}
     </HeadlessTippy>

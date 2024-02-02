@@ -18,6 +18,7 @@ const SideBar = () => {
               path={path}
               icon={route.icon}
               title={route.title}
+              pathPrefix={route.pathPrefix}
             />
           );
         })}

@@ -43,48 +43,30 @@ const appRoutes = {
   },
 };
 
-const navigationRoutes: Array<{
-  title: string;
-  path: string;
-  icon: React.ReactNode | undefined;
-}> = [
-  {
-    title: "Home",
-    path: appRoutes.home,
-    icon: undefined,
-  },
-  {
-    title: "Services",
-    path: `${appRoutes.users.all}?page=1`,
-    icon: undefined,
-  },
-  {
-    title: "Counter",
-    path: appRoutes.checkout.inStore.checkout,
-    icon: undefined,
-  },
-];
-
 const servicesSidebarRoutes: Array<{
   title: string;
   path: string;
+  pathPrefix: string;
   icon: React.ReactNode | undefined;
 }> = [
   {
+    icon: icons.userGroup,
     title: "Human resources",
     path: appRoutes.users.all,
-    icon: icons.userGroup,
+    pathPrefix: "/services/users",
   },
   {
+    icon: icons.shirt,
     title: "Product catalog",
     path: appRoutes.products.all,
-    icon: icons.shirt,
+    pathPrefix: "/services/products",
   },
   {
-    title: "Customer relationship",
-    path: appRoutes.customers.all,
     icon: icons.users,
+    path: appRoutes.customers.all,
+    title: "Customer relationship",
+    pathPrefix: "/services/customers",
   },
 ];
 
-export { appRoutes, navigationRoutes, servicesSidebarRoutes };
+export { appRoutes, servicesSidebarRoutes };

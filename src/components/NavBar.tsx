@@ -10,7 +10,7 @@ import { useRouter, usePathname } from "next/navigation";
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { appRoutes, navigationRoutes } from "@/config/pathConfig";
+import { appRoutes } from "@/config/pathConfig";
 
 import UserTippy from "./UserTippy";
 
@@ -28,20 +28,44 @@ const NavBar = () => {
     }
   }, [router, session.status]);
 
-  const renderNavBarElements = () => {
+  const renderNavBarElements = (): React.ReactNode => {
     if (session.status === "authenticated") {
-      return navigationRoutes.map((route, index) => {
-        return (
-          <li
-            key={index}
-            className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
-              route.path.includes(currentPage || "") ? "bg-gray-100" : ""
-            }`}
-          >
-            <Link href={route.path}>{route.title}</Link>
-          </li>
-        );
-      });
+      const navBarElements = [];
+
+      navBarElements.push(
+        <li
+          key={0}
+          className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
+            currentPage === "/" ? "bg-gray-100" : ""
+          }`}
+        >
+          <Link href={appRoutes.home}>Home</Link>
+        </li>
+      );
+
+      navBarElements.push(
+        <li
+          key={1}
+          className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
+            currentPage?.startsWith("/services") ? "bg-gray-100" : ""
+          }`}
+        >
+          <Link href={`${appRoutes.users.all}?page=1`}>Services</Link>
+        </li>
+      );
+
+      navBarElements.push(
+        <li
+          key={2}
+          className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
+            currentPage?.startsWith("/checkout-in-store") ? "bg-gray-100" : ""
+          }`}
+        >
+          <Link href={appRoutes.checkout.inStore.checkout}>Counter</Link>
+        </li>
+      );
+
+      return navBarElements;
     }
   };
 
@@ -94,7 +118,7 @@ const NavBar = () => {
           <ul className="justify-center items-center space-y-4 text-sm md:text-lg md:flex md:space-x-6 md:space-y-0 lg:text-xl">
             {renderNavBarElements()}
             <li className="relative shadow-lg border rounded-xl p-3 hidden cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 md:block">
-              <UserTippy profileButtonClicked={profileButtonClicked}>
+              <UserTippy profileButtonClicked={profileButtonClicked} setProfileButtonClicked={setProfileButtonClicked}>
                 <Image
                   src={images.maleDefaultProfilePicture}
                   width={40}
