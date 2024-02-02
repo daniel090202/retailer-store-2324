@@ -1,4 +1,12 @@
-import { IOrderDetail } from "../interfaces";
+declare global {
+  interface IOrderDetail {
+    orderID: number;
+    productSKU: string;
+    purchasedQuantity: number;
+    totalExpense: number;
+    notes: string;
+  }
+}
 
 class OrderDetail implements IOrderDetail {
   public orderID: number;

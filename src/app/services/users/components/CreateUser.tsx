@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import icons from "@/assets/Icons";
-import Modal from "@/components/Modal";
-import Button from "@/components/Button";
+import Modal from "@/app/components/Modal";
+import Button from "@/app/components/Button";
 
 import { createUser } from "@/redux-api";
 import { appRoutes } from "@/config/pathConfig";

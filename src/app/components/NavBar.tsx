@@ -33,36 +33,39 @@ const NavBar = () => {
       const navBarElements = [];
 
       navBarElements.push(
-        <li
+        <Link
           key={0}
-          className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
+          href={appRoutes.home}
+          className={`p-4 text-gray-600 font-medium rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
             currentPage === "/" ? "bg-gray-100" : ""
           }`}
         >
-          <Link href={appRoutes.home}>Home</Link>
-        </li>
+          Home
+        </Link>
       );
 
       navBarElements.push(
-        <li
+        <Link
           key={1}
+          href={`${appRoutes.users.all}?page=1`}
           className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
             currentPage?.startsWith("/services") ? "bg-gray-100" : ""
           }`}
         >
-          <Link href={`${appRoutes.users.all}?page=1`}>Services</Link>
-        </li>
+          Services
+        </Link>
       );
 
       navBarElements.push(
-        <li
+        <Link
           key={2}
+          href={appRoutes.checkout.inStore.checkout}
           className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
             currentPage?.startsWith("/checkout-in-store") ? "bg-gray-100" : ""
           }`}
         >
-          <Link href={appRoutes.checkout.inStore.checkout}>Counter</Link>
-        </li>
+          Counter
+        </Link>
       );
 
       return navBarElements;
@@ -118,7 +121,10 @@ const NavBar = () => {
           <ul className="justify-center items-center space-y-4 text-sm md:text-lg md:flex md:space-x-6 md:space-y-0 lg:text-xl">
             {renderNavBarElements()}
             <li className="relative shadow-lg border rounded-xl p-3 hidden cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 md:block">
-              <UserTippy profileButtonClicked={profileButtonClicked} setProfileButtonClicked={setProfileButtonClicked}>
+              <UserTippy
+                profileButtonClicked={profileButtonClicked}
+                setProfileButtonClicked={setProfileButtonClicked}
+              >
                 <Image
                   src={images.maleDefaultProfilePicture}
                   width={40}

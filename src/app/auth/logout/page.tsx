@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 
 import icons from "@/assets/Icons";
 
-import Modal from "@/components/Modal";
-import Button from "@/components/Button";
+import Modal from "@/app/components/Modal";
+import Button from "@/app/components/Button";
 
 const Login = () => {
   const router = useRouter();

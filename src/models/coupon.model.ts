@@ -1,4 +1,14 @@
-import { ICoupon } from "../interfaces";
+declare global {
+  interface ICoupon {
+    orderID?: number;
+    barcode: string;
+    owner?: string;
+    discountPercentage: number;
+    usageStatus: number;
+    createdBy: string;
+    expiredIn: Date;
+  }
+}
 
 class Coupon implements ICoupon {
   public barcode: string;

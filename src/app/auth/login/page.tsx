@@ -6,8 +6,8 @@ import { signIn } from "next-auth/react";
 
 import icons from "@/assets/Icons";
 
-import Modal from "@/components/Modal";
-import Button from "@/components/Button";
+import Modal from "@/app/components/Modal";
+import Button from "@/app/components/Button";
 
 const Login = () => {
   const [loginUserModal, setLoginUserModal] = useState(false);

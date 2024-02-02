@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 import icons from "@/assets/Icons";
-import { getUsersWithQuery } from "@/services";
+import { getUsersWithUserName } from "@/services";
 import { useAppDispatch } from "@/lib/redux/store";
 import { getAllUsersSuccess } from "@/lib/redux/features";
 
@@ -9,6 +10,9 @@ import { User } from "@/models";
 
 const Filter = () => {
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
+
+  const pageNumber = searchParams?.get("page");
 
   const [filterOption, setFilterOption] = useState("-1");
   const [searchUsername, setSearchUsername] = useState("");
@@ -38,21 +42,31 @@ const Filter = () => {
           break;
       }
 
-      const usersData:
-        | {
-            statusCode: number;
-            message: string;
-            data?: Array<User>;
-          }
-        | undefined = await getUsersWithQuery(searchUsername, filter);
+      if (pageNumber !== null && pageNumber !== undefined) {
+        const usersData:
+          | {
+              statusCode: number;
+              message: string;
+              data?: {
+                totalUser: number;
+                totalPage: number;
+                allUsers: Array<User>;
+              };
+            }
+          | undefined = await getUsersWithUserName(
+          pageNumber,
+          searchUsername,
+          filter
+        );
 
-      if (usersData !== undefined && usersData.data !== undefined) {
-        dispatch(getAllUsersSuccess(usersData));
+        if (usersData !== undefined && usersData.data !== undefined) {
+          dispatch(getAllUsersSuccess(usersData));
+        }
       }
     };
 
     fetchData();
-  }, [filterOption, searchUsername]);
+  }, [pageNumber, filterOption, searchUsername, dispatch]);
 
   const handleSelectFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterOption(event.target.value);
@@ -72,9 +86,9 @@ const Filter = () => {
           className="appearance-none outline-none cursor-pointer"
         >
           <option value="0">All</option>
-          <option value="1">Alphabetical name</option>
-          <option value="2">Male users</option>
-          <option value="3">Female users</option>
+          <option value="1">Alphabetical</option>
+          <option value="2">Male</option>
+          <option value="3">Female</option>
           <option value="4">Ascending age</option>
           <option value="5">Descending age</option>
         </select>

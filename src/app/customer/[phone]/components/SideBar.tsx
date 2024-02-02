@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import icons from "@/assets/Icons";
 import { appRoutes } from "@/config/pathConfig";
 
-import Button from "@/components/Button";
+import Button from "@/app/components/Button";
 
 import {
   renderCustomerLevel,

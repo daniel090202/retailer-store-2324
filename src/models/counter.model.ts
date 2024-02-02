@@ -1,4 +1,9 @@
-import { ICounter } from "../interfaces";
+declare global {
+  interface ICounter {
+    barcode: string;
+    location: number;
+  }
+}
 
 class Counter implements ICounter {
   public barcode: string;

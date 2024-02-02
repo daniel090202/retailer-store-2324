@@ -126,7 +126,6 @@ const UserTippy = ({
     <HeadlessTippy
       placement="bottom"
       interactive={true}
-      hideOnClick={true}
       interactiveDebounce={1000}
       visible={profileButtonClicked}
       render={(attrs) => renderTippyContent(attrs)}

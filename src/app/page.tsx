@@ -1,6 +1,6 @@
 "use client";
 
-import Card from "@/components/Card";
+import Card from "@/app/components/Card";
 
 const Home = () => {
   return (

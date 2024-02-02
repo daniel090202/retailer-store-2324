@@ -6,10 +6,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import icons from "@/assets/Icons";
 
 import { appRoutes } from "@/config/pathConfig";
-import { getAllUsers, getAllArchivedUsers } from "@/redux-api";
+import { getAllArchivedUsers } from "@/redux-api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
-import Button from "@/components/Button";
+import Button from "@/app/components/Button";
 
 import Table from "../components/Table";
 import CreateUser from "../components/CreateUser";
@@ -38,13 +38,12 @@ const AllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       if (pageNumber !== null && pageNumber !== undefined) {
-        await getAllUsers(pageNumber, dispatch);
         await getAllArchivedUsers(pageNumber, dispatch);
       }
     };
 
     fetchUsers();
-  }, [dispatch, totalPage, pageNumber]);
+  }, [totalPage, pageNumber, dispatch]);
 
   const handleCreateUser = () => {
     setCreateUserModal(true);

@@ -2,37 +2,18 @@ import * as request from "@/utils/http";
 
 import { User } from "@/models";
 
-const getUsersWithQuery = async (
+const getUsersWithUserName = async (
+  pageNumber: string,
   userName: string = "",
   filter: string = ""
 ) => {
   try {
     const url = "/users";
     const params = new URLSearchParams([
+      ["page", pageNumber],
       ["userName", userName],
       ["filter", filter],
     ]);
-
-    const response = await request.get(url, { params });
-
-    const usersData: {
-      statusCode: number;
-      message: string;
-      data?: Array<User>;
-    } = response;
-
-    if (usersData.statusCode === 200) {
-      return usersData;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const getAllUsers = async (pageNumber: string) => {
-  try {
-    const url = "/users/get-all-users";
-    const params = new URLSearchParams([["page", pageNumber]]);
 
     const response = await request.get(url, { params });
 
@@ -109,4 +90,4 @@ const postUser = async (user: {
   }
 };
 
-export { getUsersWithQuery, getAllUsers, getAllArchivedUsers, postUser };
+export { getUsersWithUserName, getAllArchivedUsers, postUser };

@@ -8,7 +8,7 @@ import { appRoutes } from "@/config/pathConfig";
 import { getAllArchivedUsers } from "@/redux-api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 
-import Button from "@/components/Button";
+import Button from "@/app/components/Button";
 
 import Table from "../components/Table";
 

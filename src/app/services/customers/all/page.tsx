@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import icons from "@/assets/Icons";
-import Button from "@/components/Button";
+import Button from "@/app/components/Button";
 
 import { appRoutes } from "@/config/pathConfig";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";

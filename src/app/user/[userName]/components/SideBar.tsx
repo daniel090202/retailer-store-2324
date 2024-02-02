@@ -1,7 +1,7 @@
 "use client";
 
 import icons from "@/assets/Icons";
-import Button from "@/components/Button";
+import Button from "@/app/components/Button";
 
 import {
   renderUserActiveStatus,

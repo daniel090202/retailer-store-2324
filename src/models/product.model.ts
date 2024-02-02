@@ -1,5 +1,24 @@
-import { IProduct } from "../interfaces";
-import { ProductDetail } from "./productDetail.dto";
+import { ProductDetail } from "./productDetail.model";
+
+declare global {
+  interface IProduct {
+    SKU: string;
+    UPC: string;
+    name: string;
+    brand: string;
+    forGender: number;
+    category: Array<number>;
+    originalPrice: number;
+    salePrice: number;
+    unit: number;
+    productDetails: Array<ProductDetail>;
+    active: boolean;
+    archived: boolean;
+    verified: boolean;
+    createdAt: string;
+    updatedAt: string;
+  }
+}
 
 class Product implements IProduct {
   public SKU: string;

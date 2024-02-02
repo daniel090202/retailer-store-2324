@@ -7,34 +7,12 @@ import {
   getAllArchivedUsersFailed,
 } from "@/lib/redux/features";
 import {
-  getAllUsers as readAllUsers,
   getAllArchivedUsers as readAllArchivedUsers,
   postUser,
 } from "@/services";
 
 import { User } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
-
-const getAllUsers = async (pageNumber: string, dispatch: AppDispatch) => {
-  dispatch(getAllUsersStart());
-
-  try {
-    const usersData = (await readAllUsers(pageNumber)) as {
-      statusCode: number;
-      message: string;
-      data?: {
-        totalUser: number;
-        totalPage: number;
-        allUsers: Array<User>;
-      };
-    };
-
-    dispatch(getAllUsersSuccess(usersData));
-  } catch (error) {
-    console.log(error);
-    dispatch(getAllUsersFailed());
-  }
-};
 
 const getAllArchivedUsers = async (
   pageNumber: string,
@@ -80,4 +58,4 @@ const createUser = async (createdUser: {
   }
 };
 
-export { createUser, getAllUsers, getAllArchivedUsers };
+export { createUser, getAllArchivedUsers };

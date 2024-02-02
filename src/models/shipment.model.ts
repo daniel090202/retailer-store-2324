@@ -1,5 +1,12 @@
-import { Order } from "./order.dto";
-import { IShipment } from "../interfaces";
+import { Order } from "./order.model";
+
+declare global {
+  interface IShipment {
+    barcode: string;
+    location: string;
+    orders: Array<Order>;
+  }
+}
 
 class Shipment implements IShipment {
   public barcode: string;

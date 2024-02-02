@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
-import Header from "@/components/Header";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
+import Header from "@/app/components/Header";
+import NavBar from "@/app/components/NavBar";
+import Footer from "@/app/components/Footer";
 
 import StoreProvider from "@/lib/redux/StoreProvider";
 import NextAuthProviders from "@/lib/next-auth/NextAuthProviders";

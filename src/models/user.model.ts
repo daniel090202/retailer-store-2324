@@ -1,4 +1,21 @@
-import { IUser } from "../interfaces";
+declare global {
+  interface IUser {
+    email: string;
+    gender: number;
+    age: number;
+    phone: string;
+    address: number;
+    position: number;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    middleName: string;
+    admin: boolean;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+  }
+}
 
 class User implements IUser {
   public email: string;

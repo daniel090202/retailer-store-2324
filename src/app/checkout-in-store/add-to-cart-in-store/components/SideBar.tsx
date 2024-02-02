@@ -20,7 +20,7 @@ import {
   getCustomersWithQuery,
 } from "@/services";
 
-import Button from "@/components/Button";
+import Button from "@/app/components/Button";
 import { User, Product, Customer, ProductDetail } from "@/models";
 
 import CreateCustomer from "./CreateCustomer";
