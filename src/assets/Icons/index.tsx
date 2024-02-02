@@ -35,7 +35,10 @@ import {
   faHandsBubbles,
   IconDefinition,
   faRightFromBracket,
+  faCircleChevronLeft,
+  faCircleChevronRight,
   faArrowUpRightFromSquare,
+  faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 const wrapIcon = (icon: IconDefinition) => {
@@ -70,6 +73,8 @@ const icons = {
   addressCard: wrapIcon(faAddressCard),
   handsWaving: wrapIcon(faHandsBubbles),
   entering: wrapIcon(faRightFromBracket),
+  chevronLeft: wrapIcon(faCircleChevronLeft),
+  chevronRight: wrapIcon(faCircleChevronRight),
   solidLinkDirect: wrapIcon(faArrowUpRightFromSquare),
 };
 

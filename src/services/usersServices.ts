@@ -29,16 +29,21 @@ const getUsersWithQuery = async (
   }
 };
 
-const getAllUsers = async () => {
+const getAllUsers = async (pageNumber: string) => {
   try {
     const url = "/users/get-all-users";
+    const params = new URLSearchParams([["page", pageNumber]]);
 
-    const response = await request.get(url);
+    const response = await request.get(url, { params });
 
     const usersData: {
       statusCode: number;
       message: string;
-      data?: Array<User>;
+      data?: {
+        totalUser: number;
+        totalPage: number;
+        allUsers: Array<User>;
+      };
     } = response;
 
     if (usersData.statusCode === 200) {
@@ -49,16 +54,21 @@ const getAllUsers = async () => {
   }
 };
 
-const getAllArchivedUsers = async () => {
+const getAllArchivedUsers = async (pageNumber: string) => {
   try {
     const url = "/users/get-all-archived-users";
+    const params = new URLSearchParams([["page", pageNumber]]);
 
-    const response = await request.get(url);
+    const response = await request.get(url, { params });
 
     const archivedUsersData: {
       statusCode: number;
       message: string;
-      data?: Array<User>;
+      data?: {
+        totalPage: number;
+        totalArchivedUser: number;
+        allArchivedUsers: Array<User>;
+      };
     } = response;
 
     if (archivedUsersData.statusCode === 200) {

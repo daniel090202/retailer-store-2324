@@ -29,13 +29,13 @@ const NavBar = () => {
   }, [router, session.status]);
 
   const renderNavBarElements = () => {
-    if (session.status !== "unauthenticated") {
+    if (session.status === "authenticated") {
       return navigationRoutes.map((route, index) => {
         return (
           <li
             key={index}
             className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
-              route.path === currentPage ? "bg-gray-100" : ""
+              route.path.includes(currentPage || "") ? "bg-gray-100" : ""
             }`}
           >
             <Link href={route.path}>{route.title}</Link>

@@ -10,12 +10,14 @@ const SideBar = () => {
     <aside className="md:w-1/4 md:m-2">
       <Menu className="flex md:flex-col">
         {servicesSidebarRoutes.map((route, index) => {
+          const path = `${route.path}?page=1`;
+
           return (
             <Item
               key={index}
-              title={route.title}
-              path={route.path}
+              path={path}
               icon={route.icon}
+              title={route.title}
             />
           );
         })}

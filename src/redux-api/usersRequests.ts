@@ -6,10 +6,59 @@ import {
   getAllArchivedUsersSuccess,
   getAllArchivedUsersFailed,
 } from "@/lib/redux/features";
-import { getAllUsers, getAllArchivedUsers, postUser } from "@/services";
+import {
+  getAllUsers as readAllUsers,
+  getAllArchivedUsers as readAllArchivedUsers,
+  postUser,
+} from "@/services";
 
 import { User } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
+
+const getAllUsers = async (pageNumber: string, dispatch: AppDispatch) => {
+  dispatch(getAllUsersStart());
+
+  try {
+    const usersData = (await readAllUsers(pageNumber)) as {
+      statusCode: number;
+      message: string;
+      data?: {
+        totalUser: number;
+        totalPage: number;
+        allUsers: Array<User>;
+      };
+    };
+
+    dispatch(getAllUsersSuccess(usersData));
+  } catch (error) {
+    console.log(error);
+    dispatch(getAllUsersFailed());
+  }
+};
+
+const getAllArchivedUsers = async (
+  pageNumber: string,
+  dispatch: AppDispatch
+) => {
+  dispatch(getAllArchivedUsersStart());
+
+  try {
+    const archivedUsersData = (await readAllArchivedUsers(pageNumber)) as {
+      statusCode: number;
+      message: string;
+      data?: {
+        totalPage: number;
+        totalArchivedUser: number;
+        allArchivedUsers: Array<User>;
+      };
+    };
+
+    dispatch(getAllArchivedUsersSuccess(archivedUsersData));
+  } catch (error) {
+    console.log(error);
+    dispatch(getAllArchivedUsersFailed());
+  }
+};
 
 const createUser = async (createdUser: {
   firstName: string;
@@ -31,38 +80,4 @@ const createUser = async (createdUser: {
   }
 };
 
-const readAllUsers = async (dispatch: AppDispatch) => {
-  dispatch(getAllUsersStart());
-
-  try {
-    const usersData = (await getAllUsers()) as {
-      statusCode: number;
-      message: string;
-      data: Array<User>;
-    };
-
-    dispatch(getAllUsersSuccess(usersData));
-  } catch (error) {
-    console.log(error);
-    dispatch(getAllUsersFailed());
-  }
-};
-
-const readAllArchivedUsers = async (dispatch: AppDispatch) => {
-  dispatch(getAllArchivedUsersStart());
-
-  try {
-    const archivedUsersData = (await getAllArchivedUsers()) as {
-      statusCode: number;
-      message: string;
-      data: Array<User>;
-    };
-
-    dispatch(getAllArchivedUsersSuccess(archivedUsersData));
-  } catch (error) {
-    console.log(error);
-    dispatch(getAllArchivedUsersFailed());
-  }
-};
-
-export { createUser, readAllUsers, readAllArchivedUsers };
+export { createUser, getAllUsers, getAllArchivedUsers };

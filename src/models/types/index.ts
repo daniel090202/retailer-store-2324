@@ -67,7 +67,11 @@ declare global {
     allUsers?: {
       statusCode: number;
       message: string;
-      data?: Array<User>;
+      data?: {
+        totalUser: number;
+        totalPage: number;
+        allUsers: Array<User>;
+      };
     };
     isFetching: boolean;
   };
@@ -77,7 +81,11 @@ declare global {
     allArchivedUsers?: {
       statusCode: number;
       message: string;
-      data?: Array<User>;
+      data?: {
+        totalPage: number;
+        totalArchivedUser: number;
+        allArchivedUsers: Array<User>;
+      };
     };
     isFetching: boolean;
   };

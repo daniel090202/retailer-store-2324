@@ -25,11 +25,10 @@ const appRoutes = {
       orders: "/website-orders",
     },
   },
-
   getCustomerPath: function (
     phone: string = "",
     option: number = 0,
-    orderID: number = 0,
+    orderID: number = 0
   ) {
     switch (option) {
       case 0:
@@ -56,7 +55,7 @@ const navigationRoutes: Array<{
   },
   {
     title: "Services",
-    path: appRoutes.users.all,
+    path: `${appRoutes.users.all}?page=1`,
     icon: undefined,
   },
   {

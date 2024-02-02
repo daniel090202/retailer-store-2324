@@ -22,7 +22,11 @@ const usersSlice = createSlice({
       action: PayloadAction<{
         statusCode: number;
         message: string;
-        data: Array<User>;
+        data?: {
+          totalPage: number;
+          totalArchivedUser: number;
+          allArchivedUsers: Array<User>;
+        };
       }>
     ) => {
       state.archivedUsers.error = false;
