@@ -22,7 +22,11 @@ const customersSlice = createSlice({
       action: PayloadAction<{
         statusCode: number;
         message: string;
-        data: Array<Customer>;
+        data?: {
+          totalPage: number;
+          totalArchivedCustomer: number;
+          allArchivedCustomers: Array<Customer>;
+        };
       }>
     ) => {
       state.archivedCustomers.error = false;

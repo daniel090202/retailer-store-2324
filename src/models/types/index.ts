@@ -47,7 +47,11 @@ declare global {
     allCustomers?: {
       statusCode: number;
       message: string;
-      data?: Array<Customer>;
+      data?: {
+        totalPage: number;
+        totalCustomer: number;
+        allCustomers: Array<Customer>;
+      };
     };
     isFetching: boolean;
   };
@@ -57,7 +61,11 @@ declare global {
     allArchivedCustomers?: {
       statusCode: number;
       message: string;
-      data?: Array<Customer>;
+      data?: {
+        totalPage: number;
+        totalArchivedCustomer: number;
+        allArchivedCustomers: Array<Customer>;
+      };
     };
     isFetching: boolean;
   };
@@ -95,7 +103,11 @@ declare global {
     allProducts?: {
       statusCode: number;
       message: string;
-      data?: Array<Product>;
+      data?: {
+        totalPage: number;
+        totalProduct: number;
+        allProducts: Array<Product>;
+      };
     };
     isFetching: boolean;
   };
@@ -105,7 +117,11 @@ declare global {
     allArchivedProducts?: {
       statusCode: number;
       message: string;
-      data?: Array<Product>;
+      data?: {
+        totalPage: number;
+        totalArchivedProduct: number;
+        allArchivedProducts: Array<Product>;
+      };
     };
     isFetching: boolean;
   };

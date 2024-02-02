@@ -22,7 +22,11 @@ const productsSlice = createSlice({
       action: PayloadAction<{
         statusCode: number;
         message: string;
-        data?: Array<Product>;
+        data?: {
+          totalPage: number;
+          totalArchivedProduct: number;
+          allArchivedProducts: Array<Product>;
+        };
       }>
     ) => {
       state.archivedProducts.error = false;

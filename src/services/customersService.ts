@@ -30,17 +30,21 @@ const getCustomersWithQuery = async (
   }
 };
 
-const getCustomers = async () => {
+const getCustomers = async (pageNumber: string) => {
   try {
     const url = "/customers/get-all-customers";
+    const params = new URLSearchParams([["page", pageNumber]]);
 
-    const response = await request.get(url);
+    const response = await request.get(url, { params });
 
     const customersData: {
       statusCode: number;
       message: string;
-      data: Array<Customer>;
-      accessToken: string;
+      data?: {
+        totalPage: number;
+        totalCustomer: number;
+        allCustomers: Array<Customer>;
+      };
     } = response;
 
     if (customersData.statusCode === 200) {
@@ -51,17 +55,21 @@ const getCustomers = async () => {
   }
 };
 
-const getArchivedCustomers = async () => {
+const getArchivedCustomers = async (pageNumber: string) => {
   try {
     const url = "/customers/get-all-archived-customers";
+    const params = new URLSearchParams([["page", pageNumber]]);
 
-    const response = await request.get(url);
+    const response = await request.get(url, { params });
 
     const archivedCustomersData: {
       statusCode: number;
       message: string;
-      data: Array<Customer>;
-      accessToken: string;
+      data?: {
+        totalPage: number;
+        totalArchivedCustomer: number;
+        allArchivedCustomers: Array<Customer>;
+      };
     } = response;
 
     if (archivedCustomersData.statusCode === 200) {

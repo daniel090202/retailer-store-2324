@@ -12,31 +12,42 @@ import { getProducts, getArchivedProducts } from "@/services";
 import { Product } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
 
-const getAllProducts = async (dispatch: AppDispatch) => {
+const getAllProducts = async (pageNumber: string, dispatch: AppDispatch) => {
   dispatch(getAllProductsStart());
 
   try {
-    const productsData = (await getProducts()) as {
+    const allProductsData = (await getProducts(pageNumber)) as {
       statusCode: number;
       message: string;
-      data: Array<Product>;
+      data?: {
+        totalPage: number;
+        totalProduct: number;
+        allProducts: Array<Product>;
+      };
     };
 
-    dispatch(getAllProductsSuccess(productsData));
+    dispatch(getAllProductsSuccess(allProductsData));
   } catch (error) {
     console.log(error);
     dispatch(getAllProductsFailed());
   }
 };
 
-const getAllArchivedProducts = async (dispatch: AppDispatch) => {
+const getAllArchivedProducts = async (
+  pageNumber: string,
+  dispatch: AppDispatch
+) => {
   dispatch(getAllArchivedProductsStart());
 
   try {
-    const archivedProductsData = (await getArchivedProducts()) as {
+    const archivedProductsData = (await getArchivedProducts(pageNumber)) as {
       statusCode: number;
       message: string;
-      data: Array<Product>;
+      data?: {
+        totalPage: number;
+        totalArchivedProduct: number;
+        allArchivedProducts: Array<Product>;
+      };
     };
 
     dispatch(getAllArchivedProductsSuccess(archivedProductsData));

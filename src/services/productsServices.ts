@@ -50,16 +50,21 @@ const getProductsWithUPC = async (UPC: string = "", filter: string = "all") => {
   }
 };
 
-const getProducts = async () => {
+const getProducts = async (pageNumber: string) => {
   try {
     const url = "/products/get-all-products";
+    const params = new URLSearchParams([["page", pageNumber]]);
 
-    const response = await request.get(url);
+    const response = await request.get(url, { params });
 
     const productsData: {
       statusCode: number;
       message: string;
-      data: Array<Product>;
+      data?: {
+        totalPage: number;
+        totalProduct: number;
+        allProducts: Array<Product>;
+      };
     } = response;
 
     if (productsData.statusCode === 200) {
@@ -70,16 +75,21 @@ const getProducts = async () => {
   }
 };
 
-const getArchivedProducts = async () => {
+const getArchivedProducts = async (pageNumber: string) => {
   try {
     const url = "/products/get-all-archived-products";
+    const params = new URLSearchParams([["page", pageNumber]]);
 
-    const response = await request.get(url);
+    const response = await request.get(url, { params });
 
     const archivedProductsData: {
       statusCode: number;
       message: string;
-      data: Array<Product>;
+      data?: {
+        totalPage: number;
+        totalArchivedProduct: number;
+        allArchivedProducts: Array<Product>;
+      };
     } = response;
 
     if (archivedProductsData.statusCode === 200) {

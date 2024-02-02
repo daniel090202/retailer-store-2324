@@ -21,10 +21,10 @@ const AllArchivedUsers = () => {
     return state.archivedUsersReducer.archivedUsers.allArchivedUsers?.data;
   });
 
+  const pageNumber = searchParams?.get("page");
+  const totalPage = allArchivedUsersData?.totalPage;
   const allArchivedUsers = allArchivedUsersData?.allArchivedUsers;
   const totalArchivedUser = allArchivedUsersData?.totalArchivedUser;
-  const totalPage = allArchivedUsersData?.totalPage;
-  const pageNumber = searchParams?.get("page");
 
   useEffect(() => {
     const fetchUsers = async () => {
