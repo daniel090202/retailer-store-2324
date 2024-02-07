@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import icons from "@/assets/Icons";
-import { getOrdersWithPhone, getCustomersWithQuery } from "@/services";
+import { getOrdersWithPhone, getCustomerWithPhoneNumber } from "@/services";
 
 import { Order, Customer } from "@/models";
 
@@ -33,12 +33,12 @@ const PurchasedHistory = ({ params }: { params: { phone: string } }) => {
         | {
             statusCode: number;
             message: string;
-            data?: Array<Customer>;
+            data?: Customer;
           }
-        | undefined = await getCustomersWithQuery(params.phone);
+        | undefined = await getCustomerWithPhoneNumber(params.phone);
 
       if (customersData?.data !== undefined) {
-        setCustomer(customersData.data[0]);
+        setCustomer(customersData.data);
       }
 
       const ordersData:

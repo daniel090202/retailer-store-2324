@@ -15,9 +15,9 @@ import { allPaymentMethods, renderPaymentMethod } from "@/utils";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/store";
 import {
   createOrder,
-  getProductsWithUPC,
+  getProductWithUPC,
   getProductsWithSKU,
-  getCustomersWithQuery,
+  getAllCustomersWithPhoneNumber,
 } from "@/services";
 
 import Button from "@/app/components/Button";
@@ -108,14 +108,12 @@ const SideBar = () => {
           | {
               statusCode: number;
               message: string;
-              data?: Array<Product>;
+              data?: Product;
             }
-          | undefined = await getProductsWithUPC(
-          productDetailsData.data[0].UPC
-        );
+          | undefined = await getProductWithUPC(productDetailsData.data[0].UPC);
 
-        if (productData?.data !== undefined && productData.data.length > 0) {
-          setProductResult(productData.data[0]);
+        if (productData?.data !== undefined) {
+          setProductResult(productData.data);
           setProductDetailsResult(productDetailsData.data);
         }
       }
@@ -132,7 +130,7 @@ const SideBar = () => {
             message: string;
             data?: Array<Customer>;
           }
-        | undefined = await getCustomersWithQuery(searchCustomer);
+        | undefined = await getAllCustomersWithPhoneNumber(searchCustomer);
 
       if (
         customersData?.data !== undefined &&

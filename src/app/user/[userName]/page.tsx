@@ -6,13 +6,13 @@ import { useState, useEffect } from "react";
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { getUsersWithQuery } from "@/services";
 import { User as UserDTO } from "@/models";
 import {
   renderUserGender,
   renderUserAddress,
   renderUserPosition,
 } from "@/utils";
+import { getUserWithUserName } from "@/services";
 
 import SideBar from "./components/SideBar";
 
@@ -40,17 +40,17 @@ const User = ({ params }: { params: { userName: string } }) => {
         | {
             statusCode: number;
             message: string;
-            data?: Array<UserDTO>;
+            data?: UserDTO;
           }
-        | undefined = await getUsersWithQuery(params.userName);
+        | undefined = await getUserWithUserName(params.userName);
 
-      if (usersData !== undefined && usersData.data !== undefined) {
-        setUser(usersData.data[0]);
+      if (usersData?.data !== undefined) {
+        setUser(usersData.data);
       }
     };
 
     fetchData();
-  }, []);
+  }, [params.userName]);
 
   const normalizeDateTime = (dateTime: string): React.ReactNode => {
     const newDateTime = new Date(dateTime);
@@ -146,15 +146,6 @@ const User = ({ params }: { params: { userName: string } }) => {
             </p>
           </div>
           <div className="my-4">
-            <label htmlFor="gender">Gender</label>
-            <p
-              id="gender"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {renderUserGender(user.gender)}
-            </p>
-          </div>
-          <div className="my-4">
             <label htmlFor="position">Position</label>
             <p
               id="position"
@@ -163,6 +154,45 @@ const User = ({ params }: { params: { userName: string } }) => {
               {renderUserPosition(user.position)}
             </p>
           </div>
+          <fieldset className="my-4">
+            <legend>Gender</legend>
+            <div className="my-2">
+              <input
+                id="male"
+                type="radio"
+                name="gender"
+                checked={user.gender === 0}
+                className="accent-gray-400"
+              />
+              <label htmlFor="male" className="mx-4">
+                Male
+              </label>
+            </div>
+            <div className="my-2">
+              <input
+                id="female"
+                type="radio"
+                name="gender"
+                className="accent-gray-400"
+                checked={user.gender === 1}
+              />
+              <label htmlFor="female" className="mx-4">
+                Female
+              </label>
+            </div>
+            <div className="my-2">
+              <input
+                id="other"
+                type="radio"
+                name="gender"
+                checked={user.gender === 2}
+                className="accent-gray-400"
+              />
+              <label htmlFor="other" className="mx-4">
+                Other
+              </label>
+            </div>
+          </fieldset>
         </div>
         <div className="flex flex-col items-end">
           <div className="flex mt-2">

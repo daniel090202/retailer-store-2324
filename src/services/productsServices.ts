@@ -26,20 +26,17 @@ const getProductsWithSKU = async (SKU: string = "", filter: string = "all") => {
   }
 };
 
-const getProductsWithUPC = async (UPC: string = "", filter: string = "all") => {
+const getProductWithUPC = async (UPC: string = "") => {
   try {
     const url = "/products/get-product-with-upc";
-    const params = new URLSearchParams([
-      ["UPC", UPC],
-      ["filter", filter],
-    ]);
+    const params = new URLSearchParams([["UPC", UPC]]);
 
     const response = await request.get(url, { params });
 
     const productsData: {
       statusCode: number;
       message: string;
-      data?: Array<Product>;
+      data?: Product;
     } = response;
 
     if (productsData.statusCode === 200) {
@@ -50,10 +47,20 @@ const getProductsWithUPC = async (UPC: string = "", filter: string = "all") => {
   }
 };
 
-const getProducts = async (pageNumber: string) => {
+const getProductsWithUPC = async (
+  pageNumber: string = "1",
+  UPC: string = "",
+  filter: string = "all",
+  archivedProductStatus: string = "archived"
+) => {
   try {
-    const url = "/products/get-all-products";
-    const params = new URLSearchParams([["page", pageNumber]]);
+    const url = "/products/get-products-with-upc";
+    const params = new URLSearchParams([
+      ["page", pageNumber],
+      ["UPC", UPC],
+      ["filter", filter],
+      ["archivedProductStatus", archivedProductStatus],
+    ]);
 
     const response = await request.get(url, { params });
 
@@ -142,8 +149,8 @@ const createProduct = async (product: {
 
 export {
   getProductsWithSKU,
+  getProductWithUPC,
   getProductsWithUPC,
-  getProducts,
   getArchivedProducts,
   createProduct,
 };

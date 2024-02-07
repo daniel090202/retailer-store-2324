@@ -59,7 +59,7 @@ const Filter = () => {
           filter
         );
 
-        if (usersData !== undefined && usersData.data !== undefined) {
+        if (usersData?.data !== undefined) {
           dispatch(getAllUsersSuccess(usersData));
         }
       }

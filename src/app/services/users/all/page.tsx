@@ -67,14 +67,12 @@ const AllUsers = () => {
 
       router.push(path);
     }
-
-    return;
   };
 
   const handleViewNextPage = () => {
     if (
-      totalPage !== undefined &&
       pageNumber !== null &&
+      totalPage !== undefined &&
       pageNumber !== undefined &&
       parseInt(pageNumber) < totalPage
     ) {
@@ -83,8 +81,6 @@ const AllUsers = () => {
 
       router.push(path);
     }
-
-    return;
   };
 
   return (

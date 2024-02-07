@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { getProductsWithUPC } from "@/services";
+import { getProductWithUPC } from "@/services";
 import { renderProductUnit, renderProductCategory } from "@/utils";
 
 import { Product as ProductDTO } from "@/models";
@@ -53,17 +53,17 @@ const Product = ({ params }: { params: { UPC: string } }) => {
         | {
             statusCode: number;
             message: string;
-            data?: Array<ProductDTO>;
+            data?: ProductDTO;
           }
-        | undefined = await getProductsWithUPC(params.UPC);
+        | undefined = await getProductWithUPC(params.UPC);
 
-      if (productsData !== undefined && productsData.data !== undefined) {
-        setProduct(productsData.data[0]);
+      if (productsData?.data !== undefined) {
+        setProduct(productsData.data);
       }
     };
 
     fetchData();
-  }, []);
+  }, [params.UPC]);
 
   const normalizeDateTime = (dateTime: string): React.ReactNode => {
     const newDateTime = new Date(dateTime);

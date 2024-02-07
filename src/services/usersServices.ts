@@ -2,13 +2,34 @@ import * as request from "@/utils/http";
 
 import { User } from "@/models";
 
+const getUserWithUserName = async (userName: string = "") => {
+  try {
+    const url = "/users/get-user-with-username";
+    const params = new URLSearchParams([["userName", userName]]);
+
+    const response = await request.get(url, { params });
+
+    const usersData: {
+      statusCode: number;
+      message: string;
+      data?: User;
+    } = response;
+
+    if (usersData.statusCode === 200) {
+      return usersData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getUsersWithUserName = async (
-  pageNumber: string,
+  pageNumber: string = "1",
   userName: string = "",
   filter: string = ""
 ) => {
   try {
-    const url = "/users";
+    const url = "/users/get-users-with-username";
     const params = new URLSearchParams([
       ["page", pageNumber],
       ["userName", userName],
@@ -90,4 +111,9 @@ const postUser = async (user: {
   }
 };
 
-export { getUsersWithUserName, getAllArchivedUsers, postUser };
+export {
+  getUserWithUserName,
+  getUsersWithUserName,
+  getAllArchivedUsers,
+  postUser,
+};

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 import icons from "@/assets/Icons/index";
 import { getProductsWithUPC } from "@/services";
@@ -9,9 +10,13 @@ import { Product } from "@/models";
 
 const Filter = () => {
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
 
-  const [searchSKU, setSearchSKU] = useState("");
-  const [filterOption, setFilterOption] = useState("-1");
+  const pageNumber = searchParams?.get("page");
+  const archivedProductStatus: string = "unarchived";
+
+  const [searchUPC, setSearchUPC] = useState<string>("");
+  const [filterOption, setFilterOption] = useState<string>("-1");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,21 +43,32 @@ const Filter = () => {
           break;
       }
 
-      const productsData:
-        | {
-            statusCode: number;
-            message: string;
-            data?: Array<Product>;
-          }
-        | undefined = await getProductsWithUPC(searchSKU, filter);
+      if (pageNumber !== null && pageNumber !== undefined) {
+        const productsData:
+          | {
+              statusCode: number;
+              message: string;
+              data?: {
+                totalPage: number;
+                totalProduct: number;
+                allProducts: Array<Product>;
+              };
+            }
+          | undefined = await getProductsWithUPC(
+          pageNumber,
+          searchUPC,
+          filter,
+          archivedProductStatus
+        );
 
-      if (productsData !== undefined && productsData.data !== undefined) {
-        dispatch(getAllProductsSuccess(productsData));
+        if (productsData?.data !== undefined) {
+          dispatch(getAllProductsSuccess(productsData));
+        }
       }
     };
 
     fetchData();
-  }, [dispatch, searchSKU, filterOption]);
+  }, [pageNumber, searchUPC, filterOption, dispatch]);
 
   const handleSelectFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterOption(event.target.value);
@@ -72,7 +88,7 @@ const Filter = () => {
           className="appearance-none outline-none cursor-pointer"
         >
           <option value="0">All</option>
-          <option value="1">Alphabetical name</option>
+          <option value="1">Alphabetical</option>
           <option value="2">Ascending price</option>
           <option value="3">Descending price</option>
           <option value="4">Ascending stock</option>
@@ -81,10 +97,10 @@ const Filter = () => {
       </div>
       <input
         type="text"
-        value={searchSKU}
-        placeholder="Search for stock keeping unit"
+        value={searchUPC}
+        placeholder="Search for universal product code"
         onChange={(event) => {
-          setSearchSKU(event.target.value);
+          setSearchUPC(event.target.value);
         }}
         className="p-2 mx-2 w-72 border rounded-xl shadow-lg outline-none"
       />

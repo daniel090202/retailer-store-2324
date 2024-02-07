@@ -1,17 +1,22 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 import icons from "@/assets/Icons/index";
-import { getCustomersWithQuery } from "@/services";
 import { useAppDispatch } from "@/lib/redux/store";
+import { getCustomersWithPhoneNumber } from "@/services";
 import { getAllCustomersSuccess } from "@/lib/redux/features";
 
 import { Customer } from "@/models";
 
 const Filter = () => {
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
 
-  const [filterOption, setFilterOption] = useState("-1");
-  const [searchCustomerPhone, setSearchCustomerPhone] = useState("");
+  const pageNumber = searchParams?.get("page");
+  const archivedCustomerStatus: string = "unarchived";
+
+  const [filterOption, setFilterOption] = useState<string>("-1");
+  const [searchCustomerPhone, setSearchCustomerPhone] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,21 +37,32 @@ const Filter = () => {
           break;
       }
 
-      const customersData:
-        | {
-            statusCode: number;
-            message: string;
-            data?: Array<Customer>;
-          }
-        | undefined = await getCustomersWithQuery(searchCustomerPhone, filter);
+      if (pageNumber !== null && pageNumber !== undefined) {
+        const customersData:
+          | {
+              statusCode: number;
+              message: string;
+              data?: {
+                totalPage: number;
+                totalCustomer: number;
+                allCustomers: Array<Customer>;
+              };
+            }
+          | undefined = await getCustomersWithPhoneNumber(
+          pageNumber,
+          searchCustomerPhone,
+          filter,
+          archivedCustomerStatus
+        );
 
-      if (customersData !== undefined && customersData.data !== undefined) {
-        dispatch(getAllCustomersSuccess(customersData));
+        if (customersData?.data !== undefined) {
+          dispatch(getAllCustomersSuccess(customersData));
+        }
       }
     };
 
     fetchData();
-  }, [filterOption, searchCustomerPhone]);
+  }, [pageNumber, searchCustomerPhone, filterOption, dispatch]);
 
   const handleSelectFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterOption(event.target.value);

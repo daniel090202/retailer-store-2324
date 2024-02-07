@@ -1,37 +1,13 @@
 import {
-  getAllCustomersStart,
-  getAllCustomersSuccess,
-  getAllCustomersFailed,
   getAllArchivedCustomersStart,
   getAllArchivedCustomersSuccess,
   getAllArchivedCustomersFailed,
 } from "@/lib/redux/features";
 
-import { getCustomers, getArchivedCustomers } from "@/services";
+import { getArchivedCustomers } from "@/services";
 
 import { Customer } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
-
-const getAllCustomers = async (pageNumber: string, dispatch: AppDispatch) => {
-  dispatch(getAllCustomersStart());
-
-  try {
-    const customersData = (await getCustomers(pageNumber)) as {
-      statusCode: number;
-      message: string;
-      data?: {
-        totalPage: number;
-        totalCustomer: number;
-        allCustomers: Array<Customer>;
-      };
-    };
-
-    dispatch(getAllCustomersSuccess(customersData));
-  } catch (error) {
-    console.log(error);
-    dispatch(getAllCustomersFailed());
-  }
-};
 
 const getAllArchivedCustomers = async (
   pageNumber: string,
@@ -57,4 +33,4 @@ const getAllArchivedCustomers = async (
   }
 };
 
-export { getAllCustomers, getAllArchivedCustomers };
+export { getAllArchivedCustomers };

@@ -7,8 +7,8 @@ import icons from "@/assets/Icons";
 import Button from "@/app/components/Button";
 
 import { appRoutes } from "@/config/pathConfig";
+import { getAllArchivedProducts } from "@/redux-api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
-import { getAllProducts, getAllArchivedProducts } from "@/redux-api";
 
 import Table from "../components/Table";
 import CreateProduct from "../components/CreateProduct";
@@ -39,7 +39,6 @@ const AllProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       if (pageNumber !== null && pageNumber !== undefined) {
-        await getAllProducts(pageNumber, dispatch);
         await getAllArchivedProducts(pageNumber, dispatch);
       }
     };
@@ -69,14 +68,12 @@ const AllProducts = () => {
 
       router.push(path);
     }
-
-    return;
   };
 
   const handleViewNextPage = () => {
     if (
-      totalPage !== undefined &&
       pageNumber !== null &&
+      totalPage !== undefined &&
       pageNumber !== undefined &&
       parseInt(pageNumber) < totalPage
     ) {
@@ -85,8 +82,6 @@ const AllProducts = () => {
 
       router.push(path);
     }
-
-    return;
   };
 
   return (
@@ -104,17 +99,14 @@ const AllProducts = () => {
         </div>
         <div>
           <Button
-            leftIcon={icons.plus}
-            rightIcon=""
             className="mx-2"
+            leftIcon={icons.plus}
             onClick={() => handleCreateProduct()}
           >
             New product
           </Button>
           <Button
             leftIcon={icons.archive}
-            rightIcon=""
-            className=""
             onClick={() => handleViewArchivedProducts()}
           >
             Archive ({allArchivedProducts?.length.toLocaleString()})

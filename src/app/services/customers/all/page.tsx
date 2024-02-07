@@ -7,8 +7,8 @@ import icons from "@/assets/Icons";
 import Button from "@/app/components/Button";
 
 import { appRoutes } from "@/config/pathConfig";
+import { getAllArchivedCustomers } from "@/redux-api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
-import { getAllCustomers, getAllArchivedCustomers } from "@/redux-api";
 
 import Table from "../components/Table";
 
@@ -27,6 +27,7 @@ const AllCustomers = () => {
   });
 
   const pageNumber = searchParams?.get("page");
+  const archivedCustomerStatus: string = "unarchived";
   const allCustomers = allCustomersData?.allCustomers;
   const totalCustomer = allCustomersData?.totalCustomer;
   const allArchivedCustomers = allArchivedCustomersData?.allArchivedCustomers;
@@ -36,7 +37,6 @@ const AllCustomers = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       if (pageNumber !== null && pageNumber !== undefined) {
-        await getAllCustomers(pageNumber, dispatch);
         await getAllArchivedCustomers(pageNumber, dispatch);
       }
     };

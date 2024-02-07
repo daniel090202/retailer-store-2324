@@ -6,8 +6,9 @@ import { useState, useEffect } from "react";
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { getCustomersWithQuery } from "@/services";
 import { renderCustomerGender } from "@/utils";
+import { getCustomerWithPhoneNumber } from "@/services";
+
 import { Customer as CustomerDTO } from "@/models";
 
 import SideBar from "../components/SideBar";
@@ -34,12 +35,12 @@ const Customer = ({ params }: { params: { phone: string } }) => {
         | {
             statusCode: number;
             message: string;
-            data?: Array<CustomerDTO>;
+            data?: CustomerDTO;
           }
-        | undefined = await getCustomersWithQuery(params.phone);
+        | undefined = await getCustomerWithPhoneNumber(params.phone);
 
       if (customersData?.data !== undefined) {
-        setCustomer(customersData.data[0]);
+        setCustomer(customersData.data);
       }
     };
 
@@ -118,15 +119,45 @@ const Customer = ({ params }: { params: { phone: string } }) => {
               {customer.age}
             </p>
           </div>
-          <div className="my-4">
-            <label htmlFor="gender">Gender</label>
-            <p
-              id="gender"
-              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-            >
-              {renderCustomerGender(customer.gender)}
-            </p>
-          </div>
+          <fieldset className="my-4">
+            <legend>Gender</legend>
+            <div className="my-2">
+              <input
+                type="radio"
+                id="male"
+                name="gender"
+                checked={customer.gender === 0}
+                className="accent-gray-400"
+              />
+              <label htmlFor="male" className="mx-4">
+                Male
+              </label>
+            </div>
+            <div className="my-2">
+              <input
+                type="radio"
+                id="female"
+                name="gender"
+                className="accent-gray-400"
+                checked={customer.gender === 1}
+              />
+              <label htmlFor="female" className="mx-4">
+                Female
+              </label>
+            </div>
+            <div className="my-2">
+              <input
+                type="radio"
+                id="other"
+                name="gender"
+                checked={customer.gender === 2}
+                className="accent-gray-400"
+              />
+              <label htmlFor="other" className="mx-4">
+                Other
+              </label>
+            </div>
+          </fieldset>
         </div>
         <div className="flex flex-col items-end">
           <div className="flex mt-2">

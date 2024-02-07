@@ -8,7 +8,6 @@ import { Product } from "@/models";
 const Table = ({ product }: { product?: Product }) => {
   const productDetails = product?.productDetails;
 
-  console.log(product)
   const renderProductDetails = (): React.ReactNode => {
     return productDetails?.map((productDetail, index) => {
       return (

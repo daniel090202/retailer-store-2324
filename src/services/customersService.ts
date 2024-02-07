@@ -2,17 +2,67 @@ import * as request from "@/utils/http";
 
 import { Customer } from "@/models";
 
-const getCustomersWithQuery = async (
+const getCustomerWithPhoneNumber = async (phone: string = "") => {
+  try {
+    const url = "/customers/get-customer-with-phone-number";
+    const params = new URLSearchParams([["phone", phone]]);
+
+    const response = await request.get(url, { params });
+
+    const customerData: {
+      statusCode: number;
+      message: string;
+      data?: Customer;
+    } = response;
+
+    if (customerData.statusCode === 200) {
+      return customerData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getCustomersWithPhoneNumber = async (
+  pageNumber: string = "1",
   phone: string = "",
-  filter: string = ""
+  filter: string = "",
+  archivedCustomerStatus: string = "unarchived"
 ) => {
   try {
-    const url = "/customers";
+    const url = "/customers/get-customers-with-phone-number";
 
     const params = new URLSearchParams([
+      ["page", pageNumber],
       ["phone", phone],
       ["filter", filter],
+      ["archivedCustomerStatus", archivedCustomerStatus],
     ]);
+
+    const response = await request.get(url, { params });
+
+    const customerData: {
+      statusCode: number;
+      message: string;
+      data?: {
+        totalPage: number;
+        totalCustomer: number;
+        allCustomers: Array<Customer>;
+      };
+    } = response;
+
+    if (customerData.statusCode === 200) {
+      return customerData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getAllCustomersWithPhoneNumber = async (phone: string = "") => {
+  try {
+    const url = "/customers/get-all-customers-with-phone-number";
+    const params = new URLSearchParams([["phone", phone]]);
 
     const response = await request.get(url, { params });
 
@@ -24,31 +74,6 @@ const getCustomersWithQuery = async (
 
     if (customerData.statusCode === 200) {
       return customerData;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const getCustomers = async (pageNumber: string) => {
-  try {
-    const url = "/customers/get-all-customers";
-    const params = new URLSearchParams([["page", pageNumber]]);
-
-    const response = await request.get(url, { params });
-
-    const customersData: {
-      statusCode: number;
-      message: string;
-      data?: {
-        totalPage: number;
-        totalCustomer: number;
-        allCustomers: Array<Customer>;
-      };
-    } = response;
-
-    if (customersData.statusCode === 200) {
-      return customersData;
     }
   } catch (error) {
     console.log(error);
@@ -109,8 +134,9 @@ const createCustomer = async (user: {
 };
 
 export {
-  getCustomersWithQuery,
-  getCustomers,
+  getCustomerWithPhoneNumber,
+  getCustomersWithPhoneNumber,
+  getAllCustomersWithPhoneNumber,
   getArchivedCustomers,
   createCustomer,
 };
