@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { User } from "@/models/dto";
+import { User } from "@/models";
 
 const initialState = {
   archivedUsers: {

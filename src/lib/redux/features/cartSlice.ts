@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { Product, Customer, ProductDetail } from "@/models/dto";
+import { Product, Customer, ProductDetail } from "@/models";
 
 const initialState = {
   cart: {

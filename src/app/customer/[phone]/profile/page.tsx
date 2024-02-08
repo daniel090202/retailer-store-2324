@@ -6,14 +6,13 @@ import { useState, useEffect } from "react";
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
-import { renderCustomerGender } from "@/utils";
 import { getCustomerWithPhoneNumber } from "@/services";
 
 import { Customer as CustomerDTO } from "@/models";
 
 import SideBar from "../components/SideBar";
 
-const Customer = ({ params }: { params: { phone: string } }) => {
+const CustomerProfile = ({ params }: { params: { phone: string } }) => {
   const [customer, setCustomer] = useState<CustomerDTO>({
     email: "",
     phone: "",
@@ -174,4 +173,4 @@ const Customer = ({ params }: { params: { phone: string } }) => {
   );
 };
 
-export default Customer;
+export default CustomerProfile;

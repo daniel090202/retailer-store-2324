@@ -7,12 +7,8 @@ import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 
 import { User as UserDTO } from "@/models";
-import {
-  renderUserGender,
-  renderUserAddress,
-  renderUserPosition,
-} from "@/utils";
 import { getUserWithUserName } from "@/services";
+import { renderUserAddress, renderUserPosition } from "@/utils";
 
 import SideBar from "./components/SideBar";
 

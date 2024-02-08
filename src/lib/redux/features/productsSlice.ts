@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { Product } from "@/models/dto";
+import { Product } from "@/models";
 
 const initialState = {
   products: {
@@ -8,7 +8,7 @@ const initialState = {
     allProducts: undefined,
     isFetching: false,
   } as ProductsState,
-} as ProductInitialState;
+} as ProductsInitialState;
 
 const productsSlice = createSlice({
   name: "products",

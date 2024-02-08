@@ -28,7 +28,6 @@ const getAllArchivedProducts = async (
 
     dispatch(getAllArchivedProductsSuccess(archivedProductsData));
   } catch (error) {
-    console.log(error);
     dispatch(getAllArchivedProductsFailed());
   }
 };

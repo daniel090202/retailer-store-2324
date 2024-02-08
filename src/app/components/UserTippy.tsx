@@ -5,7 +5,6 @@ import "tippy.js/dist/tippy.css";
 import HeadlessTippy from "@tippyjs/react/headless";
 
 import icons from "@/assets/Icons";
-
 import { appRoutes } from "@/config/pathConfig";
 
 import { User } from "@/models";
@@ -33,13 +32,18 @@ const UserTippy = ({
   }> = [
     {
       icon: icons.user,
-      title: "View profile",
+      title: "Profile",
       onClick: () => handleViewProfile(),
     },
     {
       icon: icons.listCheck,
       title: "Tasks",
       onClick: () => handleViewTasks(),
+    },
+    {
+      icon: icons.bell,
+      title: "Notifications",
+      onClick: () => handleViewNotifications(),
     },
     {
       icon: icons.gear,
@@ -104,6 +108,12 @@ const UserTippy = ({
 
   const handleViewTasks = () => {
     setProfileButtonClicked(!profileButtonClicked);
+  };
+
+  const handleViewNotifications = () => {
+    const path = `${appRoutes.notifications.all}?page=1`;
+
+    router.push(path);
   };
 
   const handleViewSettings = () => {

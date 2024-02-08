@@ -1,13 +1,16 @@
 "use client";
 
-import icons from "@/assets/Icons";
-import Button from "@/app/components/Button";
+import { useRouter } from "next/navigation";
 
 import {
   renderUserActiveStatus,
   renderUserBlockedStatus,
   renderUserVerifiedStatus,
 } from "@/utils";
+import icons from "@/assets/Icons";
+import { appRoutes } from "@/config/pathConfig";
+
+import Button from "@/app/components/Button";
 
 const SideBar = ({
   active = false,
@@ -20,12 +23,18 @@ const SideBar = ({
   block?: boolean;
   verified?: boolean;
 }) => {
+  const router = useRouter();
+
   const handleBlockUser = () => {
     return;
   };
 
   const handleResendVerification = () => {
     return;
+  };
+
+  const handleReviewNotifications = () => {
+    router.push(appRoutes.notifications.all);
   };
 
   const handleReviewSalesPerformance = () => {
@@ -62,24 +71,24 @@ const SideBar = ({
         </div>
       </div>
       <Button
-        leftIcon=""
-        rightIcon=""
         className="w-full mt-4 mb-2 p-4 text-xl"
         onClick={() => handleBlockUser()}
       >
         Block user
       </Button>
       <Button
-        leftIcon=""
-        rightIcon=""
         className="w-full my-2 p-4 text-xl"
         onClick={() => handleResendVerification()}
       >
         Resend verification
       </Button>
       <Button
-        leftIcon=""
-        rightIcon=""
+        className="w-full my-2 p-4 text-xl"
+        onClick={() => handleReviewNotifications()}
+      >
+        Review notifications
+      </Button>
+      <Button
         className="w-full my-2 p-4 text-xl"
         onClick={() => handleReviewSalesPerformance()}
       >

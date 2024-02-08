@@ -1,7 +1,4 @@
 import {
-  getAllUsersStart,
-  getAllUsersSuccess,
-  getAllUsersFailed,
   getAllArchivedUsersStart,
   getAllArchivedUsersSuccess,
   getAllArchivedUsersFailed,

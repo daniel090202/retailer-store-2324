@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import icons from "@/assets/Icons";
-
 import { appRoutes } from "@/config/pathConfig";
 import { getAllArchivedUsers } from "@/redux-api";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
@@ -46,7 +45,7 @@ const AllUsers = () => {
   }, [totalPage, pageNumber, dispatch]);
 
   const handleCreateUser = () => {
-    setCreateUserModal(true);
+    setCreateUserModal(!createUserModal);
   };
 
   const handleViewArchivedUsers = () => {

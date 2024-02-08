@@ -25,11 +25,18 @@ const appRoutes = {
       orders: "/website-orders",
     },
   },
+  notifications: {
+    details: "/notifications",
+    all: "/notifications/all",
+  },
+  getNotificationPath: function (id: number): string {
+    return `/notifications/${id}`;
+  },
   getCustomerPath: function (
     phone: string = "",
     option: number = 0,
     orderID: number = 0
-  ) {
+  ): string {
     switch (option) {
       case 0:
         return `/customer/${phone}/profile`;

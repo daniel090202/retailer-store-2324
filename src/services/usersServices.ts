@@ -26,7 +26,8 @@ const getUserWithUserName = async (userName: string = "") => {
 const getUsersWithUserName = async (
   pageNumber: string = "1",
   userName: string = "",
-  filter: string = ""
+  filter: string = "",
+  archivedUserStatus: string = "unarchived"
 ) => {
   try {
     const url = "/users/get-users-with-username";
@@ -34,6 +35,7 @@ const getUsersWithUserName = async (
       ["page", pageNumber],
       ["userName", userName],
       ["filter", filter],
+      ["archivedUserStatus", archivedUserStatus],
     ]);
 
     const response = await request.get(url, { params });

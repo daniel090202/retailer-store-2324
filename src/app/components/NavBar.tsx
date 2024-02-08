@@ -49,7 +49,10 @@ const NavBar = () => {
           key={1}
           href={`${appRoutes.users.all}?page=1`}
           className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
-            currentPage?.startsWith("/services") ? "bg-gray-100" : ""
+            currentPage?.startsWith("/services") ||
+            currentPage?.startsWith("/notifications")
+              ? "bg-gray-100"
+              : ""
           }`}
         >
           Services

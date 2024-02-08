@@ -13,6 +13,7 @@ const Filter = () => {
   const searchParams = useSearchParams();
 
   const pageNumber = searchParams?.get("page");
+  const archivedUserStatus: string = "unarchived";
 
   const [filterOption, setFilterOption] = useState("-1");
   const [searchUsername, setSearchUsername] = useState("");
@@ -56,7 +57,8 @@ const Filter = () => {
           | undefined = await getUsersWithUserName(
           pageNumber,
           searchUsername,
-          filter
+          filter,
+          archivedUserStatus
         );
 
         if (usersData?.data !== undefined) {

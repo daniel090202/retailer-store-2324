@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { Customer } from "@/models/dto";
+import { Customer } from "@/models";
 
 const initialState = {
   archivedCustomers: {

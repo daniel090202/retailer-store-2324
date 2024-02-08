@@ -6,9 +6,11 @@ import authReducer from "./features/authSlice";
 import usersReducer from "./features/usersSlice";
 import productsReducer from "./features/productsSlice";
 import customersReducer from "./features/customersSlice";
+import notificationsReducer from "./features/notificationsSlice";
 import archivedUsersReducer from "./features/archivedUsersSlice";
 import archivedProductsReducer from "./features/archivedProductsSlice";
 import archivedCustomersReducer from "./features/archivedCustomersSlice";
+import hiddenNotificationsReducer from "./features/hiddenNotificationsSlice";
 
 const makeStore = () => {
   return configureStore({
@@ -19,8 +21,10 @@ const makeStore = () => {
       productsReducer,
       customersReducer,
       archivedUsersReducer,
+      notificationsReducer,
       archivedProductsReducer,
       archivedCustomersReducer,
+      hiddenNotificationsReducer,
     },
   });
 };

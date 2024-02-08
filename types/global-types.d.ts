@@ -1,15 +1,15 @@
-import { User, Customer, Product, ProductDetail } from "../dto";
+import { User, Customer, Product, ProductDetail, Notification } from "@/models";
 
 declare global {
   type AuthInitialState = {
     login: AuthState;
   };
 
-  type ProductInitialState = {
+  type ProductsInitialState = {
     products: ProductsState;
   };
 
-  type ArchivedProductInitialState = {
+  type ArchivedProductsInitialState = {
     archivedProducts: ArchivedProductsState;
   };
 
@@ -33,9 +33,45 @@ declare global {
     cart: CartState;
   };
 
+  type NotificationsInitialState = {
+    notifications: NotificationsState;
+  };
+
+  type HiddenNotificationsInitialState = {
+    hiddenNotifications: HiddenNotificationsState;
+  };
+
+  type HiddenNotificationsState = {
+    error: boolean;
+    allHiddenNotifications?: {
+      statusCode: number;
+      message: string;
+      data?: {
+        totalPage: number;
+        totalNotification: number;
+        allNotifications: Array<Notification>;
+      };
+    };
+    isFetching: boolean;
+  };
+
+  type NotificationsState = {
+    error: boolean;
+    allNotifications?: {
+      statusCode: number;
+      message: string;
+      data?: {
+        totalPage: number;
+        totalNotification: number;
+        allNotifications: Array<Notification>;
+      };
+    };
+    isFetching: boolean;
+  };
+
   type CartState = {
     customer?: Customer;
-    allProducts: Array<{
+    allProducts?: Array<{
       product: Product;
       productDetail: ProductDetail;
       purchasedAmount: number;

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { Product } from "@/models/dto";
+import { Product } from "@/models";
 
 const initialState = {
   archivedProducts: {
@@ -8,7 +8,7 @@ const initialState = {
     allArchivedProducts: undefined,
     isFetching: false,
   } as ArchivedProductsState,
-} as ArchivedProductInitialState;
+} as ArchivedProductsInitialState;
 
 const productsSlice = createSlice({
   name: "archivedProducts",
