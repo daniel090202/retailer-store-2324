@@ -13,15 +13,11 @@ import Table from "../components/Table";
 import SideBar from "../components/SideBar";
 import CreateNotification from "../components/CreateNotification";
 
-const AllNotifications = () => {
+const ArchivedNotifications = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [createNotificationModal, setCreateNotificationModal] = useState(false);
-
-  const allNotificationsData = useAppSelector((state) => {
-    return state.notificationsReducer.notifications.allNotifications?.data;
-  });
 
   const allHiddenNotificationsData = useAppSelector((state) => {
     return state.hiddenNotificationsReducer.hiddenNotifications
@@ -29,22 +25,12 @@ const AllNotifications = () => {
   });
 
   const pageNumber = searchParams?.get("page");
-  const notifications = allNotificationsData?.allNotifications;
-  const totalNotification = allNotificationsData?.totalNotification;
+  const totalHiddenNotification = allHiddenNotificationsData?.totalNotification;
   const hiddenNotifications = allHiddenNotificationsData?.allNotifications;
   const totalPage =
-    allNotificationsData?.totalPage === 0 ? 1 : allNotificationsData?.totalPage;
-
-  const handleCreateNotifications = () => {
-    setCreateNotificationModal(!createNotificationModal);
-  };
-
-  const handleViewDraftNotifications = () => {
-    const archivedPageNumber = 1;
-    const path = `${appRoutes.notifications.archived}?page=${archivedPageNumber}`;
-
-    router.push(path);
-  };
+    allHiddenNotificationsData?.totalPage === 0
+      ? 1
+      : allHiddenNotificationsData?.totalPage;
 
   const handleViewPreviousPage = () => {
     if (
@@ -77,37 +63,26 @@ const AllNotifications = () => {
     <div className="md:flex">
       <SideBar />
       <div className="flex-1 flex flex-col mx-2 my-4 p-4 h-[680px] bg-white rounded-xl">
-        <h1 className="my-2 text-2xl font-bold flex justify-center">
-          Notifications management
-        </h1>
-        <div className="flex justify-between">
-          <div className="my-2">
-            <span className="font-bold">
-              Total announced notifications in the store:
-            </span>
-            <span className="mx-4 text-lg">
-              {totalNotification?.toLocaleString()}
-            </span>
-            <span>notification(s)</span>
-          </div>
-          <div className="flex">
-            <Button
-              className="mx-2"
-              leftIcon={icons.plus}
-              onClick={() => handleCreateNotifications()}
-            >
-              New notification
-            </Button>
-            <Button
-              leftIcon={icons.archive}
-              onClick={() => handleViewDraftNotifications()}
-            >
-              Draft ({hiddenNotifications?.length.toLocaleString()})
-            </Button>
-          </div>
+        <div className="flex items-center bg-white rounded-xl">
+          <span
+            onClick={() => window.history.back()}
+            className="mr-4 px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
+          >
+            {icons.arrowLeft}
+          </span>
+          <h1 className="my-2 text-2xl font-bold flex justify-center">
+            All archived notifications
+          </h1>
+        </div>
+        <div className="my-2 flex justify-start items-center">
+          <span className="font-bold">Total hidden notifications:</span>
+          <span className="mx-4 text-lg">
+            {totalHiddenNotification?.toLocaleString()}
+          </span>
+          <span>notification(s)</span>
         </div>
         <div className="flex-1">
-          <Table notifications={notifications} />
+          <Table notifications={hiddenNotifications} />
         </div>
         <div className="flex justify-center items-center">
           <span>Page</span>
@@ -141,4 +116,4 @@ const AllNotifications = () => {
   );
 };
 
-export default AllNotifications;
+export default ArchivedNotifications;

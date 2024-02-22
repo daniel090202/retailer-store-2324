@@ -12,11 +12,11 @@ import { Notification } from "@/models";
 import { AppDispatch } from "@/lib/redux/store";
 
 const dispatchGetAllNotificationsWithFilterAndCategory = async (
-  pageNumber: string = "1",
-  title: string = "",
-  category: string = "all",
-  filter: string = "all",
-  hiddenNotificationStatus: string = "published",
+  pageNumber: string,
+  title: string,
+  category: string,
+  filter: string,
+  hiddenNotificationStatus: string,
   dispatch: AppDispatch
 ) => {
   dispatch(getAllNotificationsStart());
@@ -49,11 +49,11 @@ const dispatchGetAllNotificationsWithFilterAndCategory = async (
 };
 
 const dispatchGetAllHiddenNotificationsWithFilterAndCategory = async (
-  pageNumber: string = "1",
-  title: string = "",
-  category: string = "all",
-  filter: string = "all",
-  hiddenNotificationStatus: string = "hidden",
+  pageNumber: string,
+  title: string,
+  category: string,
+  filter: string,
+  hiddenNotificationStatus: string,
   dispatch: AppDispatch
 ) => {
   dispatch(getAllHiddenNotificationsStart());

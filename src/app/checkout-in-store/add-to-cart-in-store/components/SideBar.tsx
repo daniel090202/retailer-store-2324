@@ -47,12 +47,12 @@ const SideBar = () => {
   const user: User | undefined = session.data?.user;
 
   const cartProductsData:
-    | {
+    | Array<{
         product: Product;
         productDetail: ProductDetail;
         purchasedAmount: number;
-      }[]
-    | [] = useAppSelector((state) => {
+      }>
+    | undefined = useAppSelector((state) => {
     return state.cartReducer.cart.allProducts;
   });
 
@@ -60,7 +60,7 @@ const SideBar = () => {
     return state.cartReducer.cart.customer;
   });
 
-  const productDetails = cartProductsData.map((cartProductData, index) => {
+  const productDetails = cartProductsData?.map((cartProductData) => {
     return {
       productSKU: cartProductData.productDetail.SKU,
       purchasedQuantity: cartProductData.purchasedAmount,
@@ -70,22 +70,18 @@ const SideBar = () => {
     };
   });
 
-  const totalProductsInCart = cartProductsData.reduce(
-    (productTotalPrice, currentProduct) => {
+  const totalProductsInCart =
+    cartProductsData?.reduce((productTotalPrice, currentProduct) => {
       return productTotalPrice + currentProduct.purchasedAmount;
-    },
-    0
-  );
+    }, 0) ?? 0;
 
-  const totalExpense = cartProductsData.reduce(
-    (productTotalPrice, currentProduct) => {
+  const totalExpense =
+    cartProductsData?.reduce((productTotalPrice, currentProduct) => {
       return (
         productTotalPrice +
         currentProduct.product.salePrice * currentProduct.purchasedAmount
       );
-    },
-    0
-  );
+    }, 0) ?? 0;
 
   const exchange = parseFloat(customerPayment) - totalExpense;
 
@@ -184,7 +180,7 @@ const SideBar = () => {
   };
 
   const handleForwardOrder = async () => {
-    if (cartProductsData.length <= 0) {
+    if (cartProductsData !== undefined && cartProductsData?.length <= 0) {
       error("Your cart is empty!");
       return;
     }
@@ -201,6 +197,11 @@ const SideBar = () => {
 
     if (customer === undefined) {
       error("Customer can not be empty.");
+      return;
+    }
+
+    if (productDetails === undefined) {
+      error("You have not selected any items.");
       return;
     }
 
@@ -240,12 +241,18 @@ const SideBar = () => {
       paymentStatus: 1,
       shipmentBarcode: "0000000000",
       coupons: [],
-      orderDetails: [...productDetails],
+      orderDetails: productDetails,
     };
 
     const confirmedOrder = await createOrder(order);
 
-    window.location.href = appRoutes.customers.all;
+    if (confirmedOrder !== undefined) {
+      const path = `${appRoutes.customers.all}?page=1`;
+
+      window.location.href = path;
+    } else {
+      error("Transaction failed.");
+    }
   };
 
   return (

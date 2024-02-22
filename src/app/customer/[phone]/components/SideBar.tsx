@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import { appRoutes } from "@/config/pathConfig";
+import { error, success } from "@/lib/hot-toast";
+import { blockCustomer, unblockCustomer } from "@/services";
 
 import Button from "@/app/components/Button";
 
@@ -29,8 +31,70 @@ const SideBar = ({
 }) => {
   const router = useRouter();
 
-  const handleBlockCustomer = () => {
-    return;
+  const renderButtons = () => {
+    const buttons = [];
+
+    if (block) {
+      buttons.push(
+        <Button
+          key={0}
+          className="w-full mt-4 mb-2 p-4 text-xl"
+          onClick={() => handleUnblockCustomer()}
+        >
+          Unblock customer
+        </Button>
+      );
+    } else {
+      buttons.push(
+        <Button
+          key={1}
+          className="w-full mt-4 mb-2 p-4 text-xl"
+          onClick={() => handleBlockCustomer()}
+        >
+          Block customer
+        </Button>
+      );
+    }
+
+    buttons.push(
+      <Button
+        key={2}
+        className="w-full my-2 p-4 text-xl"
+        onClick={() => handleReviewPurchaseHistory()}
+      >
+        Review purchase history
+      </Button>
+    );
+
+    return buttons;
+  };
+
+  const handleBlockCustomer = async () => {
+    const blockedCustomer = await blockCustomer(customerPhone);
+
+    if (blockedCustomer !== undefined) {
+      success("Customer has been successfully blocked.");
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 4000);
+    } else {
+      error("Failed to block this customer at this time.");
+    }
+  };
+
+  const handleUnblockCustomer = async () => {
+    const activatedCustomer = await unblockCustomer(customerPhone);
+
+    if (activatedCustomer !== undefined) {
+      success("Customer has been successfully activated.");
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 4000);
+    } else {
+      error("Failed to activate this customer at this time.");
+    }
   };
 
   const handleReviewPurchaseHistory = () => {
@@ -75,22 +139,7 @@ const SideBar = ({
           </div>
         </div>
       </div>
-      <Button
-        leftIcon=""
-        rightIcon=""
-        className="w-full mt-4 mb-2 p-4 text-xl"
-        onClick={() => handleBlockCustomer()}
-      >
-        Block customer
-      </Button>
-      <Button
-        leftIcon=""
-        rightIcon=""
-        className="w-full my-2 p-4 text-xl"
-        onClick={() => handleReviewPurchaseHistory()}
-      >
-        Review purchase history
-      </Button>
+      {renderButtons()}
     </aside>
   );
 };

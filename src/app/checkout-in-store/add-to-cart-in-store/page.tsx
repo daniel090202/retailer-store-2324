@@ -8,17 +8,17 @@ import Card from "./components/Card";
 
 const Counter = () => {
   const productsInCartData:
-    | {
+    | Array<{
         product: Product;
         productDetail: ProductDetail;
         purchasedAmount: number;
-      }[]
-    | [] = useAppSelector((state) => {
+      }>
+    | undefined = useAppSelector((state) => {
     return state.cartReducer.cart.allProducts;
   });
 
   const renderEmptyCart = () => {
-    if (productsInCartData.length <= 0) {
+    if (productsInCartData !== undefined && productsInCartData.length <= 0) {
       return (
         <div className="h-full flex justify-center items-center">
           <span className="text-6xl font-medium text-white">Empty cart...</span>

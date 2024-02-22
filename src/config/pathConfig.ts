@@ -17,6 +17,9 @@ const appRoutes = {
     all: "/services/customers/all",
     archived: "/services/customers/archived",
   },
+  salesPerformance: {
+    statistic: "/services/sales-performance/statistic",
+  },
   checkout: {
     inStore: {
       checkout: "/checkout-in-store/add-to-cart-in-store",
@@ -28,6 +31,7 @@ const appRoutes = {
   notifications: {
     details: "/notifications",
     all: "/notifications/all",
+    archived: "/notifications/archived",
   },
   getNotificationPath: function (id: number): string {
     return `/notifications/${id}`;
@@ -73,6 +77,12 @@ const servicesSidebarRoutes: Array<{
     path: appRoutes.customers.all,
     title: "Customer relationship",
     pathPrefix: "/services/customers",
+  },
+  {
+    icon: icons.barChart,
+    path: appRoutes.salesPerformance.statistic,
+    title: "Sales report",
+    pathPrefix: "/services/sales-performance",
   },
 ];
 

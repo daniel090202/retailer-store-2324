@@ -41,6 +41,30 @@ declare global {
     hiddenNotifications: HiddenNotificationsState;
   };
 
+  type SalesInitialState = {
+    sales: SalesState;
+  };
+
+  type SalesState = {
+    error: boolean;
+    sales?: {
+      totalPage: number;
+      totalOrders: number;
+      totalRevenue: number;
+      totalAmount: number;
+      salesData: Array<{
+        date: number;
+        month: number;
+        year: number;
+        day: string;
+        totalOrders: number;
+        totalRevenue: number;
+        totalAmount: number;
+      }>;
+    };
+    isFetching: boolean;
+  };
+
   type HiddenNotificationsState = {
     error: boolean;
     allHiddenNotifications?: {

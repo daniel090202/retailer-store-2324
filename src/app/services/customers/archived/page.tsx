@@ -84,7 +84,7 @@ const AllArchivedCustomers = () => {
           All archived customers
         </h1>
       </div>
-      <div className="my-2 flex justify-start">
+      <div className="my-2 flex justify-start items-center">
         <span>Total available customers in the store:</span>
         <span className="mx-4 text-lg">
           {totalArchivedCustomer?.toLocaleString()}

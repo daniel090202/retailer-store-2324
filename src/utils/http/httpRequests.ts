@@ -16,5 +16,11 @@ const post = async (url: string, options: object = {}) => {
   return response;
 };
 
-export { get, post };
+const patch = async (url: string, options: object = {}) => {
+  const response = await request.patch(url, options);
+
+  return response;
+};
+
+export { get, post, patch };
 export default request;

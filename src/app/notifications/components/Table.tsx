@@ -5,20 +5,15 @@ import { appRoutes } from "@/config/pathConfig";
 import { useAppSelector } from "@/lib/redux/store";
 import { renderNotificationDegree, renderNotificationType } from "@/utils";
 
+import { Notification } from "@/models";
+
 import Filter from "./Filter";
 
-const Table = () => {
-  const allNotificationsData = useAppSelector((state) => {
-    return state.notificationsReducer.notifications.allNotifications?.data;
-  });
-
-  const notifications = allNotificationsData?.allNotifications;
-
+const Table = ({ notifications }: { notifications?: Array<Notification> }) => {
   const renderAllUsers = (): React.ReactNode => {
     return notifications?.map((notification, index) => {
       return (
         <tr key={index}>
-          <td className="px-6 py-4 whitespace-nowrap">{index}</td>
           <td className="px-6 py-4 whitespace-nowrap">{notification.id}</td>
           <td className="px-6 py-4 whitespace-nowrap">
             {notification.title.length === 0 ? "No title" : notification.title}
@@ -60,7 +55,6 @@ const Table = () => {
       <table className="w-full my-4 table-auto text-sm text-left">
         <thead className="bg-gray-100 text-gray-600 font-medium border-b">
           <tr>
-            <th className="py-3 px-6">No.</th>
             <th className="py-3 px-6">Barcode</th>
             <th className="py-3 px-6">Title</th>
             <th className="py-3 px-6">Degree</th>

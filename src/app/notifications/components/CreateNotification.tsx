@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 import icons from "@/assets/Icons";
 import { appRoutes } from "@/config/pathConfig";
@@ -14,20 +15,25 @@ const CreateNotification = ({
   createNotificationModal: boolean;
   setCreateNotificationModal: (value: boolean) => void;
 }) => {
+  const session = useSession();
+
   const [target, setTarget] = useState("-1");
+  const [showSpecificTarget, setShowSpecificTarget] = useState(false);
 
   const [notification, setNotification] = useState<{
     title: string;
     target: string;
-    degree: string;
-    type: string;
+    degree: number;
+    type: number;
     content: string;
+    createdBy: string;
   }>({
     title: "",
     target: "",
-    degree: "",
-    type: "",
+    degree: 0,
+    type: 0,
     content: "",
+    createdBy: "",
   });
 
   const handleInputNotification = (
@@ -39,18 +45,50 @@ const CreateNotification = ({
     });
   };
 
+  const handleNumericInputNotification = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
+    setNotification({
+      ...notification,
+      [event.target.name]: parseInt(event.target.value),
+    });
+  };
+
   const handleTargetSelectNotification = (
     event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setTarget(event.target.value);
+  ): void => {
+    const target = event.target.value;
+
+    if (target === "3") {
+      setTarget(target);
+      setShowSpecificTarget(true);
+    } else {
+      setNotification({
+        ...notification,
+        [event.target.name]: event.target.value,
+      });
+      setShowSpecificTarget(false);
+    }
+  };
+
+  const handleSpecificTargetInputNotification = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setNotification({
+      ...notification,
+      target: `${target}_${event.target.value}`,
+    });
   };
 
   const handleCreateUser = async () => {
+    notification.title.toUpperCase();
+    notification.createdBy = session.data?.user.userName;
+
     await createNotification(notification);
 
     setCreateNotificationModal(!createNotificationModal);
 
-    window.location.href = appRoutes.notifications.all;
+    window.location.href = `${appRoutes.notifications.all}?page=1`;
   };
 
   return createNotificationModal ? (
@@ -70,35 +108,47 @@ const CreateNotification = ({
       <hr />
       <div className="flex">
         <div className="w-[200px]">
-          <div className="my-4 ">
+          <div className="my-4">
             <label htmlFor="position">Target</label>
             <select
               id="target"
               name="target"
-              value={target}
               onChange={(event) => handleTargetSelectNotification(event)}
               className="w-full p-4 my-2 border rounded-xl shadow-xl cursor-pointer outline-none appearance-none"
             >
               <option value="-1" hidden>
                 Select a target
               </option>
-              <option value="0">All</option>
-              <option value="1">Administrator</option>
-              <option value="2">Accountant</option>
-              <option value="3">Sales assistant</option>
+              <option value="0">Administrator</option>
+              <option value="1">Accountant</option>
+              <option value="2">Sales assistant</option>
+              <option value="3">For specific target</option>
+              <option value="4">All</option>
             </select>
           </div>
+          {showSpecificTarget ? (
+            <input
+              type="text"
+              id="specificTarget"
+              name="specificTarget"
+              placeholder="Specific target"
+              onChange={(event) => handleSpecificTargetInputNotification(event)}
+              className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
+            />
+          ) : (
+            <div></div>
+          )}
           <fieldset className="my-4">
             <legend>Select a degree</legend>
             <div className="my-2">
               <input
-                type="radio"
+                value={0}
                 id="normal"
+                type="radio"
                 name="degree"
-                value="0"
                 className="accent-blue-400"
-                defaultChecked
-                onChange={(event) => handleInputNotification(event)}
+                checked={notification.degree === 0}
+                onChange={(event) => handleNumericInputNotification(event)}
               />
               <label htmlFor="normal" className="mx-4">
                 Normal
@@ -106,12 +156,13 @@ const CreateNotification = ({
             </div>
             <div className="my-2">
               <input
+                value={1}
                 type="radio"
-                id="important"
                 name="degree"
-                value="1"
+                id="important"
                 className="accent-yellow-400"
-                onChange={(event) => handleInputNotification(event)}
+                checked={notification.degree === 1}
+                onChange={(event) => handleNumericInputNotification(event)}
               />
               <label htmlFor="important" className="mx-4">
                 Important
@@ -119,12 +170,13 @@ const CreateNotification = ({
             </div>
             <div className="my-2">
               <input
-                type="radio"
+                value={2}
                 id="urgent"
+                type="radio"
                 name="degree"
-                value="2"
                 className="accent-red-400"
-                onChange={(event) => handleInputNotification(event)}
+                checked={notification.degree === 2}
+                onChange={(event) => handleNumericInputNotification(event)}
               />
               <label htmlFor="urgent" className="mx-4">
                 Urgent
@@ -135,13 +187,13 @@ const CreateNotification = ({
             <legend>Select a type</legend>
             <div className="my-2">
               <input
-                type="radio"
+                value={0}
                 id="normal"
                 name="type"
-                value="0"
+                type="radio"
                 className="accent-gray-400"
-                defaultChecked
-                onChange={(event) => handleInputNotification(event)}
+                checked={notification.type === 0}
+                onChange={(event) => handleNumericInputNotification(event)}
               />
               <label htmlFor="distribution" className="mx-4">
                 Normal
@@ -149,13 +201,13 @@ const CreateNotification = ({
             </div>
             <div className="my-2">
               <input
+                value={1}
+                name="type"
                 type="radio"
                 id="distribution"
-                name="type"
-                value="1"
                 className="accent-gray-400"
-                defaultChecked
-                onChange={(event) => handleInputNotification(event)}
+                checked={notification.type === 1}
+                onChange={(event) => handleNumericInputNotification(event)}
               />
               <label htmlFor="distribution" className="mx-4">
                 Distribution
@@ -163,12 +215,13 @@ const CreateNotification = ({
             </div>
             <div className="my-2">
               <input
-                type="radio"
+                value={2}
                 id="salary"
                 name="type"
-                value="2"
+                type="radio"
                 className="accent-gray-400"
-                onChange={(event) => handleInputNotification(event)}
+                checked={notification.type === 2}
+                onChange={(event) => handleNumericInputNotification(event)}
               />
               <label htmlFor="salary" className="mx-4">
                 Salary

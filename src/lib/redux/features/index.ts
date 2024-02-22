@@ -1,5 +1,6 @@
 export * from "./cartSlice";
 export * from "./authSlice";
+export * from "./salesSlice";
 export * from "./usersSlice";
 export * from "./productsSlice";
 export * from "./customersSlice";

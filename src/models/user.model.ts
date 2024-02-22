@@ -10,8 +10,10 @@ declare global {
     firstName: string;
     lastName: string;
     middleName: string;
+    archived: boolean;
     admin: boolean;
     active: boolean;
+    verified: boolean;
     createdAt: string;
     updatedAt: string;
   }
@@ -29,8 +31,10 @@ class User implements IUser {
   public lastName: string;
   public middleName: string;
 
+  public archived: boolean;
   public admin: boolean;
   public active: boolean;
+  public verified: boolean;
 
   public createdAt: string;
   public updatedAt: string;
@@ -47,8 +51,10 @@ class User implements IUser {
     firstName?: string,
     lastName?: string,
     middleName?: string,
+    archived?: boolean,
     admin?: boolean,
     active?: boolean,
+    verified?: boolean,
     createdAt?: string,
     updatedAt?: string
   ) {
@@ -62,8 +68,10 @@ class User implements IUser {
     this.firstName = firstName ?? "";
     this.lastName = lastName ?? "";
     this.middleName = middleName ?? "";
+    this.archived = archived ?? false;
     this.admin = admin ?? false;
     this.active = active ?? false;
+    this.verified = verified ?? false;
     this.createdAt = createdAt ?? "";
     this.updatedAt = updatedAt ?? "";
   }

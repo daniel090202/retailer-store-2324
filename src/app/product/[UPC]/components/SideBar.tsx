@@ -1,6 +1,10 @@
 "use client";
 
 import icons from "@/assets/Icons";
+import { appRoutes } from "@/config/pathConfig";
+import { error, success } from "@/lib/hot-toast";
+import { archiveProduct, publishProduct } from "@/services";
+
 import Button from "@/app/components/Button";
 
 import {
@@ -10,16 +14,90 @@ import {
 } from "@/utils";
 
 const SideBar = ({
-  active = false,
+  UPC,
   archived = false,
+  active = false,
   verified = false,
 }: {
-  active: boolean;
+  UPC: string;
   archived: boolean;
+  active: boolean;
   verified: boolean;
 }) => {
-  const handleArchiveProduct = () => {
-    return;
+  const renderButtons = () => {
+    const buttons = [];
+
+    if (archived) {
+      buttons.push(
+        <Button
+          key={0}
+          className="w-full mt-4 mb-2 p-4 text-xl"
+          onClick={() => handlePublishProduct()}
+        >
+          Publish product
+        </Button>
+      );
+    } else {
+      buttons.push(
+        <Button
+          key={1}
+          className="w-full mt-4 mb-2 p-4 text-xl"
+          onClick={() => handleArchiveProduct()}
+        >
+          Archive product
+        </Button>
+      );
+    }
+
+    buttons.push(
+      <Button
+        key={2}
+        className="w-full my-2 p-4 text-xl"
+        onClick={() => handleReviewImportation()}
+      >
+        Review importation
+      </Button>
+    );
+
+    buttons.push(
+      <Button
+        key={3}
+        className="w-full my-2 p-4 text-xl"
+        onClick={() => handleReviewSalesHistory()}
+      >
+        Review sales history
+      </Button>
+    );
+
+    return buttons;
+  };
+
+  const handleArchiveProduct = async () => {
+    const archivedProduct = await archiveProduct(UPC);
+
+    if (archivedProduct !== undefined) {
+      success("Product has been successfully archived.");
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 4000);
+    } else {
+      error("Failed to archive this product at this time.");
+    }
+  };
+
+  const handlePublishProduct = async () => {
+    const publishedProduct = await publishProduct(UPC);
+
+    if (publishedProduct !== undefined) {
+      success("Product has been successfully published.");
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 4000);
+    } else {
+      error("Failed to publish this product at this time.");
+    }
   };
 
   const handleReviewImportation = () => {
@@ -59,30 +137,7 @@ const SideBar = ({
           </div>
         </div>
       </div>
-      <Button
-        leftIcon=""
-        rightIcon=""
-        className="w-full mt-4 mb-2 p-4 text-xl"
-        onClick={() => handleArchiveProduct()}
-      >
-        Archive product
-      </Button>
-      <Button
-        leftIcon=""
-        rightIcon=""
-        className="w-full my-2 p-4 text-xl"
-        onClick={() => handleReviewImportation()}
-      >
-        Review importation
-      </Button>
-      <Button
-        leftIcon=""
-        rightIcon=""
-        className="w-full my-2 p-4 text-xl"
-        onClick={() => handleReviewSalesHistory()}
-      >
-        Review sales history
-      </Button>
+      {renderButtons()}
     </aside>
   );
 };

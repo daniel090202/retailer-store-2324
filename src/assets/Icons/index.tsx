@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFaceSmile,
   faFaceSadTear,
+  faCircleCheck,
 } from "@fortawesome/free-regular-svg-icons";
 
 import {
@@ -12,6 +13,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 import {
+  faPen,
   faLock,
   faGear,
   faBars,
@@ -34,6 +36,9 @@ import {
   faArrowUpAZ,
   faArrowUpZA,
   faBoxArchive,
+  faChartSimple,
+  faCircleXmark,
+  faPenToSquare,
   faAddressCard,
   faArrowDownAZ,
   faArrowDownZA,
@@ -50,6 +55,7 @@ const wrapIcon = (icon: IconDefinition) => {
 };
 
 const icons = {
+  pen: wrapIcon(faPen),
   gear: wrapIcon(faGear),
   lock: wrapIcon(faLock),
   user: wrapIcon(faUser),
@@ -77,6 +83,10 @@ const icons = {
   caretDown: wrapIcon(faCaretDown),
   userGroup: wrapIcon(faUserGroup),
   faceTear: wrapIcon(faFaceSadTear),
+  barChart: wrapIcon(faChartSimple),
+  squaredPen: wrapIcon(faPenToSquare),
+  circleXmark: wrapIcon(faCircleXmark),
+  circleCheck: wrapIcon(faCircleCheck),
   arrowDownAZ: wrapIcon(faArrowDownAZ),
   addressCard: wrapIcon(faAddressCard),
   arrowDownZA: wrapIcon(faArrowDownZA),

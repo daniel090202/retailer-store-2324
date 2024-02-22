@@ -1,4 +1,4 @@
-const renderUserGender = (gender: number) => {
+const renderUserGender = (gender: number): string => {
   switch (gender) {
     case 0:
       return "Male";
@@ -9,7 +9,7 @@ const renderUserGender = (gender: number) => {
   }
 };
 
-const renderUserAddress = (address: number) => {
+const renderUserAddress = (address: number): string => {
   switch (address) {
     case 0:
       return "Ho Chi Minh";
@@ -22,7 +22,7 @@ const renderUserAddress = (address: number) => {
   }
 };
 
-const renderUserPosition = (position: number) => {
+const renderUserPosition = (position: number): string => {
   switch (position) {
     case 0:
       return "Administrator";

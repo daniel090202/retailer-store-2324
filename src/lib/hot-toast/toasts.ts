@@ -14,4 +14,10 @@ const error = (message: string) => {
   });
 };
 
-export { error, success };
+const toastWithIcon = (message: string, icon: string) => {
+  toast(message, {
+    icon: icon,
+  });
+};
+
+export { error, success, toastWithIcon };

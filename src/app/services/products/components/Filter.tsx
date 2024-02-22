@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation"; 
 
 import icons from "@/assets/Icons/index";
 import { getProductsWithUPC } from "@/services";
