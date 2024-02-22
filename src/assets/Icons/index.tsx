@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 import {
+  faEye,
   faPen,
   faLock,
   faGear,
@@ -29,6 +30,7 @@ import {
   faFilter,
   faCircle,
   faLockOpen,
+  faEyeSlash,
   faArrowLeft,
   faUserGroup,
   faCaretDown,
@@ -55,6 +57,7 @@ const wrapIcon = (icon: IconDefinition) => {
 };
 
 const icons = {
+  eye: wrapIcon(faEye),
   pen: wrapIcon(faPen),
   gear: wrapIcon(faGear),
   lock: wrapIcon(faLock),
@@ -71,6 +74,7 @@ const icons = {
   solidStar: wrapIcon(faStar),
   shopify: wrapIcon(faShopify),
   facebook: wrapIcon(faFacebook),
+  eyeClosed: wrapIcon(faEyeSlash),
   solidCircle: wrapIcon(faCircle),
   archive: wrapIcon(faBoxArchive),
   faceSmile: wrapIcon(faFaceSmile),

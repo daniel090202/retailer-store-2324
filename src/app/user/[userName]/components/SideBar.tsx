@@ -1,15 +1,19 @@
 "use client";
 
+import { useState } from "react";
+
 import {
   renderUserActiveStatus,
   renderUserBlockedStatus,
   renderUserVerifiedStatus,
 } from "@/utils";
 import icons from "@/assets/Icons";
+import { useSession } from "next-auth/react";
 import { error, success } from "@/lib/hot-toast";
 import { blockUser, unblockUser } from "@/services";
 
 import Button from "@/app/components/Button";
+import ChangePassword from "./ChangePassword";
 
 const SideBar = ({
   userName,
@@ -24,52 +28,80 @@ const SideBar = ({
   admin?: boolean;
   verified?: boolean;
 }) => {
+  const session = useSession();
+
+  const [changePasswordModal, setChangePasswordModal] = useState(false);
+
+  const currentUser = session.data?.user;
+
   const renderButtons = () => {
     const buttons = [];
 
-    if (archived) {
+    if (currentUser?.position === 0 && currentUser.userName !== userName) {
+      if (archived) {
+        buttons.push(
+          <Button
+            key={0}
+            className="w-full mt-4 p-4 text-xl"
+            onClick={() => handleUnblockUser()}
+          >
+            Unblock user
+          </Button>
+        );
+      } else {
+        buttons.push(
+          <Button
+            key={1}
+            className="w-full mt-4 p-4 text-xl"
+            onClick={() => handleBlockUser()}
+          >
+            Block user
+          </Button>
+        );
+      }
+    }
+
+    if (currentUser?.userName === userName) {
       buttons.push(
         <Button
-          key={0}
-          className="w-full mt-4 mb-2 p-4 text-xl"
-          onClick={() => handleUnblockUser()}
+          key={2}
+          className="w-full mt-4 p-4 text-xl"
+          onClick={() => {
+            handleOpenChangePasswordModal();
+          }}
         >
-          Unblock user
-        </Button>
-      );
-    } else {
-      buttons.push(
-        <Button
-          key={1}
-          className="w-full mt-4 mb-2 p-4 text-xl"
-          onClick={() => handleBlockUser()}
-        >
-          Block user
+          Change password
         </Button>
       );
     }
 
-    buttons.push(
-      <Button
-        key={2}
-        className="w-full my-2 p-4 text-xl"
-        onClick={() => handleResendVerification()}
-      >
-        Resend verification
-      </Button>
-    );
+    if (!active && currentUser?.position === 0) {
+      buttons.push(
+        <Button
+          key={3}
+          className="w-full mt-4 p-4 text-xl"
+          onClick={() => handleResendVerification()}
+        >
+          Resend verification
+        </Button>
+      );
 
-    buttons.push(
-      <Button
-        key={4}
-        className="w-full my-2 p-4 text-xl"
-        onClick={() => handleReviewSalesPerformance()}
-      >
-        Review sales performance
-      </Button>
-    );
+      buttons.push(
+        <Button
+          key={4}
+          className="w-full mt-4 p-4 text-xl"
+          onClick={() => handleReviewSalesPerformance()}
+        >
+          Review sales performance
+        </Button>
+      );
+    }
 
     return buttons;
+  };
+
+  const handleOpenChangePasswordModal = async () => {
+    setChangePasswordModal(!changePasswordModal);
   };
 
   const handleBlockUser = async () => {
@@ -138,6 +170,11 @@ const SideBar = ({
         </div>
       </div>
       {renderButtons()}
+      <ChangePassword
+        userName={userName}
+        changePasswordModal={changePasswordModal}
+        setChangePasswordModal={setChangePasswordModal}
+      />
     </aside>
   );
 };

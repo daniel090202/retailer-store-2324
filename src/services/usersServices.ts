@@ -1,3 +1,6 @@
+"use server";
+
+import * as argon from "argon2";
 import * as request from "@/utils/http";
 
 import { User } from "@/models";
@@ -138,6 +141,37 @@ const unblockUser = async (userName: string): Promise<User | undefined> => {
     const url = "/users/unblock-user";
 
     const response = await request.patch(url, { userName });
+
+    const unblockedUserData: {
+      statusCode: number;
+      message: string;
+      data?: User;
+    } = response.data;
+
+    if (unblockedUserData.statusCode === 200) {
+      return unblockedUserData.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const changePassword = async (
+  userName: string,
+  newPassword: string,
+  previousPassword: string
+): Promise<User | undefined> => {
+  try {
+    const url = "/users/change-password";
+
+    const hashedNewPassword = await argon.hash(newPassword);
+    const hashedPreviousPassword = await argon.hash(previousPassword);
+
+    const response = await request.patch(url, {
+      userName,
+      hashedNewPassword,
+      hashedPreviousPassword,
+    });
 
     const unblockedUserData: {
       statusCode: number;
@@ -298,6 +332,7 @@ export {
   postUser,
   blockUser,
   unblockUser,
+  changePassword,
   updateUserFirstName,
   updateUserMiddleName,
   updateUserLastName,

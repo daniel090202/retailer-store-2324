@@ -14,8 +14,8 @@ const CreateUser = ({
   createUserModal: boolean;
   setCreateUserModal: (value: boolean) => void;
 }) => {
-  const [address, setAddress] = useState("-1");
-  const [position, setPosition] = useState("-1");
+  const [address, setAddress] = useState<string>("-1");
+  const [position, setPosition] = useState<string>("-1");
 
   const [user, setUser] = useState<{
     firstName: string;
@@ -66,9 +66,9 @@ const CreateUser = ({
   const handleCreateUser = async () => {
     await createUser(user);
 
-    setCreateUserModal(!createUserModal);
+    const path = `${appRoutes.users.all}?page=1`;
 
-    window.location.href = appRoutes.users.all;
+    window.location.href = path;
   };
 
   return createUserModal ? (
@@ -234,7 +234,6 @@ const CreateUser = ({
       <div className="flex justify-center">
         <Button
           leftIcon={icons.plus}
-          rightIcon=""
           className="mt-4 p-4"
           onClick={() => handleCreateUser()}
         >
