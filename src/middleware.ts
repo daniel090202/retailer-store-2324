@@ -1,4 +1,4 @@
-import { getSession } from "next-auth/react";
+// import { getSession } from "next-auth/react";
 import { withAuth } from "next-auth/middleware";
 
 import { NextResponse } from "next/server";
@@ -16,37 +16,37 @@ export default withAuth(
       },
     };
 
-    const session = await getSession({ req: requestForNextAuth });
+    // const session = await getSession({ req: requestForNextAuth });
 
-    if (session) {
-      const url = "/users/me";
+    // if (session) {
+    //   const url = "/users/me";
 
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_SERVER_BASE_URL + url,
-        {
-          method: "GET",
-          headers: { Authorization: `Bearer ${session.accessToken}` },
-        }
-      );
+    //   const response = await fetch(
+    //     process.env.NEXT_PUBLIC_SERVER_BASE_URL + url,
+    //     {
+    //       method: "GET",
+    //       headers: { Authorization: `Bearer ${session.accessToken}` },
+    //     }
+    //   );
 
-      if (response?.status === 200) {
-        return NextResponse.next();
-      } else {
-        const url = request.nextUrl.clone();
+    //   if (response?.status === 200) {
+    //     return NextResponse.next();
+    //   } else {
+    //     const url = request.nextUrl.clone();
 
-        url.search = new URLSearchParams(`callbackUrl=${url}`).toString();
-        url.pathname = `/auth/login`;
+    //     url.search = new URLSearchParams(`callbackUrl=${url}`).toString();
+    //     url.pathname = `/auth/login`;
 
-        return NextResponse.redirect(url);
-      }
-    } else {
-      const url = request.nextUrl.clone();
+    //     return NextResponse.redirect(url);
+    //   }
+    // } else {
+    //   const url = request.nextUrl.clone();
 
-      url.search = new URLSearchParams(`callbackUrl=${url}`).toString();
-      url.pathname = `/auth/login`;
+    //   url.search = new URLSearchParams(`callbackUrl=${url}`).toString();
+    //   url.pathname = `/auth/login`;
 
-      return NextResponse.redirect(url);
-    }
+    //   return NextResponse.redirect(url);
+    // }
   },
   {
     callbacks: {
