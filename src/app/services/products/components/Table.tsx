@@ -10,6 +10,42 @@ import { Product } from "@/models";
 import Filter from "./Filter";
 
 const Table = ({ products }: { products?: Array<Product> }) => {
+  const renderProductColors = (product: Product): React.ReactNode => {
+    const productColors: Array<string> = [];
+
+    return product.productDetails.map((productDetail, index) => {
+      const isSizeExisted = productColors.includes(productDetail.color);
+
+      if (!isSizeExisted) {
+        productColors.push(productDetail.color);
+
+        return (
+          <option key={index} value={index}>
+            {productDetail.color}
+          </option>
+        );
+      }
+    });
+  };
+
+  const renderProductSizes = (product: Product): React.ReactNode => {
+    const productSizes: Array<string> = [];
+
+    return product.productDetails.map((productDetail, index) => {
+      const isSizeExisted = productSizes.includes(productDetail.size);
+
+      if (!isSizeExisted) {
+        productSizes.push(productDetail.size);
+
+        return (
+          <option key={index} value={index}>
+            {productDetail.size}
+          </option>
+        );
+      }
+    });
+  };
+
   const renderAllProducts = (): React.ReactNode => {
     return products?.map((product, index) => {
       return (
@@ -30,24 +66,12 @@ const Table = ({ products }: { products?: Array<Product> }) => {
           </td>
           <td className="px-6 py-4 whitespace-nowrap">
             <select id="color" name="color">
-              {product.productDetails.map((productDetail, index) => {
-                return (
-                  <option key={index} value={index}>
-                    {productDetail.color}
-                  </option>
-                );
-              })}
+              {renderProductColors(product)}
             </select>
           </td>
           <td className="px-6 py-4 whitespace-nowrap">
             <select id="size" name="size">
-              {product.productDetails.map((productDetail, index) => {
-                return (
-                  <option key={index} value={index}>
-                    {productDetail.size}
-                  </option>
-                );
-              })}
+              {renderProductSizes(product)}
             </select>
           </td>
           <td className="px-6 py-4 whitespace-nowrap">

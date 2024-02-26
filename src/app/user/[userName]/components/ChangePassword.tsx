@@ -52,7 +52,7 @@ const ChangePassword = ({
   return changePasswordModal ? (
     <Modal modal={changePasswordModal} setCloseModal={setChangePasswordModal}>
       <div className="my-2 flex justify-between">
-        <h1 className="text-2xl">New user profile</h1>
+        <h1 className="text-2xl">Reset password</h1>
         <span
           className="px-2 py-1 rounded-full cursor-pointer hover:bg-gray-200"
           onClick={() => setChangePasswordModal(false)}

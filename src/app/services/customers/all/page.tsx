@@ -58,28 +58,24 @@ const AllCustomers = () => {
       parseInt(pageNumber) > 1
     ) {
       const previousPage = parseInt(pageNumber) - 1;
-      const path = `${appRoutes.users.all}?page=${previousPage}`;
+      const path = `${appRoutes.customers.all}?page=${previousPage}`;
 
       router.push(path);
     }
-
-    return;
   };
 
   const handleViewNextPage = () => {
     if (
-      totalPage !== undefined &&
       pageNumber !== null &&
+      totalPage !== undefined &&
       pageNumber !== undefined &&
       parseInt(pageNumber) < totalPage
     ) {
       const nextPage = parseInt(pageNumber) + 1;
-      const path = `${appRoutes.users.all}?page=${nextPage}`;
+      const path = `${appRoutes.customers.all}?page=${nextPage}`;
 
       router.push(path);
     }
-
-    return;
   };
 
   return (

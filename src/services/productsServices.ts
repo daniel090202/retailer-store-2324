@@ -15,11 +15,14 @@ const getProductsWithSKU = async (SKU: string = "", filter: string = "all") => {
     const productsData: {
       statusCode: number;
       message: string;
-      data?: Array<ProductDetail>;
+      data?: Array<{
+        product: Product;
+        detail: ProductDetail;
+      }>;
     } = response;
 
     if (productsData.statusCode === 200) {
-      return productsData;
+      return productsData.data;
     }
   } catch (error) {
     console.log(error);
@@ -108,7 +111,6 @@ const getArchivedProducts = async (pageNumber: string) => {
 };
 
 const createProduct = async (product: {
-  SKU: string;
   UPC: string;
   name: string;
   brand: string;
@@ -118,6 +120,7 @@ const createProduct = async (product: {
   salePrice: string;
   unit: string;
   details: Array<{
+    SKU: string;
     size: string;
     color: string;
     initialInventory: string;
@@ -134,10 +137,8 @@ const createProduct = async (product: {
     const createdProductData: {
       statusCode: number;
       message: string;
-      data: Array<Product>;
+      data: Product;
     } = response.data;
-
-    console.log(createdProductData);
 
     if (createdProductData.statusCode === 200) {
       return createdProductData.data;

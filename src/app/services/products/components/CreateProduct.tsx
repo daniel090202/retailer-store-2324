@@ -1,10 +1,6 @@
 import { useState } from "react";
 
 import icons from "@/assets/Icons";
-
-import Modal from "@/app/components/Modal";
-import Button from "@/app/components/Button";
-
 import {
   allProductUnits,
   allStorageLocation,
@@ -12,6 +8,11 @@ import {
 } from "@/utils";
 import { createProduct } from "@/services";
 import { appRoutes } from "@/config/pathConfig";
+
+import { Product } from "@/models";
+
+import Modal from "@/app/components/Modal";
+import Button from "@/app/components/Button";
 
 const CreateProduct = ({
   createProductModal,
@@ -27,7 +28,6 @@ const CreateProduct = ({
   const [categoryList, setCategoryList] = useState<Array<string>>([]);
 
   const [product, setProduct] = useState<{
-    SKU: string;
     UPC: string;
     name: string;
     brand: string;
@@ -37,7 +37,6 @@ const CreateProduct = ({
     salePrice: string;
     unit: string;
   }>({
-    SKU: "",
     UPC: "",
     name: "",
     brand: "",
@@ -50,6 +49,7 @@ const CreateProduct = ({
 
   const [productDetails, setProductDetails] = useState<
     Array<{
+      SKU: string;
       size: string;
       color: string;
       initialInventory: string;
@@ -59,6 +59,7 @@ const CreateProduct = ({
     }>
   >([
     {
+      SKU: "",
       size: "",
       color: "",
       initialInventory: "",
@@ -116,6 +117,19 @@ const CreateProduct = ({
     for (let i: number = 0; i < rowInputAmount; i++) {
       rowInputs.push(
         <tr key={i} className="text-left">
+          <td className="w-1/6 p-2 whitespace-nowrap">
+            <input
+              key={i}
+              type="number"
+              id={`SKU_${i}`}
+              name={`SKU_${i}`}
+              placeholder="Stock barcode"
+              onChange={(event) => {
+                handleProductDetailsInputProduct(event);
+              }}
+              className="w-full p-2 border rounded-xl outline-none"
+            />
+          </td>
           <td className="w-1/6 p-2 whitespace-nowrap">
             <input
               key={i}
@@ -185,7 +199,6 @@ const CreateProduct = ({
             <select
               id={`storageLocation_${i}`}
               name={`storageLocation_${i}`}
-              // value={storageLocationList[0]}
               onChange={(event) => handleStorageLocationSelectProduct(event)}
               className="w-full p-2 border rounded-xl cursor-pointer outline-none appearance-none"
             >
@@ -237,6 +250,7 @@ const CreateProduct = ({
 
   const handleIncreaseRowInputsAmount = () => {
     productDetails.push({
+      SKU: "",
       size: "",
       color: "",
       initialInventory: "",
@@ -281,6 +295,11 @@ const CreateProduct = ({
     }
 
     switch (targetProductDetail) {
+      case "SKU":
+        productDetails[startIndex].SKU = event.target.value;
+        setProductDetails([...productDetails]);
+
+        return;
       case "color":
         productDetails[startIndex].color = event.target.value;
         setProductDetails([...productDetails]);
@@ -306,17 +325,22 @@ const CreateProduct = ({
         setProductDetails([...productDetails]);
 
         return;
-      default:
-        return;
     }
   };
 
   const handleCreateProduct = async () => {
-    await createProduct({ ...product, details: [...productDetails] });
+    const createdProduct: Product | undefined = await createProduct({
+      ...product,
+      details: [...productDetails],
+    });
 
-    setCreateProductModal(!createProductModal);
+    if (createdProduct !== undefined) {
+      setCreateProductModal(!createProductModal);
 
-    window.location.href = appRoutes.products.all;
+      const path = `${appRoutes.products.all}?page=1`;
+
+      window.location.href = path;
+    }
   };
 
   return createProductModal ? (
@@ -332,17 +356,6 @@ const CreateProduct = ({
       </div>
       <hr />
       <div className="mx-auto py-3 space-y-3 grid grid-cols-3 gap-x-3">
-        <div className="my-4">
-          <label htmlFor="sku">Stock keeping unit</label>
-          <input
-            type="text"
-            id="SKU"
-            name="SKU"
-            placeholder="Stock keeping unit"
-            onChange={(event) => handleInputProduct(event)}
-            className="w-full p-4 my-2 border rounded-xl shadow-xl outline-none"
-          />
-        </div>
         <div className="my-4">
           <label htmlFor="sku">Universal product code</label>
           <input
@@ -457,12 +470,13 @@ const CreateProduct = ({
       <table className="w-full h-full my-4 table-auto text-sm text-left">
         <thead className="bg-gray-100 text-gray-600 font-medium border-b">
           <tr>
+            <th className="py-2 px-4">Stock barcode</th>
             <th className="py-2 px-4">Color</th>
             <th className="py-2 px-4">Size</th>
-            <th className="py-2 px-4">Initial inventory</th>
-            <th className="py-2 px-4">Minimum inventory</th>
-            <th className="py-2 px-4">Maximum inventory</th>
-            <th className="py-2 px-4">Storage location</th>
+            <th className="py-2 px-4">Initial</th>
+            <th className="py-2 px-4">Minimum</th>
+            <th className="py-2 px-4">Maximum</th>
+            <th className="py-2 px-4">Storage</th>
             <th className="py-2 px-4"></th>
           </tr>
         </thead>

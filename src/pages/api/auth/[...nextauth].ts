@@ -1,9 +1,7 @@
-import { jwtDecode } from "jwt-decode";
-
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { User } from "@/models/dto";
+import { User } from "@/models";
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -44,13 +42,16 @@ const authOptions: NextAuthOptions = {
             headers: { "Content-Type": "application/json" },
           }
         );
+
         const userData = await response.json();
 
         if (userData && userData.statusCode === 200) {
           return userData;
-        }
+        } else {
+          const errorMessage = "Account credentials failed.";
 
-        return null;
+          throw new Error(errorMessage);
+        }
       },
     }),
   ],
@@ -71,10 +72,30 @@ const authOptions: NextAuthOptions = {
 
       return token;
     },
+    async signIn({ user }) {
+      const currentUser: User = user?.data;
+
+      if (currentUser !== null) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      } else if (new URL(url).origin === baseUrl) {
+        return url;
+      }
+
+      return baseUrl;
+    },
   },
   pages: {
+    error: "/auth/error",
     signIn: "/auth/login",
     signOut: "/auth/logout",
+    newUser: "/auth/new-user",
   },
 };
 

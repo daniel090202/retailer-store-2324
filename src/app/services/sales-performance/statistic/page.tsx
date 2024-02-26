@@ -51,7 +51,7 @@ const SalesPerformance = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col mx-2 my-4 p-4 h-fit bg-white rounded-xl">
+    <div className="flex-1 flex flex-col mx-2 my-4 p-4 h-[680px] bg-white rounded-xl flex flex-col">
       <h1 className="text-2xl font-bold flex justify-center">Sales report</h1>
       <div className="flex flex-col justify-center">
         <div>
@@ -75,7 +75,9 @@ const SalesPerformance = () => {
         </div>
       </div>
       <Filter />
-      <Table salesData={salesData} />
+      <div className="flex-1">
+        <Table salesData={salesData} />
+      </div>
       <div className="flex justify-center items-center">
         <span>Page</span>
         <div className="mx-2">

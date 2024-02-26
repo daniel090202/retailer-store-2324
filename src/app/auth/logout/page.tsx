@@ -10,14 +10,14 @@ import icons from "@/assets/Icons";
 import Modal from "@/app/components/Modal";
 import Button from "@/app/components/Button";
 
-const Login = () => {
+const Logout = () => {
   const router = useRouter();
 
   const [logoutUserModal, setLogoutUserModal] = useState(false);
 
   const handleUserAgreeLogout = async () => {
     await signOut({
-      callbackUrl: "/api/auth/signin",
+      callbackUrl: "/api/auth/signout",
     });
   };
 
@@ -36,15 +36,13 @@ const Login = () => {
       <div className="flex justify-evenly items-center">
         <Button
           leftIcon={icons.check}
-          rightIcon=""
-          className="mt-4 p-4"
+          className="mt-4 p-4 bg-red-200 hover:bg-red-400"
           onClick={() => handleUserAgreeLogout()}
         >
           Yes
         </Button>
         <Button
           leftIcon={icons.cross}
-          rightIcon=""
           className="mt-4 p-4"
           onClick={() => handleUserDisagreeLogout()}
         >
@@ -55,4 +53,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Logout;

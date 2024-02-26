@@ -9,7 +9,6 @@ import { useRouter, usePathname } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
-
 import { appRoutes } from "@/config/pathConfig";
 
 import UserTippy from "./UserTippy";
@@ -26,10 +25,13 @@ const NavBar = () => {
     if (session.status === "unauthenticated") {
       router.replace("/api/auth/signin");
     }
-  }, [router, session.status]);
+  }, [router, session.status, session.data?.user]);
 
   const renderNavBarElements = (): React.ReactNode => {
-    if (session.status === "authenticated") {
+    if (
+      !currentPage?.startsWith("/auth/login") &&
+      session.status === "authenticated"
+    ) {
       const navBarElements = [];
 
       navBarElements.push(
@@ -47,7 +49,7 @@ const NavBar = () => {
       navBarElements.push(
         <Link
           key={1}
-          href={`${appRoutes.users.all}?page=1`}
+          href={`${appRoutes.products.all}?page=1`}
           className={`text-gray-600 font-medium p-4 rounded-lg md:transition md:ease-in-out md:delay-150 md:hover:-translate-y-1 hover:text-gray-800 hover:bg-gray-200 ${
             currentPage?.startsWith("/user") ||
             currentPage?.startsWith("/customer") ||

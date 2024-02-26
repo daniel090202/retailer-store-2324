@@ -6,6 +6,10 @@ import type { NextRequest } from "next/server";
 
 export default withAuth(
   async function middleware(request: NextRequest) {
+    if (request.nextUrl.pathname.startsWith("login")) {
+      return NextResponse.next();
+    }
+
     const requestForNextAuth = {
       headers: {
         cookie: request.headers.get("cookie") ?? undefined,
@@ -47,12 +51,15 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token }) => {
-        if (token?.accessToken) return true;
+        if (token?.accessToken) {
+          return true;
+        }
 
         return false;
       },
     },
     pages: {
+      error: "/auth/error",
       signIn: "/auth/login",
       signOut: "/auth/logout",
     },

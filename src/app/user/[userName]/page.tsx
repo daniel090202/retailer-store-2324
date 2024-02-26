@@ -63,7 +63,7 @@ const User = ({ params }: { params: { userName: string } }) => {
   useEffect(() => {
     const fetchData = async () => {
       const user: UserDTO | undefined = await getUserWithUserName(
-        params.userName
+        decodeURIComponent(params.userName)
       );
 
       if (user !== undefined) {

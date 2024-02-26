@@ -12,23 +12,37 @@ const Table = ({
   }>;
 }) => {
   const renderSalesData = (): React.ReactNode => {
-    return salesData?.map((saleData, index) => {
+    if (salesData && salesData.length > 0) {
+      return salesData?.map((saleData, index) => {
+        return (
+          <tr key={index}>
+            <td className="px-6 py-4 whitespace-nowrap">{index}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{saleData.day}</td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              {saleData.totalRevenue.toLocaleString()} VND
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              {saleData.totalOrders}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              {saleData.totalAmount}
+            </td>
+          </tr>
+        );
+      });
+    } else {
       return (
-        <tr key={index}>
-          <td className="px-6 py-4 whitespace-nowrap">{index}</td>
-          <td className="px-6 py-4 whitespace-nowrap">{saleData.day}</td>
-          <td className="px-6 py-4 whitespace-nowrap">
-            {saleData.totalRevenue.toLocaleString()} VND
-          </td>
-          <td className="px-6 py-4 whitespace-nowrap">
-            {saleData.totalOrders}
-          </td>
-          <td className="px-6 py-4 whitespace-nowrap">
-            {saleData.totalAmount}
+        <tr>
+          <td
+            colSpan={5}
+            rowSpan={7}
+            className="p-4 italic text-base text-center"
+          >
+            There is no sales in this timeline or time period.
           </td>
         </tr>
       );
-    });
+    }
   };
 
   return (

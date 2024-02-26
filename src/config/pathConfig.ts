@@ -58,31 +58,41 @@ const servicesSidebarRoutes: Array<{
   title: string;
   path: string;
   pathPrefix: string;
+  isAuthenticated: boolean;
+  shownTarget: Array<number>;
   icon: React.ReactNode | undefined;
 }> = [
   {
+    shownTarget: [0, 1, 2],
+    icon: icons.shirt,
+    isAuthenticated: false,
+    title: "Product catalog",
+    path: appRoutes.products.all,
+    pathPrefix: "/services/products",
+  },
+  {
+    shownTarget: [0],
+    isAuthenticated: true,
     icon: icons.userGroup,
     title: "Human resources",
     path: appRoutes.users.all,
     pathPrefix: "/services/users",
   },
   {
-    icon: icons.shirt,
-    title: "Product catalog",
-    path: appRoutes.products.all,
-    pathPrefix: "/services/products",
-  },
-  {
     icon: icons.users,
+    isAuthenticated: false,
+    shownTarget: [0, 1, 2],
     path: appRoutes.customers.all,
     title: "Customer relationship",
     pathPrefix: "/services/customers",
   },
   {
+    shownTarget: [0, 1],
     icon: icons.barChart,
-    path: appRoutes.salesPerformance.statistic,
+    isAuthenticated: true,
     title: "Sales report",
     pathPrefix: "/services/sales-performance",
+    path: appRoutes.salesPerformance.statistic,
   },
 ];
 

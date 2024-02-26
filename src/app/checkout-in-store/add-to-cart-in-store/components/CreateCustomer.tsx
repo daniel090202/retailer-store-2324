@@ -1,13 +1,14 @@
 import { useState } from "react";
 
 import icons from "@/assets/Icons";
-
-import Modal from "@/app/components/Modal";
-import Button from "@/app/components/Button";
-
 import { createCustomer } from "@/services";
 import { allCustomerLevels } from "@/utils";
-import { appRoutes } from "@/config/pathConfig";
+import { useAppDispatch } from "@/lib/redux/store";
+import { setCartCustomer } from "@/lib/redux/features";
+
+import { Customer } from "@/models";
+import Modal from "@/app/components/Modal";
+import Button from "@/app/components/Button";
 
 const CreateCustomer = ({
   createCustomerModal,
@@ -16,6 +17,8 @@ const CreateCustomer = ({
   createCustomerModal: boolean;
   setCreateCustomerModal: (value: boolean) => void;
 }) => {
+  const dispatch = useAppDispatch();
+
   const [accountLevel, setAccountLevel] = useState("-1");
 
   const [customer, setCustomer] = useState<{
@@ -54,10 +57,14 @@ const CreateCustomer = ({
   };
 
   const handleCreateCustomer = async () => {
-    await createCustomer(customer);
-    setCreateCustomerModal(!createCustomerModal);
+    const createdCustomer: Customer | undefined = await createCustomer(
+      customer
+    );
 
-    window.location.href = appRoutes.customers.all;
+    if (createdCustomer !== undefined) {
+      setCreateCustomerModal(!createCustomerModal);
+      dispatch(setCartCustomer(createdCustomer));
+    }
   };
 
   return createCustomerModal ? (

@@ -8,6 +8,7 @@ import Footer from "@/app/components/Footer";
 
 import StoreProvider from "@/lib/redux/StoreProvider";
 import NextAuthProviders from "@/lib/next-auth/NextAuthProviders";
+import AutoLogoutProvider from "@/lib/next-auth/AutoLogoutProvider";
 
 import "./globals.css";
 
@@ -23,14 +24,16 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
         <NextAuthProviders>
-          <Toaster />
-          <StoreProvider>
-            <Header>
-              <NavBar />
-            </Header>
-            {children}
-            <Footer />
-          </StoreProvider>
+          <AutoLogoutProvider>
+            <Toaster />
+            <StoreProvider>
+              <Header>
+                <NavBar />
+              </Header>
+              {children}
+              <Footer />
+            </StoreProvider>
+          </AutoLogoutProvider>
         </NextAuthProviders>
       </body>
     </html>

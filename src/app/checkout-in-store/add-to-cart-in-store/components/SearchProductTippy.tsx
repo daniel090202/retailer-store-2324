@@ -9,24 +9,25 @@ import { Product, ProductDetail } from "@/models";
 import SearchTippyElement from "./SearchProductTippyElement";
 
 const SearchProductTippy = ({
-  productResult,
-  productDetailsResult,
+  productsWithEachDetailResult,
   children,
 }: {
-  productResult?: Product;
-  productDetailsResult?: Array<ProductDetail>;
+  productsWithEachDetailResult?: Array<{
+    product: Product;
+    detail: ProductDetail;
+  }>;
   children: React.ReactElement;
 }) => {
   const dispatch = useAppDispatch();
 
   const handleClickTippyContent = (
-    productResult?: Product,
+    product?: Product,
     productDetail?: ProductDetail
   ) => {
-    if (productResult !== undefined && productDetail !== undefined) {
+    if (product !== undefined && productDetail !== undefined) {
       dispatch(
         setCartItem({
-          product: productResult,
+          product: product,
           productDetail: productDetail,
         })
       );
@@ -35,19 +36,22 @@ const SearchProductTippy = ({
 
   const renderTippyContent = ({ ...attrs }) => {
     return (
-      productDetailsResult !== undefined && (
+      productsWithEachDetailResult !== undefined && (
         <div
           className="z-10 w-96 absolute translate-x-[-50%] py-2 border text-base shadow-xl bg-white rounded-xl"
           {...attrs}
         >
-          {productDetailsResult.map((productDetail, index) => {
+          {productsWithEachDetailResult.map((productWithEachDetail, index) => {
+            const product = productWithEachDetail.product;
+            const productDetail = productWithEachDetail.detail;
+
             return (
               <SearchTippyElement
                 key={index}
-                SKU={productResult ? productDetail.SKU : "0000000000"}
-                title={productResult ? productResult.name : "Not Found"}
+                SKU={productDetail ? productDetail.SKU : "0000000000"}
+                title={product ? product.name : "Not Found"}
                 onClick={() => {
-                  handleClickTippyContent(productResult, productDetail);
+                  handleClickTippyContent(product, productDetail);
                 }}
               />
             );

@@ -95,7 +95,7 @@ declare global {
 
   type CartState = {
     customer?: Customer;
-    allProducts?: Array<{
+    allProducts: Array<{
       product: Product;
       productDetail: ProductDetail;
       purchasedAmount: number;

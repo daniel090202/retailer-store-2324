@@ -7,7 +7,6 @@ import icons from "@/assets/Icons";
 import images from "@/assets/Images";
 import {
   getCustomerWithPhoneNumber,
-  updateCustomerName,
   updateCustomerEmailAddress,
   updateCustomerResidentialAddress,
   updateCustomerPhoneNumber,

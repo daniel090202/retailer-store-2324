@@ -39,8 +39,13 @@ const SideBar = () => {
 
   const [productResult, setProductResult] = useState<Product>();
   const [customersResult, setCustomersResult] = useState<Array<Customer>>();
-  const [productDetailsResult, setProductDetailsResult] =
-    useState<Array<ProductDetail>>();
+  const [productsWithEachDetailResult, setProductsWithEachDetailResult] =
+    useState<
+      Array<{
+        product: Product;
+        detail: ProductDetail;
+      }>
+    >();
 
   const counterID = "MTV9834009";
 
@@ -87,31 +92,14 @@ const SideBar = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const productDetailsData:
-        | {
-            statusCode: number;
-            message: string;
-            data?: Array<ProductDetail>;
-          }
-        | undefined = await getProductsWithSKU(searchProduct);
-
-      if (
-        productDetailsData?.data !== undefined &&
-        productDetailsData.data.length > 0 &&
-        searchProduct.length > 0
-      ) {
-        const productData:
-          | {
-              statusCode: number;
-              message: string;
-              data?: Product;
-            }
-          | undefined = await getProductWithUPC(productDetailsData.data[0].UPC);
-
-        if (productData?.data !== undefined) {
-          setProductResult(productData.data);
-          setProductDetailsResult(productDetailsData.data);
-        }
+      if (searchProduct.length > 0) {
+        const productsWithEachDetail:
+          | Array<{
+              product: Product;
+              detail: ProductDetail;
+            }>
+          | undefined = await getProductsWithSKU(searchProduct);
+        setProductsWithEachDetailResult(productsWithEachDetail);
       }
     };
 
@@ -143,14 +131,13 @@ const SideBar = () => {
   const handleRemoveCustomerInformation = () => {
     setSearchCustomer("");
     setCustomersResult(undefined);
-
     dispatch(setCartCustomer(undefined));
   };
 
   const handleInputSearchProduct = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setProductDetailsResult(undefined);
+    setProductsWithEachDetailResult(undefined);
     setSearchProduct(event.target.value);
   };
 
@@ -258,8 +245,7 @@ const SideBar = () => {
   return (
     <aside className="md:w-1/4 md:mx-2 md:mb-4 text-xl font-medium rounded-xl">
       <SearchProductTippy
-        productResult={productResult}
-        productDetailsResult={productDetailsResult}
+        productsWithEachDetailResult={productsWithEachDetailResult}
       >
         <div className="flex items-center my-4 px-2 bg-white border rounded-xl shadow-xl">
           <input
@@ -274,7 +260,7 @@ const SideBar = () => {
             <span
               className="p-4 text-gray-400 cursor-pointer"
               onClick={() => {
-                setProductDetailsResult(undefined);
+                setProductsWithEachDetailResult(undefined);
                 setSearchProduct("");
               }}
             >
@@ -330,12 +316,12 @@ const SideBar = () => {
                 alt="User's profile picture."
               />
             </div>
-            <div className="mb-2 flex flex-col justify-between">
-              <div className="flex justify-between">
+            <div className="flex-1 mb-2 flex flex-col justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-lg font-bold">Full name:</span>
                 <span>{customer.customerName}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-lg font-bold">Phone number:</span>
                 <span>{customer.phone}</span>
               </div>

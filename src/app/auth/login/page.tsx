@@ -1,16 +1,18 @@
 "use client";
 
 import { useState } from "react";
-
-import { signIn } from "next-auth/react";
+import { signIn, SignInResponse } from "next-auth/react";
 
 import icons from "@/assets/Icons";
 
 import Modal from "@/app/components/Modal";
 import Button from "@/app/components/Button";
+import { appRoutes } from "@/config";
 
 const Login = () => {
-  const [loginUserModal, setLoginUserModal] = useState(false);
+  const [loginUserModal, setLoginUserModal] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>();
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const [account, setAccount] = useState({
     userName: "",
     password: "",
@@ -21,11 +23,22 @@ const Login = () => {
   };
 
   const handleUserLogin = async () => {
-    await signIn("credentials", {
-      userName: account.userName,
-      password: account.password,
-      callbackUrl: "/",
-    });
+    const credentialsData: SignInResponse | undefined = await signIn(
+      "credentials",
+      {
+        userName: account.userName,
+        password: account.password,
+        callbackUrl: "/",
+        redirect: false,
+      }
+    );
+
+    if (credentialsData?.status !== 200) {
+      setShowErrorMessage(true);
+      setErrorMessage(credentialsData?.error);
+    } else {
+      window.location.href = appRoutes.home;
+    }
   };
 
   return (
@@ -73,6 +86,16 @@ const Login = () => {
             Remember for one session
           </label>
         </div>
+        {showErrorMessage && (
+          <div>
+            <p className="font-semibold text-base text-red-600">
+              {errorMessage}
+            </p>
+            <p className="italic text-sm">
+              Contact the host if encounter any issues.
+            </p>
+          </div>
+        )}
         <div className="flex justify-center">
           <Button
             className="mt-4 p-4"

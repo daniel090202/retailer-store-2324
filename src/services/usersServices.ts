@@ -164,13 +164,10 @@ const changePassword = async (
   try {
     const url = "/users/change-password";
 
-    const hashedNewPassword = await argon.hash(newPassword);
-    const hashedPreviousPassword = await argon.hash(previousPassword);
-
     const response = await request.patch(url, {
       userName,
-      hashedNewPassword,
-      hashedPreviousPassword,
+      newPassword,
+      previousPassword,
     });
 
     const unblockedUserData: {
