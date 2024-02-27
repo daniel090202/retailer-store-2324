@@ -8,6 +8,7 @@ const config = { matcher: ["/:path*"] };
 
 export default withAuth(
   async function middleware(request: NextRequest) {
+    return NextResponse.next();
     // if (request.nextUrl.pathname.startsWith("login")) {
     //   return NextResponse.next();
     // }
