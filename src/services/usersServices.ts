@@ -1,9 +1,29 @@
-"use server";
-
-import * as argon from "argon2";
 import * as request from "@/utils/http";
 
 import { User } from "@/models";
+
+const getCurrentUser = async (accessToken: string) => {
+  try {
+    const url = "/users/me";
+    const params = {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    };
+
+    const response = await request.get(url, params);
+
+    const usersData: {
+      statusCode: number;
+      message: string;
+      data?: User;
+    } = response;
+
+    if (usersData.statusCode === 200) {
+      return usersData.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const getUserWithUserName = async (userName: string = "") => {
   try {
@@ -323,6 +343,7 @@ const updateUserGender = async (
 };
 
 export {
+  getCurrentUser,
   getUserWithUserName,
   getUsersWithUserName,
   getAllArchivedUsers,

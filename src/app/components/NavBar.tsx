@@ -3,9 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import icons from "@/assets/Icons";
 import images from "@/assets/Images";
@@ -14,18 +14,11 @@ import { appRoutes } from "@/config/pathConfig";
 import UserTippy from "./UserTippy";
 
 const NavBar = () => {
-  const router = useRouter();
   const session = useSession();
   const currentPage = usePathname();
 
   const [state, setState] = useState(false);
   const [profileButtonClicked, setProfileButtonClicked] = useState(false);
-
-  useEffect(() => {
-    if (session.status === "unauthenticated") {
-      router.replace("/api/auth/signin");
-    }
-  }, [router, session.status, session.data?.user]);
 
   const renderNavBarElements = (): React.ReactNode => {
     if (

@@ -22,7 +22,7 @@ const SearchCustomerTippy = ({
   customersResult?: Array<Customer>;
   setSearchCustomer: (value: string) => void;
   setCreateCustomerModal: (value: boolean) => void;
-  setCustomersResult: (values: Array<Customer> | undefined) => void;
+  setCustomersResult: (values?: Array<Customer>) => void;
   children: React.ReactElement;
 }) => {
   const dispatch = useAppDispatch();
@@ -79,6 +79,9 @@ const SearchCustomerTippy = ({
       interactive={true}
       placement="bottom"
       render={(attrs) => renderTippyContent(attrs)}
+      onClickOutside={() => {
+        setCustomersResult(undefined);
+      }}
     >
       {children}
     </HeadlessTippy>

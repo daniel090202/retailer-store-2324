@@ -4,23 +4,21 @@ import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+const config = { matcher: ["/:path*"] };
+
 export default withAuth(
   async function middleware(request: NextRequest) {
-    if (request.nextUrl.pathname.startsWith("login")) {
-      return NextResponse.next();
-    }
-
-    const requestForNextAuth = {
-      headers: {
-        cookie: request.headers.get("cookie") ?? undefined,
-      },
-    };
-
+    // if (request.nextUrl.pathname.startsWith("login")) {
+    //   return NextResponse.next();
+    // }
+    // const requestForNextAuth = {
+    //   headers: {
+    //     cookie: request.headers.get("cookie") ?? undefined,
+    //   },
+    // };
     // const session = await getSession({ req: requestForNextAuth });
-
     // if (session) {
     //   const url = "/users/me";
-
     //   const response = await fetch(
     //     process.env.NEXT_PUBLIC_SERVER_BASE_URL + url,
     //     {
@@ -28,23 +26,18 @@ export default withAuth(
     //       headers: { Authorization: `Bearer ${session.accessToken}` },
     //     }
     //   );
-
     //   if (response?.status === 200) {
     //     return NextResponse.next();
     //   } else {
     //     const url = request.nextUrl.clone();
-
     //     url.search = new URLSearchParams(`callbackUrl=${url}`).toString();
     //     url.pathname = `/auth/login`;
-
     //     return NextResponse.redirect(url);
     //   }
     // } else {
     //   const url = request.nextUrl.clone();
-
     //   url.search = new URLSearchParams(`callbackUrl=${url}`).toString();
     //   url.pathname = `/auth/login`;
-
     //   return NextResponse.redirect(url);
     // }
   },
@@ -66,4 +59,4 @@ export default withAuth(
   }
 );
 
-export const config = { matcher: ["/:path*"] };
+export { config };

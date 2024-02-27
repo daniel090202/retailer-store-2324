@@ -10,12 +10,19 @@ import SearchTippyElement from "./SearchProductTippyElement";
 
 const SearchProductTippy = ({
   productsWithEachDetailResult,
+  setProductsWithEachDetailResult,
   children,
 }: {
   productsWithEachDetailResult?: Array<{
     product: Product;
     detail: ProductDetail;
   }>;
+  setProductsWithEachDetailResult: (
+    value?: Array<{
+      product: Product;
+      detail: ProductDetail;
+    }>
+  ) => void;
   children: React.ReactElement;
 }) => {
   const dispatch = useAppDispatch();
@@ -63,10 +70,13 @@ const SearchProductTippy = ({
 
   return (
     <HeadlessTippy
-      visible={true}
+      visible={productsWithEachDetailResult?.length || 0 > 0 ? true : false}
       interactive={true}
       placement="bottom"
       render={(attrs) => renderTippyContent(attrs)}
+      onClickOutside={() => {
+        setProductsWithEachDetailResult(undefined);
+      }}
     >
       {children}
     </HeadlessTippy>

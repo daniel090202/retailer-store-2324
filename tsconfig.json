@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/services/products/poductsServices.poductsServicests"
-, "src/pages/auth/new-user.js"  ],
+    "src/services/products/poductsServices.poductsServicests",
+    "src/pages/auth/new-user.js"
+  ],
   "exclude": ["node_modules"]
 }

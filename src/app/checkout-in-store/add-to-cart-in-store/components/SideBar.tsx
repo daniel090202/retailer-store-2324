@@ -37,7 +37,6 @@ const SideBar = () => {
   const [customerPayment, setCustomerPayment] = useState<string>("0");
   const [createCustomerModal, setCreateCustomerModal] = useState(false);
 
-  const [productResult, setProductResult] = useState<Product>();
   const [customersResult, setCustomersResult] = useState<Array<Customer>>();
   const [productsWithEachDetailResult, setProductsWithEachDetailResult] =
     useState<
@@ -246,6 +245,7 @@ const SideBar = () => {
     <aside className="md:w-1/4 md:mx-2 md:mb-4 text-xl font-medium rounded-xl">
       <SearchProductTippy
         productsWithEachDetailResult={productsWithEachDetailResult}
+        setProductsWithEachDetailResult={setProductsWithEachDetailResult}
       >
         <div className="flex items-center my-4 px-2 bg-white border rounded-xl shadow-xl">
           <input
