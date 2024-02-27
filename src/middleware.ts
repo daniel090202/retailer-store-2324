@@ -6,58 +6,21 @@ import type { NextRequest } from "next/server";
 
 const config = { matcher: ["/:path*"] };
 
-export default withAuth(
-  async function middleware(request: NextRequest) {
-    return NextResponse.next();
-    // if (request.nextUrl.pathname.startsWith("login")) {
-    //   return NextResponse.next();
-    // }
-    // const requestForNextAuth = {
-    //   headers: {
-    //     cookie: request.headers.get("cookie") ?? undefined,
-    //   },
-    // };
-    // const session = await getSession({ req: requestForNextAuth });
-    // if (session) {
-    //   const url = "/users/me";
-    //   const response = await fetch(
-    //     process.env.NEXT_PUBLIC_SERVER_BASE_URL + url,
-    //     {
-    //       method: "GET",
-    //       headers: { Authorization: `Bearer ${session.accessToken}` },
-    //     }
-    //   );
-    //   if (response?.status === 200) {
-    //     return NextResponse.next();
-    //   } else {
-    //     const url = request.nextUrl.clone();
-    //     url.search = new URLSearchParams(`callbackUrl=${url}`).toString();
-    //     url.pathname = `/auth/login`;
-    //     return NextResponse.redirect(url);
-    //   }
-    // } else {
-    //   const url = request.nextUrl.clone();
-    //   url.search = new URLSearchParams(`callbackUrl=${url}`).toString();
-    //   url.pathname = `/auth/login`;
-    //   return NextResponse.redirect(url);
-    // }
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => {
-        if (token?.accessToken) {
-          return true;
-        }
+export default withAuth({
+  callbacks: {
+    authorized: ({ token }) => {
+      if (token?.accessToken) {
+        return true;
+      }
 
-        return false;
-      },
+      return false;
     },
-    pages: {
-      error: "/auth/error",
-      signIn: "/auth/login",
-      signOut: "/auth/logout",
-    },
-  }
-);
+  },
+  pages: {
+    error: "/auth/error",
+    signIn: "/auth/login",
+    signOut: "/auth/logout",
+  },
+});
 
 export { config };
