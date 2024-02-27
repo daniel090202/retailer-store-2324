@@ -4,6 +4,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { User } from "@/models";
 
 const authOptions: NextAuthOptions = {
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -95,7 +99,6 @@ const authOptions: NextAuthOptions = {
     error: "/auth/error",
     signIn: "/auth/login",
     signOut: "/auth/logout",
-    newUser: "/auth/new-user",
   },
 };
 

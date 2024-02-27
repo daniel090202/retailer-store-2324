@@ -1,8 +1,4 @@
-// import { getSession } from "next-auth/react";
 import { withAuth } from "next-auth/middleware";
-
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 
 const config = { matcher: ["/:path*"] };
 
