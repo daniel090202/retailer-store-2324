@@ -72,30 +72,11 @@ const authOptions: NextAuthOptions = {
 
       return token;
     },
-    async signIn({ user }) {
-      const currentUser: User = user?.data;
-
-      if (currentUser !== null) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    async redirect({ url, baseUrl }) {
-      if (url.startsWith("/")) {
-        return `${baseUrl}${url}`;
-      } else if (new URL(url).origin === baseUrl) {
-        return url;
-      }
-
-      return baseUrl;
-    },
   },
   pages: {
     error: "/auth/error",
     signIn: "/auth/login",
     signOut: "/auth/logout",
-    newUser: "/auth/new-user",
   },
 };
 
