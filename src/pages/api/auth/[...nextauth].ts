@@ -46,12 +46,11 @@ const authOptions: NextAuthOptions = {
         const userData = await response.json();
 
         if (userData && userData.statusCode === 200) {
-          console.log(userData);
           return userData;
         } else {
           const errorMessage = "Account credentials failed.";
 
-          throw new Error(userData.message);
+          throw new Error(errorMessage);
         }
       },
     }),
@@ -73,11 +72,30 @@ const authOptions: NextAuthOptions = {
 
       return token;
     },
+    async signIn({ user }) {
+      const currentUser: User = user?.data;
+
+      if (currentUser !== null) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      } else if (new URL(url).origin === baseUrl) {
+        return url;
+      }
+
+      return baseUrl;
+    },
   },
   pages: {
     error: "/auth/error",
     signIn: "/auth/login",
     signOut: "/auth/logout",
+    newUser: "/auth/new-user",
   },
 };
 
