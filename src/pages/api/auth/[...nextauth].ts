@@ -50,7 +50,7 @@ const authOptions: NextAuthOptions = {
         } else {
           const errorMessage = "Account credentials failed.";
 
-          throw new Error(errorMessage);
+          throw new Error(userData.message);
         }
       },
     }),
