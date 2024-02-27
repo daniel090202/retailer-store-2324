@@ -46,11 +46,11 @@ const authOptions: NextAuthOptions = {
         const userData = await response.json();
 
         if (userData && userData.statusCode === 200) {
+          console.log(userData);
           return userData;
         } else {
           const errorMessage = "Account credentials failed.";
 
-          console.log(userData);
           throw new Error(userData.message);
         }
       },
